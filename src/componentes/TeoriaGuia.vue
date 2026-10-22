@@ -4,10 +4,19 @@ import MiniHoja from './MiniHoja.vue'
 
 const props = defineProps({
   temas: { type: Array, required: true },
-  fases: { type: Array, required: true }
+  fases: { type: Array, required: true },
+  temaActivo: { type: String, default: null }
 })
 
 const busqueda = ref('')
+
+// se muestra un solo tema a la vez: el del link, o el primero si el link no trae ninguno (o trae uno inventado)
+const idActivo = computed(() =>
+  props.temas.some((tema) => tema.id === props.temaActivo) ? props.temaActivo : props.temas[0].id
+)
+const indiceActivo = computed(() => props.temas.findIndex((tema) => tema.id === idActivo.value))
+const anterior = computed(() => props.temas[indiceActivo.value - 1] || null)
+const siguiente = computed(() => props.temas[indiceActivo.value + 1] || null)
 
 // sin tildes ni mayúsculas, para que "buscarv" encuentre "BUSCARV" y "funcion" encuentre "Función"
 const normalizar = (texto) => texto.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
@@ -55,7 +64,13 @@ const faseDeActividad = (codigo) => codigo.split('.')[0]
         <nav aria-label="Temas de teoría">
           <div v-for="grupo in grupos" :key="grupo.fase.id" class="indice-grupo" :style="{ '--color-nivel': grupo.fase.color }">
             <p class="indice-fase">{{ grupo.fase.icono }} Fase {{ grupo.fase.id }} · {{ grupo.fase.nivel }}</p>
-            <a v-for="tema in grupo.temas" :key="tema.id" :href="`#teoria-${tema.id}`">{{ tema.titulo }}</a>
+            <a
+              v-for="tema in grupo.temas"
+              :key="tema.id"
+              :href="`#teoria-${tema.id}`"
+              :class="{ activo: tema.id === idActivo }"
+              :aria-current="tema.id === idActivo ? 'page' : null"
+            >{{ tema.titulo }}</a>
           </div>
           <p v-if="!grupos.length" class="sin-resultados">Nada con "{{ busqueda }}". Prueba con otra palabra 🤔</p>
         </nav>
@@ -64,7 +79,7 @@ const faseDeActividad = (codigo) => codigo.split('.')[0]
       <div class="teoria-temas">
         <article
           v-for="tema in temas"
-          v-show="visibles.has(tema.id)"
+          v-show="tema.id === idActivo"
           :id="`teoria-${tema.id}`"
           :key="tema.id"
           class="tema"
@@ -153,6 +168,11 @@ const faseDeActividad = (codigo) => codigo.split('.')[0]
               :href="`#fase-${faseDeActividad(codigo)}-${codigo}`"
             >Actividad {{ codigo }} →</a>
           </footer>
+
+          <nav class="tema-navegacion" aria-label="Otros temas">
+            <a v-if="anterior" :href="`#teoria-${anterior.id}`" class="tema-anterior">← {{ anterior.titulo }}</a>
+            <a v-if="siguiente" :href="`#teoria-${siguiente.id}`" class="tema-siguiente">{{ siguiente.titulo }} →</a>
+          </nav>
         </article>
       </div>
     </div>

@@ -10,11 +10,15 @@ export function usePestanaActiva(ids, porDefecto) {
     return duena ? { pestana: duena, ancla: hash } : { pestana: porDefecto, ancla: null }
   }
 
-  const activa = ref(leerDelLink().pestana)
+  const inicial = leerDelLink()
+  const activa = ref(inicial.pestana)
+  // lo que va después de la pestaña en el link (#teoria-buscarv → teoria-buscarv), por si alguien lo necesita
+  const anclaActiva = ref(inicial.ancla)
 
   async function irAlLink() {
     const { pestana, ancla } = leerDelLink()
     activa.value = pestana
+    anclaActiva.value = ancla
     // hay que esperar a que la pestaña se muestre; con el panel escondido no hay a dónde bajar
     await nextTick()
     const destino = ancla && document.getElementById(ancla)
@@ -28,5 +32,5 @@ export function usePestanaActiva(ids, porDefecto) {
   })
   onUnmounted(() => window.removeEventListener('hashchange', irAlLink))
 
-  return { activa }
+  return { activa, ancla: anclaActiva }
 }

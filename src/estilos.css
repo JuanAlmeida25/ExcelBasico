@@ -506,6 +506,25 @@ code {
   border-radius: 0 6px 6px 0;
 }
 .indice-grupo a:hover { background: color-mix(in srgb, var(--color-nivel) 8%, white); border-left-color: var(--color-nivel); }
+.indice-grupo a.activo {
+  font-weight: 700;
+  color: var(--color-nivel);
+  background: color-mix(in srgb, var(--color-nivel) 12%, white);
+  border-left-color: var(--color-nivel);
+}
+.tema-navegacion { display: flex; justify-content: space-between; gap: 12px; margin-top: 20px; }
+.tema-navegacion a {
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--texto);
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  text-decoration: none;
+}
+.tema-navegacion a:hover { border-color: var(--verde); color: var(--verde); }
+.tema-siguiente { margin-left: auto; text-align: right; }
 .sin-resultados { font-size: 0.88rem; color: var(--texto-suave); }
 
 .teoria-temas { display: flex; flex-direction: column; gap: 28px; }
@@ -739,7 +758,7 @@ kbd {
   .boton-excel, .descargas-csv, .boton-siguiente, .boton-drive, .drive-pendiente { display: none !important; }
   /* el !important le gana al display:none que pone v-show: en papel salen todos los paneles */
   .panel, .tema { display: block !important; }
-  .teoria-indice, .ver-teoria, .tema-practica { display: none !important; }
+  .teoria-indice, .ver-teoria, .tema-practica, .tema-navegacion { display: none !important; }
   .teoria-cuerpo { display: block; }
   .tema { box-shadow: none; break-inside: auto; margin-bottom: 20px; }
   .mini-hoja, .sintaxis-formula { break-inside: avoid; }

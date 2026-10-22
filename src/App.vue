@@ -45,7 +45,10 @@ const pestanas = computed(() => [
   { id: 'recomendaciones', icono: '💡', etiqueta: 'Recomendaciones' }
 ])
 
-const { activa } = usePestanaActiva(pestanas.value.map((pestana) => pestana.id), 'inicio')
+const { activa, ancla } = usePestanaActiva(pestanas.value.map((pestana) => pestana.id), 'inicio')
+
+// #teoria-buscarv → 'buscarv'; si no hay tema en el link, la teoría arranca con el primero
+const temaEnLink = computed(() => (ancla.value?.startsWith('teoria-') ? ancla.value.slice('teoria-'.length) : null))
 
 // a qué pestaña lleva el botón "Siguiente" al final de cada fase
 function siguienteDe(fase) {
@@ -81,7 +84,7 @@ function reiniciarConPermiso() {
   </div>
 
   <main v-show="activa === 'teoria'" class="panel contenedor contenedor-panel">
-    <TeoriaGuia :temas="temas" :fases="fases" />
+    <TeoriaGuia :temas="temas" :fases="fases" :tema-activo="temaEnLink" />
   </main>
 
   <main
