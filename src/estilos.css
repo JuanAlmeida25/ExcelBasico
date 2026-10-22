@@ -650,6 +650,229 @@ kbd {
 .tono-azul { background: #dbeafe; color: #1e40af; }
 .tono-morado { background: #ede9fe; color: #5b21b6; }
 
+/* ---------- Botones y mensajes comunes ---------- */
+.boton-primario, .boton-secundario, .boton-peligro, .boton-admin {
+  padding: 8px 16px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.boton-primario { color: #fff; background: var(--verde); border: 1px solid var(--verde); }
+.boton-primario:hover:not(:disabled) { background: var(--verde-oscuro); }
+.boton-secundario { color: var(--texto); background: var(--superficie); border: 1px solid var(--borde); }
+.boton-secundario:hover:not(:disabled) { border-color: var(--verde); }
+.boton-peligro { color: #b91c1c; background: var(--superficie); border: 1px solid #fecaca; }
+.boton-peligro:hover { background: #fef2f2; border-color: #ef4444; }
+.boton-admin { color: var(--texto-suave); background: transparent; border: 1px dashed #c3ccc7; padding: 6px 12px; font-size: 0.82rem; }
+.boton-admin:hover { color: var(--texto); border-style: solid; }
+button:disabled { opacity: 0.6; cursor: wait; }
+.mensaje-error { padding: 8px 12px; font-size: 0.88rem; color: #991b1b; background: #fef2f2; border-radius: 8px; }
+.solo-lectores { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Acceso admin (en la fila de pestañas) ---------- */
+.fila-pestanas { display: flex; align-items: center; gap: 8px; background: #eef2ef; }
+.fila-pestanas .pestanas-guia { flex: 1; min-width: 0; }
+.acceso-admin { display: flex; align-items: center; gap: 8px; flex-shrink: 0; padding: 4px 16px 4px 0; }
+.admin-pill {
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #7c2d12;
+  background: #ffedd5;
+  border: 1px solid #fdba74;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.acceso-admin .boton-secundario { padding: 4px 10px; font-size: 0.78rem; }
+.modal-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(15, 30, 22, 0.5);
+}
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(100%, 420px);
+  padding: 24px;
+  background: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+.modal p { font-size: 0.92rem; color: var(--texto-suave); }
+.modal label, .cuenta-formulario label, .calificar label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.modal input, .cuenta-formulario input, .calificar input, .calificar textarea, .foro-responder textarea {
+  padding: 9px 12px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+.modal input:focus, .cuenta-formulario input:focus, .calificar input:focus,
+.calificar textarea:focus, .foro-responder textarea:focus {
+  outline: none;
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(16, 124, 65, 0.12);
+}
+.modal-botones { display: flex; justify-content: flex-end; gap: 8px; }
+
+/* ---------- Foro ---------- */
+.foro {
+  margin-top: 40px;
+  padding: 28px;
+  background: var(--superficie);
+  border: 2px solid color-mix(in srgb, var(--color-nivel) 30%, white);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+.foro-encabezado { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 20px; }
+.foro-encabezado h2 { font-size: 1.4rem; }
+.foro-encabezado p { color: var(--texto-suave); }
+.foro-icono {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  font-size: 1.6rem;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--color-nivel) 12%, white);
+}
+.foro-sesion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  background: var(--fondo);
+  border-radius: 12px;
+}
+.foro-sesion > p { width: 100%; }
+.cuenta { width: 100%; max-width: 460px; }
+.cuenta-modos { display: flex; gap: 4px; margin-bottom: 12px; }
+.cuenta-modos button {
+  flex: 1;
+  padding: 8px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid var(--borde);
+  cursor: pointer;
+}
+.cuenta-modos button.activo { color: var(--verde); border-bottom-color: var(--verde); }
+.cuenta-formulario { display: flex; flex-direction: column; gap: 10px; }
+.cuenta-ayuda { font-size: 0.82rem; color: var(--texto-suave); }
+.foro-estado { padding: 20px; text-align: center; color: var(--texto-suave); }
+.foro-preguntas { list-style: none; display: flex; flex-direction: column; gap: 28px; }
+.foro-pregunta { padding-top: 20px; border-top: 1px solid var(--borde); }
+.foro-pregunta:first-child { border-top: none; padding-top: 0; }
+.foro-pregunta h3 { display: flex; gap: 10px; font-size: 1.05rem; line-height: 1.4; margin-bottom: 12px; }
+.foro-numero {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  font-size: 0.85rem;
+  color: #fff;
+  background: var(--color-nivel);
+  border-radius: 50%;
+}
+.foro-responder { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.foro-responder textarea { resize: vertical; min-height: 90px; }
+.foro-responder-pie { display: flex; justify-content: space-between; align-items: center; color: var(--texto-suave); }
+.foro-conteo { font-size: 0.85rem; color: var(--texto-suave); margin-bottom: 8px; }
+.foro-respuestas { display: flex; flex-direction: column; gap: 10px; }
+.respuesta { padding: 14px 16px; background: var(--fondo); border: 1px solid var(--borde); border-radius: 12px; }
+.respuesta.mia { border-color: color-mix(in srgb, var(--color-nivel) 40%, white); background: color-mix(in srgb, var(--color-nivel) 4%, white); }
+.respuesta-cabeza { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.respuesta-cabeza > div { display: flex; flex-direction: column; line-height: 1.25; }
+.respuesta-cabeza time { margin-left: auto; font-size: 0.78rem; color: var(--texto-suave); white-space: nowrap; }
+.respuesta-avatar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-nivel);
+  border-radius: 50%;
+}
+.respuesta-usuario { font-size: 0.8rem; color: var(--texto-suave); }
+.respuesta-texto { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 0.95rem; }
+.respuesta-nota { margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: var(--superficie); font-size: 0.88rem; }
+.respuesta-nota p { margin-top: 6px; color: var(--texto-suave); white-space: pre-wrap; }
+.respuesta-acciones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.respuesta-acciones button { padding: 5px 12px; font-size: 0.8rem; }
+.calificar { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; padding: 12px; background: #fff7ed; border-radius: 10px; }
+.calificar input { max-width: 120px; }
+.calificar-botones { display: flex; justify-content: flex-end; gap: 8px; }
+.estado-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid currentColor;
+  border-radius: 99px;
+}
+.aprobado { color: #047857; }
+.no-aprobado { color: #b91c1c; }
+.sin-calificar { color: #b45309; }
+.sin-respuestas { color: var(--texto-suave); }
+
+/* ---------- Panel del Profe ---------- */
+.panel-cabeza { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.panel-cabeza h2 { display: flex; align-items: center; gap: 12px; font-size: clamp(1.3rem, 3vw, 1.7rem); }
+.panel-cabeza p { color: var(--texto-suave); }
+.panel-acciones { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }
+.panel-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.panel-stat { padding: 14px 16px; background: var(--superficie); border: 1px solid var(--borde); border-radius: 12px; }
+.panel-stat b { display: block; font-size: 1.7rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.panel-stat span { font-size: 0.8rem; color: var(--texto-suave); }
+.panel-filtros { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.panel-chip {
+  padding: 5px 12px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 99px;
+  cursor: pointer;
+}
+.panel-chip.activo { color: var(--verde); background: var(--verde-claro); border-color: var(--verde); }
+.panel-tabla-wrap { overflow-x: auto; background: var(--superficie); border: 1px solid var(--borde); border-radius: 12px; }
+.panel-tabla { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.panel-tabla th, .panel-tabla td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--borde); white-space: nowrap; }
+.panel-tabla th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--texto-suave); background: var(--fondo); }
+.panel-tabla tbody tr:last-child td { border-bottom: none; }
+.panel-tabla .num { text-align: right; font-variant-numeric: tabular-nums; }
+.panel-tabla .boton-peligro { padding: 4px 10px; font-size: 0.78rem; }
+.sin-cuenta, .pendientes { color: var(--texto-suave); }
+.panel-ayuda { margin-top: 14px; font-size: 0.88rem; color: var(--texto-suave); }
+
 /* ---------- Criterios ---------- */
 .criterios { list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .criterio {
@@ -738,6 +961,9 @@ kbd {
 }
 @media (max-width: 600px) {
   .formula, .fx, .cuadro-nombre { display: none; }
+  .admin-pill { display: none; }
+  .foro { padding: 18px; }
+  .respuesta-cabeza { flex-wrap: wrap; }
   .progreso { width: 100%; }
   .progreso-pista { flex: 1; width: auto; }
   .fase-encabezado { align-items: flex-start; }
@@ -758,6 +984,8 @@ kbd {
   .boton-excel, .descargas-csv, .boton-siguiente, .boton-drive, .drive-pendiente { display: none !important; }
   /* el !important le gana al display:none que pone v-show: en papel salen todos los paneles */
   .panel, .tema { display: block !important; }
+  /* el foro y lo del profe son cosa de pantalla, no de papel */
+  .foro, .acceso-admin, .panel-admin, .modal-fondo { display: none !important; }
   .teoria-indice, .ver-teoria, .tema-practica, .tema-navegacion { display: none !important; }
   .teoria-cuerpo { display: block; }
   .tema { box-shadow: none; break-inside: auto; margin-bottom: 20px; }

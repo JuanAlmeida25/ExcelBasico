@@ -11,7 +11,12 @@ import EntregableFinal from './componentes/EntregableFinal.vue'
 import RecomendacionesDidacticas from './componentes/RecomendacionesDidacticas.vue'
 import NotaFinal from './componentes/NotaFinal.vue'
 import TeoriaGuia from './componentes/TeoriaGuia.vue'
+import ForoFase from './componentes/ForoFase.vue'
+import AccesoAdmin from './componentes/AccesoAdmin.vue'
+import PanelProfe from './componentes/PanelProfe.vue'
 import { temas } from './datos/teoria.js'
+import { forosPorFase } from './datos/foro.js'
+import { useSesion } from './composables/useSesion.js'
 import { useProgreso } from './composables/useProgreso.js'
 import { usePestanaActiva } from './composables/usePestanaActiva.js'
 import {
@@ -23,6 +28,8 @@ import {
   recomendaciones,
   notaFinal
 } from './datos/guia.js'
+
+const { esAdmin } = useSesion()
 
 const codigos = fases.flatMap((fase) => fase.actividades.map((actividad) => actividad.codigo))
 const { hechas, cantidadHechas, porcentaje, alternar, reiniciar } = useProgreso(codigos)
@@ -42,10 +49,13 @@ const pestanas = computed(() => [
     }
   }),
   { id: 'evaluacion', icono: '📋', etiqueta: 'Evaluación' },
-  { id: 'recomendaciones', icono: '💡', etiqueta: 'Recomendaciones' }
+  { id: 'recomendaciones', icono: '💡', etiqueta: 'Recomendaciones' },
+  // la pestaña del profe solo se pinta con el modo admin activo
+  ...(esAdmin.value ? [{ id: 'panel', icono: '👨‍🏫', etiqueta: 'Panel del Profe' }] : [])
 ])
 
-const { activa, ancla } = usePestanaActiva(pestanas.value.map((pestana) => pestana.id), 'inicio')
+// 'panel' va siempre en la lista para que el link #panel funcione apenas el profe ingrese
+const { activa, ancla } = usePestanaActiva([...pestanas.value.map((pestana) => pestana.id), 'panel'], 'inicio')
 
 // #teoria-buscarv → 'buscarv'; si no hay tema en el link, la teoría arranca con el primero
 const temaEnLink = computed(() => (ancla.value?.startsWith('teoria-') ? ancla.value.slice('teoria-'.length) : null))
@@ -71,7 +81,10 @@ function reiniciarConPermiso() {
       :porcentaje="porcentaje"
       @reiniciar="reiniciarConPermiso"
     />
-    <PestanasGuia :pestanas="pestanas" :activa="activa" />
+    <div class="fila-pestanas">
+      <PestanasGuia :pestanas="pestanas" :activa="activa" />
+      <AccesoAdmin />
+    </div>
   </div>
 
   <!-- v-show y no v-if: al imprimir se muestran todos los paneles de una -->
@@ -98,7 +111,9 @@ function reiniciarConPermiso() {
       :hechas="hechas"
       :siguiente="siguienteDe(fase)"
       @alternar="alternar"
-    />
+    >
+      <ForoFase v-if="forosPorFase[fase.id]" :fase="fase.id" />
+    </FaseActividades>
   </main>
 
   <main v-show="activa === 'evaluacion'" class="panel contenedor contenedor-panel">
@@ -109,5 +124,11 @@ function reiniciarConPermiso() {
   <main v-show="activa === 'recomendaciones'" class="panel contenedor contenedor-panel">
     <RecomendacionesDidacticas :recomendaciones="recomendaciones" />
     <NotaFinal :texto="notaFinal" />
+  </main>
+
+  <main v-show="activa === 'panel'" class="panel panel-admin contenedor contenedor-panel">
+    <!-- v-if: el panel pide los datos frescos cada vez que se abre -->
+    <PanelProfe v-if="esAdmin && activa === 'panel'" />
+    <p v-else-if="!esAdmin" class="foro-estado">🔐 Esta pestaña es solo para el profe. Ingresa con "Acceso Admin" arriba a la derecha.</p>
   </main>
 </template>

@@ -87,6 +87,9 @@ const rutaDatos = (nombre) => `${import.meta.env.BASE_URL}datos/${nombre}`
       </article>
     </div>
 
+    <!-- aquí entra el foro de la fase, si tiene -->
+    <slot />
+
     <a v-if="siguiente" class="boton-siguiente" :href="`#${siguiente.id}`">
       Siguiente: {{ siguiente.etiqueta }} →
     </a>
