@@ -1,0 +1,41 @@
+﻿Código;Documento;Tipo de documento;Proceso;Tipo de proceso;Responsable;Fecha de vencimiento;Estado
+PE-01-PO-01;Política del SIG;Política;Direccionamiento estratégico;Estratégico;Rafael Mendoza;10/02/2027;Vigente
+PE-01-PL-01;Plan estratégico 2025-2028;Plan;Direccionamiento estratégico;Estratégico;Rafael Mendoza;05/11/2026;Por vencer
+PE-01-PR-01;Revisión por la dirección;Procedimiento;Direccionamiento estratégico;Estratégico;Rafael Mendoza;01/09/2025;Vencido
+PE-01-FO-01;Acta de revisión por la dirección;Formato;Direccionamiento estratégico;Estratégico;Rafael Mendoza;30/10/2026;Por vencer
+PE-02-MA-01;Manual del SIG;Manual;Gestión de la calidad;Estratégico;Laura Pimienta;01/03/2027;Vigente
+PE-02-PR-01;Control de documentos;Procedimiento;Gestión de la calidad;Estratégico;Laura Pimienta;20/05/2027;Vigente
+PE-02-PR-02;Auditorías internas;Procedimiento;Gestión de la calidad;Estratégico;Laura Pimienta;15/08/2025;Vencido
+PE-02-PR-03;Acciones correctivas;Procedimiento;Gestión de la calidad;Estratégico;Laura Pimienta;12/11/2026;Por vencer
+PE-02-FO-01;Listado maestro de documentos;Formato;Gestión de la calidad;Estratégico;Laura Pimienta;01/07/2027;Vigente
+PE-02-FO-02;Plan de auditoría;Formato;Gestión de la calidad;Estratégico;Laura Pimienta;20/01/2026;Vencido
+PM-01-PR-01;Control de producción;Procedimiento;Producción;Misional;Andrés Brito;15/11/2026;Por vencer
+PM-01-IN-01;Limpieza y desinfección de equipos;Instructivo;Producción;Misional;Andrés Brito;14/02/2027;Vigente
+PM-01-IN-02;Pasteurización;Instructivo;Producción;Misional;Andrés Brito;30/06/2025;Vencido
+PM-01-FO-01;Registro de temperatura;Formato;Producción;Misional;Andrés Brito;01/09/2027;Vigente
+PM-01-FO-02;Control de lotes;Formato;Producción;Misional;Andrés Brito;18/04/2026;Vencido
+PM-01-PR-02;Producto no conforme;Procedimiento;Producción;Misional;Andrés Brito;03/03/2027;Vigente
+PM-02-PR-01;Atención de PQRS;Procedimiento;Comercial y ventas;Misional;Marelvis Ospino;20/11/2026;Por vencer
+PM-02-PR-02;Ventas y cotizaciones;Procedimiento;Comercial y ventas;Misional;Marelvis Ospino;11/04/2027;Vigente
+PM-02-FO-01;Encuesta de satisfacción;Formato;Comercial y ventas;Misional;Marelvis Ospino;01/12/2025;Vencido
+PM-02-FO-02;Registro de PQRS;Formato;Comercial y ventas;Misional;Marelvis Ospino;06/06/2027;Vigente
+PM-03-PR-01;Despacho y entrega;Procedimiento;Logística y distribución;Misional;Kevin Fragozo;22/05/2026;Vencido
+PM-03-IN-01;Cargue de vehículos;Instructivo;Logística y distribución;Misional;Kevin Fragozo;19/08/2027;Vigente
+PM-03-FO-01;Lista de chequeo de vehículos;Formato;Logística y distribución;Misional;Kevin Fragozo;01/11/2026;Por vencer
+PM-03-FO-02;Control de inventario;Formato;Logística y distribución;Misional;Kevin Fragozo;09/01/2027;Vigente
+PA-01-PR-01;Selección y contratación;Procedimiento;Talento humano;Apoyo;Yesenia Uriana;15/07/2026;Vencido
+PA-01-PR-02;Inducción y reinducción;Procedimiento;Talento humano;Apoyo;Yesenia Uriana;02/02/2027;Vigente
+PA-01-FO-01;Evaluación de desempeño;Formato;Talento humano;Apoyo;Yesenia Uriana;10/11/2026;Por vencer
+PA-01-PL-01;Plan de capacitación 2026;Plan;Talento humano;Apoyo;Yesenia Uriana;31/12/2026;Vigente
+PA-02-PR-01;Compras y evaluación de proveedores;Procedimiento;Compras;Apoyo;Camilo Iguarán;11/11/2025;Vencido
+PA-02-FO-01;Orden de compra;Formato;Compras;Apoyo;Camilo Iguarán;05/05/2027;Vigente
+PA-02-FO-02;Evaluación de proveedores;Formato;Compras;Apoyo;Camilo Iguarán;12/12/2026;Vigente
+PA-03-PR-01;Mantenimiento preventivo;Procedimiento;Mantenimiento;Apoyo;Sin asignar;25/03/2026;Vencido
+PA-03-FO-01;Hoja de vida de equipos;Formato;Mantenimiento;Apoyo;Sin asignar;07/07/2027;Vigente
+PA-03-FO-02;Solicitud de mantenimiento;Formato;Mantenimiento;Apoyo;Sin asignar;08/11/2026;Por vencer
+PA-04-PL-01;Plan de emergencias;Plan;Seguridad y salud en el trabajo;Apoyo;Daniela Epiayú;18/03/2027;Vigente
+PA-04-PR-01;Reporte de incidentes y accidentes;Procedimiento;Seguridad y salud en el trabajo;Apoyo;Daniela Epiayú;01/06/2026;Vencido
+PA-04-MA-01;Manual de SST;Manual;Seguridad y salud en el trabajo;Apoyo;Daniela Epiayú;18/11/2026;Por vencer
+PA-04-FO-01;Inspección de EPP;Formato;Seguridad y salud en el trabajo;Apoyo;Daniela Epiayú;08/08/2027;Vigente
+PA-04-IN-01;Trabajo en alturas;Instructivo;Seguridad y salud en el trabajo;Apoyo;Daniela Epiayú;20/10/2025;Vencido
+PA-04-FO-02;Matriz de peligros;Formato;Seguridad y salud en el trabajo;Apoyo;Daniela Epiayú;30/01/2027;Vigente

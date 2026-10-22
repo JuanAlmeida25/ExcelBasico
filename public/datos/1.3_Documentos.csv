@@ -1,0 +1,41 @@
+﻿Código;Documento;Versión;Fecha de aprobación;Fecha de vencimiento
+PE-01-PO-01;Política del SIG;3;10/02/2024;10/02/2027
+PE-01-PL-01;Plan estratégico 2025-2028;1;15/01/2025;05/11/2026
+PE-01-PR-01;Revisión por la dirección;2;01/09/2023;01/09/2025
+PE-01-FO-01;Acta de revisión por la dirección;2;12/06/2024;30/10/2026
+PE-02-MA-01;Manual del SIG;4;01/03/2024;01/03/2027
+PE-02-PR-01;Control de documentos;5;20/05/2025;20/05/2027
+PE-02-PR-02;Auditorías internas;3;15/08/2023;15/08/2025
+PE-02-PR-03;Acciones correctivas;2;10/10/2024;12/11/2026
+PE-02-FO-01;Listado maestro de documentos;6;01/07/2025;01/07/2027
+PE-02-FO-02;Plan de auditoría;2;20/01/2024;20/01/2026
+PM-01-PR-01;Control de producción;3;05/11/2024;15/11/2026
+PM-01-IN-01;Limpieza y desinfección de equipos;4;14/02/2025;14/02/2027
+PM-01-IN-02;Pasteurización;2;30/06/2023;30/06/2025
+PM-01-FO-01;Registro de temperatura;5;01/09/2025;01/09/2027
+PM-01-FO-02;Control de lotes;3;18/04/2024;18/04/2026
+PM-01-PR-02;Producto no conforme;2;03/03/2025;03/03/2027
+PM-02-PR-01;Atención de PQRS;3;08/08/2024;20/11/2026
+PM-02-PR-02;Ventas y cotizaciones;2;11/04/2025;11/04/2027
+PM-02-FO-01;Encuesta de satisfacción;4;01/12/2023;01/12/2025
+PM-02-FO-02;Registro de PQRS;2;06/06/2025;06/06/2027
+PM-03-PR-01;Despacho y entrega;3;22/05/2024;22/05/2026
+PM-03-IN-01;Cargue de vehículos;1;19/08/2025;19/08/2027
+PM-03-FO-01;Lista de chequeo de vehículos;2;01/10/2024;01/11/2026
+PM-03-FO-02;Control de inventario;4;09/01/2025;09/01/2027
+PA-01-PR-01;Selección y contratación;4;15/07/2024;15/07/2026
+PA-01-PR-02;Inducción y reinducción;3;02/02/2025;02/02/2027
+PA-01-FO-01;Evaluación de desempeño;2;30/09/2024;10/11/2026
+PA-01-PL-01;Plan de capacitación 2026;1;10/01/2026;31/12/2026
+PA-02-PR-01;Compras y evaluación de proveedores;3;11/11/2023;11/11/2025
+PA-02-FO-01;Orden de compra;5;05/05/2025;05/05/2027
+PA-02-FO-02;Evaluación de proveedores;2;12/12/2024;12/12/2026
+PA-03-PR-01;Mantenimiento preventivo;2;25/03/2024;25/03/2026
+PA-03-FO-01;Hoja de vida de equipos;3;07/07/2025;07/07/2027
+PA-03-FO-02;Solicitud de mantenimiento;1;15/10/2025;08/11/2026
+PA-04-PL-01;Plan de emergencias;3;18/03/2025;18/03/2027
+PA-04-PR-01;Reporte de incidentes y accidentes;2;01/06/2024;01/06/2026
+PA-04-MA-01;Manual de SST;2;28/02/2024;18/11/2026
+PA-04-FO-01;Inspección de EPP;4;08/08/2025;08/08/2027
+PA-04-IN-01;Trabajo en alturas;2;20/10/2023;20/10/2025
+PA-04-FO-02;Matriz de peligros;3;30/01/2025;30/01/2027

@@ -1,0 +1,9 @@
+﻿Indicador;Fórmula;Meta (%);Resultado (%);Semáforo
+Documentos vigentes;Documentos vigentes / Total de documentos × 100;90;80;
+Satisfacción del cliente;Clientes satisfechos / Clientes encuestados × 100;85;88;
+Cumplimiento del plan de auditorías;Auditorías realizadas / Auditorías programadas × 100;100;95;
+Acciones correctivas cerradas a tiempo;Acciones cerradas a tiempo / Acciones abiertas × 100;80;70;
+Cumplimiento del plan de capacitación;Capacitaciones realizadas / Capacitaciones programadas × 100;90;92;
+Entregas a tiempo;Pedidos entregados a tiempo / Pedidos totales × 100;95;96;
+Proveedores evaluados;Proveedores evaluados / Proveedores activos × 100;100;85;
+Mantenimientos preventivos ejecutados;Mantenimientos ejecutados / Mantenimientos programados × 100;90;70;

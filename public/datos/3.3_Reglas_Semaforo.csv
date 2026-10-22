@@ -1,0 +1,4 @@
+﻿Color;Condición
+Verde;Resultado ≥ Meta
+Amarillo;Meta - 10 ≤ Resultado < Meta
+Rojo;Resultado < Meta - 10

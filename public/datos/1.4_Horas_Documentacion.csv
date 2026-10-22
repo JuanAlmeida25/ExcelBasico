@@ -1,0 +1,16 @@
+﻿Código;Documento;Proceso;Horas de elaboración;Costo
+PE-01-PO-01;Política del SIG;Direccionamiento estratégico;14;
+PE-01-PL-01;Plan estratégico 2025-2028;Direccionamiento estratégico;16;
+PE-01-PR-01;Revisión por la dirección;Direccionamiento estratégico;8;
+PE-01-FO-01;Acta de revisión por la dirección;Direccionamiento estratégico;14;
+PE-02-MA-01;Manual del SIG;Gestión de la calidad;12;
+PE-02-PR-01;Control de documentos;Gestión de la calidad;6;
+PE-02-PR-02;Auditorías internas;Gestión de la calidad;4;
+PE-02-PR-03;Acciones correctivas;Gestión de la calidad;10;
+PE-02-FO-01;Listado maestro de documentos;Gestión de la calidad;10;
+PE-02-FO-02;Plan de auditoría;Gestión de la calidad;16;
+PM-01-PR-01;Control de producción;Producción;6;
+PM-01-IN-01;Limpieza y desinfección de equipos;Producción;4;
+PM-01-IN-02;Pasteurización;Producción;12;
+PM-01-FO-01;Registro de temperatura;Producción;8;
+PM-01-FO-02;Control de lotes;Producción;12;

@@ -1,0 +1,41 @@
+﻿Código;Proceso;Estado;Días de revisión
+PE-01-PO-01;Direccionamiento estratégico;Vigente;12
+PE-01-PL-01;Direccionamiento estratégico;Por vencer;20
+PE-01-PR-01;Direccionamiento estratégico;Vencido;9
+PE-01-FO-01;Direccionamiento estratégico;Por vencer;5
+PE-02-MA-01;Gestión de la calidad;Vigente;25
+PE-02-PR-01;Gestión de la calidad;Vigente;8
+PE-02-PR-02;Gestión de la calidad;Vencido;14
+PE-02-PR-03;Gestión de la calidad;Por vencer;10
+PE-02-FO-01;Gestión de la calidad;Vigente;3
+PE-02-FO-02;Gestión de la calidad;Vencido;6
+PM-01-PR-01;Producción;Por vencer;15
+PM-01-IN-01;Producción;Vigente;7
+PM-01-IN-02;Producción;Vencido;18
+PM-01-FO-01;Producción;Vigente;2
+PM-01-FO-02;Producción;Vencido;4
+PM-01-PR-02;Producción;Vigente;11
+PM-02-PR-01;Comercial y ventas;Por vencer;9
+PM-02-PR-02;Comercial y ventas;Vigente;6
+PM-02-FO-01;Comercial y ventas;Vencido;4
+PM-02-FO-02;Comercial y ventas;Vigente;3
+PM-03-PR-01;Logística y distribución;Vencido;12
+PM-03-IN-01;Logística y distribución;Vigente;5
+PM-03-FO-01;Logística y distribución;Por vencer;2
+PM-03-FO-02;Logística y distribución;Vigente;6
+PA-01-PR-01;Talento humano;Vencido;16
+PA-01-PR-02;Talento humano;Vigente;8
+PA-01-FO-01;Talento humano;Por vencer;7
+PA-01-PL-01;Talento humano;Vigente;10
+PA-02-PR-01;Compras;Vencido;13
+PA-02-FO-01;Compras;Vigente;2
+PA-02-FO-02;Compras;Vigente;5
+PA-03-PR-01;Mantenimiento;Vencido;14
+PA-03-FO-01;Mantenimiento;Vigente;4
+PA-03-FO-02;Mantenimiento;Por vencer;3
+PA-04-PL-01;Seguridad y salud en el trabajo;Vigente;21
+PA-04-PR-01;Seguridad y salud en el trabajo;Vencido;9
+PA-04-MA-01;Seguridad y salud en el trabajo;Por vencer;19
+PA-04-FO-01;Seguridad y salud en el trabajo;Vigente;3
+PA-04-IN-01;Seguridad y salud en el trabajo;Vencido;12
+PA-04-FO-02;Seguridad y salud en el trabajo;Vigente;17

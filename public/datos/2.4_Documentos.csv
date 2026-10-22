@@ -1,0 +1,41 @@
+﻿Código;Documento;Proceso;Estado
+PE-01-PO-01;Política del SIG;Direccionamiento estratégico;Vigente
+PE-01-PL-01;Plan estratégico 2025-2028;Direccionamiento estratégico;Por vencer
+PE-01-PR-01;Revisión por la dirección;Direccionamiento estratégico;Vencido
+PE-01-FO-01;Acta de revisión por la dirección;Direccionamiento estratégico;Por vencer
+PE-02-MA-01;Manual del SIG;Gestión de la calidad;Vigente
+PE-02-PR-01;Control de documentos;Gestión de la calidad;Vigente
+PE-02-PR-02;Auditorías internas;Gestión de la calidad;Vencido
+PE-02-PR-03;Acciones correctivas;Gestión de la calidad;Por vencer
+PE-02-FO-01;Listado maestro de documentos;Gestión de la calidad;Vigente
+PE-02-FO-02;Plan de auditoría;Gestión de la calidad;Vencido
+PM-01-PR-01;Control de producción;Producción;Por vencer
+PM-01-IN-01;Limpieza y desinfección de equipos;Producción;Vigente
+PM-01-IN-02;Pasteurización;Producción;Vencido
+PM-01-FO-01;Registro de temperatura;Producción;Vigente
+PM-01-FO-02;Control de lotes;Producción;Vencido
+PM-01-PR-02;Producto no conforme;Producción;Vigente
+PM-02-PR-01;Atención de PQRS;Comercial y ventas;Por vencer
+PM-02-PR-02;Ventas y cotizaciones;Comercial y ventas;Vigente
+PM-02-FO-01;Encuesta de satisfacción;Comercial y ventas;Vencido
+PM-02-FO-02;Registro de PQRS;Comercial y ventas;Vigente
+PM-03-PR-01;Despacho y entrega;Logística y distribución;Vencido
+PM-03-IN-01;Cargue de vehículos;Logística y distribución;Vigente
+PM-03-FO-01;Lista de chequeo de vehículos;Logística y distribución;Por vencer
+PM-03-FO-02;Control de inventario;Logística y distribución;Vigente
+PA-01-PR-01;Selección y contratación;Talento humano;Vencido
+PA-01-PR-02;Inducción y reinducción;Talento humano;Vigente
+PA-01-FO-01;Evaluación de desempeño;Talento humano;Por vencer
+PA-01-PL-01;Plan de capacitación 2026;Talento humano;Vigente
+PA-02-PR-01;Compras y evaluación de proveedores;Compras;Vencido
+PA-02-FO-01;Orden de compra;Compras;Vigente
+PA-02-FO-02;Evaluación de proveedores;Compras;Vigente
+PA-03-PR-01;Mantenimiento preventivo;Mantenimiento;Vencido
+PA-03-FO-01;Hoja de vida de equipos;Mantenimiento;Vigente
+PA-03-FO-02;Solicitud de mantenimiento;Mantenimiento;Por vencer
+PA-04-PL-01;Plan de emergencias;Seguridad y salud en el trabajo;Vigente
+PA-04-PR-01;Reporte de incidentes y accidentes;Seguridad y salud en el trabajo;Vencido
+PA-04-MA-01;Manual de SST;Seguridad y salud en el trabajo;Por vencer
+PA-04-FO-01;Inspección de EPP;Seguridad y salud en el trabajo;Vigente
+PA-04-IN-01;Trabajo en alturas;Seguridad y salud en el trabajo;Vencido
+PA-04-FO-02;Matriz de peligros;Seguridad y salud en el trabajo;Vigente

@@ -1,0 +1,41 @@
+﻿Código;Documento;Tipo;Proceso;Versión;Fecha de aprobación;Fecha de vencimiento;Estado
+PE-01-PO-01;Política del SIG;Política;Direccionamiento estratégico;3;10/02/2024;10/02/2027;Vigente
+PE-01-PL-01;Plan estratégico 2025-2028;Plan;Direccionamiento estratégico;1;15/01/2025;05/11/2026;Por vencer
+PE-01-PR-01;Revisión por la dirección;Procedimiento;Direccionamiento estratégico;2;01/09/2023;01/09/2025;Vencido
+PE-01-FO-01;Acta de revisión por la dirección;Formato;Direccionamiento estratégico;2;12/06/2024;30/10/2026;Por vencer
+PE-02-MA-01;Manual del SIG;Manual;Gestión de la calidad;4;01/03/2024;01/03/2027;Vigente
+PE-02-PR-01;Control de documentos;Procedimiento;Gestión de la calidad;5;20/05/2025;20/05/2027;Vigente
+PE-02-PR-02;Auditorías internas;Procedimiento;Gestión de la calidad;3;15/08/2023;15/08/2025;Vencido
+PE-02-PR-03;Acciones correctivas;Procedimiento;Gestión de la calidad;2;10/10/2024;12/11/2026;Por vencer
+PE-02-FO-01;Listado maestro de documentos;Formato;Gestión de la calidad;6;01/07/2025;01/07/2027;Vigente
+PE-02-FO-02;Plan de auditoría;Formato;Gestión de la calidad;2;20/01/2024;20/01/2026;Vencido
+PM-01-PR-01;Control de producción;Procedimiento;Producción;3;05/11/2024;15/11/2026;Por vencer
+PM-01-IN-01;Limpieza y desinfección de equipos;Instructivo;Producción;4;14/02/2025;14/02/2027;Vigente
+PM-01-IN-02;Pasteurización;Instructivo;Producción;2;30/06/2023;30/06/2025;Vencido
+PM-01-FO-01;Registro de temperatura;Formato;Producción;5;01/09/2025;01/09/2027;Vigente
+PM-01-FO-02;Control de lotes;Formato;Producción;3;18/04/2024;18/04/2026;Vencido
+PM-01-PR-02;Producto no conforme;Procedimiento;Producción;2;03/03/2025;03/03/2027;Vigente
+PM-02-PR-01;Atención de PQRS;Procedimiento;Comercial y ventas;3;08/08/2024;20/11/2026;Por vencer
+PM-02-PR-02;Ventas y cotizaciones;Procedimiento;Comercial y ventas;2;11/04/2025;11/04/2027;Vigente
+PM-02-FO-01;Encuesta de satisfacción;Formato;Comercial y ventas;4;01/12/2023;01/12/2025;Vencido
+PM-02-FO-02;Registro de PQRS;Formato;Comercial y ventas;2;06/06/2025;06/06/2027;Vigente
+PM-03-PR-01;Despacho y entrega;Procedimiento;Logística y distribución;3;22/05/2024;22/05/2026;Vencido
+PM-03-IN-01;Cargue de vehículos;Instructivo;Logística y distribución;1;19/08/2025;19/08/2027;Vigente
+PM-03-FO-01;Lista de chequeo de vehículos;Formato;Logística y distribución;2;01/10/2024;01/11/2026;Por vencer
+PM-03-FO-02;Control de inventario;Formato;Logística y distribución;4;09/01/2025;09/01/2027;Vigente
+PA-01-PR-01;Selección y contratación;Procedimiento;Talento humano;4;15/07/2024;15/07/2026;Vencido
+PA-01-PR-02;Inducción y reinducción;Procedimiento;Talento humano;3;02/02/2025;02/02/2027;Vigente
+PA-01-FO-01;Evaluación de desempeño;Formato;Talento humano;2;30/09/2024;10/11/2026;Por vencer
+PA-01-PL-01;Plan de capacitación 2026;Plan;Talento humano;1;10/01/2026;31/12/2026;Vigente
+PA-02-PR-01;Compras y evaluación de proveedores;Procedimiento;Compras;3;11/11/2023;11/11/2025;Vencido
+PA-02-FO-01;Orden de compra;Formato;Compras;5;05/05/2025;05/05/2027;Vigente
+PA-02-FO-02;Evaluación de proveedores;Formato;Compras;2;12/12/2024;12/12/2026;Vigente
+PA-03-PR-01;Mantenimiento preventivo;Procedimiento;Mantenimiento;2;25/03/2024;25/03/2026;Vencido
+PA-03-FO-01;Hoja de vida de equipos;Formato;Mantenimiento;3;07/07/2025;07/07/2027;Vigente
+PA-03-FO-02;Solicitud de mantenimiento;Formato;Mantenimiento;1;15/10/2025;08/11/2026;Por vencer
+PA-04-PL-01;Plan de emergencias;Plan;Seguridad y salud en el trabajo;3;18/03/2025;18/03/2027;Vigente
+PA-04-PR-01;Reporte de incidentes y accidentes;Procedimiento;Seguridad y salud en el trabajo;2;01/06/2024;01/06/2026;Vencido
+PA-04-MA-01;Manual de SST;Manual;Seguridad y salud en el trabajo;2;28/02/2024;18/11/2026;Por vencer
+PA-04-FO-01;Inspección de EPP;Formato;Seguridad y salud en el trabajo;4;08/08/2025;08/08/2027;Vigente
+PA-04-IN-01;Trabajo en alturas;Instructivo;Seguridad y salud en el trabajo;2;20/10/2023;20/10/2025;Vencido
+PA-04-FO-02;Matriz de peligros;Formato;Seguridad y salud en el trabajo;3;30/01/2025;30/01/2027;Vigente
