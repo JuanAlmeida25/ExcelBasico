@@ -28,7 +28,6 @@ const columnas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
           </strong>
           <span>{{ portada.fechas.anio }} · de inicio a fin</span>
         </li>
-        <li><strong>{{ portada.duracion }}</strong><span>de trabajo</span></li>
         <li><strong>{{ fases.length }} fases</strong><span>de básico a matrices</span></li>
         <li><strong>{{ fases.reduce((suma, fase) => suma + fase.actividades.length, 0) }}</strong><span>actividades</span></li>
       </ul>
