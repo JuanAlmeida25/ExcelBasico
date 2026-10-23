@@ -20,6 +20,14 @@ const columnas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
       <p class="portada-programa">{{ portada.programa }}</p>
 
       <ul class="fichas-datos">
+        <li>
+          <strong>
+            <time :datetime="portada.fechas.inicio.iso">{{ portada.fechas.inicio.texto }}</time>
+            –
+            <time :datetime="portada.fechas.fin.iso">{{ portada.fechas.fin.texto }}</time>
+          </strong>
+          <span>{{ portada.fechas.anio }} · de inicio a fin</span>
+        </li>
         <li><strong>{{ portada.duracion }}</strong><span>de trabajo</span></li>
         <li><strong>{{ fases.length }} fases</strong><span>de básico a matrices</span></li>
         <li><strong>{{ fases.reduce((suma, fase) => suma + fase.actividades.length, 0) }}</strong><span>actividades</span></li>

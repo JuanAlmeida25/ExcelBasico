@@ -7,7 +7,13 @@ export const portada = {
   programa: 'Coordinación en Sistemas Integrados de Gestión',
   ficha: '3312002',
   herramienta: 'Microsoft Excel',
-  duracion: '24 horas'
+  duracion: '24 horas',
+  // iso para la máquina, texto para la gente
+  fechas: {
+    inicio: { iso: '2026-10-22', texto: '22 oct' },
+    fin: { iso: '2026-11-26', texto: '26 nov' },
+    anio: '2026'
+  }
 }
 
 // Pega aquí el link de la carpeta compartida (en Drive: Compartir > Copiar enlace).
