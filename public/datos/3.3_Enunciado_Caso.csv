@@ -1,0 +1,11 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;3.3
+Título del Caso;Matriz de indicadores y semaforización dinámica de metas
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;Los 8 procesos reportaron resultados frente a sus metas operativas. Se requiere una matriz que califique automáticamente la eficacia y semaforice las desviaciones.
+2. Misión del Aprendiz;Estructurar la matriz de indicadores calculando la brecha (Resultado - Meta), evaluando el estado cualitativo con SI anidado y aplicando formato condicional de 3 semáforos.
+Requerimiento 1;Cálculo de la Brecha: =Resultado - Meta (muestra la desviación matemática frente a la meta corporativa).
+Requerimiento 2;"Estado Cualitativo con SI anidado: si Resultado >= Meta -> 'Conforme'; si Resultado >= Meta - 10 -> 'En Observación'; de lo contrario -> 'Crítico'."
+Requerimiento 3;Semáforo Condicional: Aplicar formato condicional: Verde (Conforme), Amarillo (En Observación) y Rojo (Crítico).
+Requerimiento 4;Alerta CAPA: Resaltar en negrita y rojo los indicadores en estado Crítico que requieran plan de acción correctiva inmediato.
+Dificultad Clave / Regla Técnica;Cada indicador tiene una meta distinta (80%, 90%, 95%, 100%). No compares contra un número fijo: las fórmulas condicionales deben comparar celdas relativas (Resultado vs Meta).

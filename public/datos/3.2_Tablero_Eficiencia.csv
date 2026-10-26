@@ -1,4 +1,4 @@
-﻿Código;Proceso;Tipo;Responsable;Documentos asociados;Indicador
+﻿Código;Proceso;Total Documentos (=CONTAR.SI);Vigentes (=CONTAR.SI.CONJUNTO);% Cobertura Vigente;Promedio Días Revisión (=PROMEDIO.SI)
 PE-01;Direccionamiento estratégico;;;;
 PE-02;Gestión de la calidad;;;;
 PM-01;Producción;;;;

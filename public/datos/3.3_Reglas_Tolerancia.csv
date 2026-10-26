@@ -1,0 +1,4 @@
+﻿Nivel de Estado;Condición Matemática;Acción Requerida;Color del Semáforo
+Conforme;Resultado ≥ Meta;Mantener seguimiento regular;Verde
+En Observación;Meta - 10 ≤ Resultado < Meta;Revisión en comité de proceso;Amarillo
+Crítico;Resultado < Meta - 10;Apertura obligatoria de Acción Correctiva (CAPA);Rojo

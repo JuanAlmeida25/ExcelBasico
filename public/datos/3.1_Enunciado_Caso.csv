@@ -1,0 +1,12 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;3.1
+Título del Caso;Análisis multidimensional y diagnóstico SIG con Tablas Dinámicas
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;Para la Revisión por la Dirección (ISO 9001:2015), la Coordinación SIG debe diagnosticar qué macroprocesos concentran el mayor cuello de botella documental.
+2. Misión del Aprendiz;Construir una Tabla Dinámica en la hoja Diagnostico_Dinamico con jerarquía de filas, vista porcentual de filas, segmentadores de datos (Slicers) y conclusión ejecutiva.
+Requerimiento 1;Crear Tabla Dinámica: En hoja Diagnostico_Dinamico con origen en Base_Auditoria.
+Requerimiento 2;"Jerarquía y Valores: Filas = 'Tipo de proceso' y 'Proceso'; Columnas = 'Estado'; Valores = Recuento de 'Código'."
+Requerimiento 3;Vista Porcentual: Duplicar campo de valor y configurarlo como '% del total de filas' para identificar la tasa de riesgo por proceso.
+Requerimiento 4;Segmentadores Interactivos: Agregar segmentación por 'Tipo de proceso' y 'Responsable'.
+Requerimiento 5;Conclusión Diagnóstica: Redactar en la celda designada cuál es el proceso más crítico y la acción preventiva propuesta.
+Dificultad Clave / Regla Técnica;Configura la base de porcentaje como '% del total de filas' (no del total general) para que cada proceso sume 100% y la comparación sea rigurosa.

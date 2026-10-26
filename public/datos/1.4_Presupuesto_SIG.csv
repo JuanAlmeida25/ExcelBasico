@@ -1,4 +1,7 @@
-﻿Código;Documento;Proceso;Horas de elaboración;Costo
+﻿Parámetro;Valor;Instrucciones de la Actividad;;
+Tarifa fija por hora ($);28500;1. En la columna 'Costo ($)' calcula =Horas * $B$2 (fijando B2 con $). 2. Completa el resumen al final con SUMA, PROMEDIO y CONTAR.;;
+;;;;
+Código;Documento;Proceso;Horas de elaboración;Costo ($)
 PE-01-PO-01;Política del SIG;Direccionamiento estratégico;14;
 PE-01-PL-01;Plan estratégico 2025-2028;Direccionamiento estratégico;16;
 PE-01-PR-01;Revisión por la dirección;Direccionamiento estratégico;8;
@@ -14,3 +17,8 @@ PM-01-IN-01;Limpieza y desinfección de equipos;Producción;4;
 PM-01-IN-02;Pasteurización;Producción;12;
 PM-01-FO-01;Registro de temperatura;Producción;8;
 PM-01-FO-02;Control de lotes;Producción;12;
+;;;;
+;;Total de horas;;
+;;Promedio de horas;;
+;;Costo total liquidado;;
+;;Cantidad de documentos;;

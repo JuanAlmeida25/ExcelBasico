@@ -1,0 +1,9 @@
+﻿Código;Indicador;Proceso;Meta (%);T1 (%);T2 (%);T3 (%)
+IND-01;Documentos vigentes;Gestión de la calidad;90;72;78;80
+IND-02;Satisfacción del cliente;Comercial y ventas;85;82;86;88
+IND-03;Cumplimiento del plan de auditorías;Gestión de la calidad;100;60;80;95
+IND-04;Acciones correctivas cerradas a tiempo;Gestión de la calidad;80;55;62;70
+IND-05;Cumplimiento del plan de capacitación;Talento humano;90;70;85;92
+IND-06;Entregas a tiempo;Logística y distribución;95;93;91;96
+IND-07;Proveedores evaluados;Compras;100;40;65;85
+IND-08;Mantenimientos preventivos ejecutados;Mantenimiento;90;88;75;70

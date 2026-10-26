@@ -1,0 +1,12 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;3.4
+Título del Caso;Blindaje de captura y aseguramiento de calidad de datos SIG
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;El personal registra novedades con constantes errores de digitación (nombres cortados, códigos inválidos, fechas incongruentes), arruinando búsquedas y reportes.
+2. Misión del Aprendiz;Blindar el formulario de captura con validaciones de lista, longitud, fecha y entero, configurar mensajes de alto restrictivos y corregir 8 registros corruptos.
+Requerimiento 1;Listas Desplegables: En Proceso y Estado, configurar validación por lista referenciando Listas_Maestras.
+Requerimiento 2;Longitud de Código: En Código, restringir la longitud del texto a exactamente 12 caracteres (ej. PM-01-PR-01).
+Requerimiento 3;Fechas y Versiones: Validar Fecha entre 01/01/2020 y 31/12/2026, y Versión número entero >= 1.
+Requerimiento 4;Mensajes y Alertas: Configurar Mensaje de Entrada orientativo y Mensaje de Error estilo 'Detener / Alto'.
+Requerimiento 5;Auditoría con Círculos: En Auditoria_Registros, activar 'Rodear con un círculo datos no válidos' y corregir los 8 registros corruptos.
+Dificultad Clave / Regla Técnica;El estilo de alerta debe ser 'Detener' (no Información ni Advertencia) para bloquear físicamente el guardado de datos inválidos.

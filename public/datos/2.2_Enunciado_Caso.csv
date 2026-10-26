@@ -1,0 +1,10 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;2.2
+Título del Caso;Consolidación relacional de auditoría con blindaje de errores
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;La información del SIG está fragmentada en 3 hojas independientes: inventario de documentos (códigos), catálogo de procesos y directorio de responsables.
+2. Misión del Aprendiz;Construir la hoja Consolidado_Auditoria cruzando las fuentes con BUSCARV o BUSCARX, envolviendo con SI.ERROR para reemplazar errores #N/D por 'SIN ASIGNAR'.
+Requerimiento 1;Cruce de Proceso: Extraer Nombre del Proceso y Macroproceso (Tipo) desde la hoja Procesos.
+Requerimiento 2;Cruce de Responsable: Traer Nombre del Responsable y Correo Corporativo desde la hoja Responsables cruzando el ID responsable.
+Requerimiento 3;"Tratamiento de Excepciones: El proceso PA-03 Mantenimiento no tiene responsable asignado y generará #N/D. Envolver con =SI.ERROR(BUSCARV(...); 'SIN ASIGNAR')."
+Dificultad Clave / Regla Técnica;En BUSCARV el código buscado debe estar en la columna 1 del rango y el 4to argumento debe ser coincidencia exacta (FALSO o 0). Todo el cruce de líderes debe protegerse con SI.ERROR.

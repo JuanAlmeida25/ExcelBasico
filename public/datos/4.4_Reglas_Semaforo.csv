@@ -1,4 +1,0 @@
-﻿Color;Condición
-Verde;% Cumplimiento ≥ 100%
-Amarillo;90% ≤ % Cumplimiento < 100%
-Rojo;% Cumplimiento < 90%

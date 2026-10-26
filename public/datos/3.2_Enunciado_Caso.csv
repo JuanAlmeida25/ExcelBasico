@@ -1,0 +1,12 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;3.2
+Título del Caso;Métricas de rendimiento procesal y estadísticas condicionales
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;El SIG evalúa la eficiencia de los procesos de Lácteos del Caribe midiendo la tasa de vigencia documental y los tiempos de revisión técnica.
+2. Misión del Aprendiz;Construir el tablero de métricas por proceso usando CONTAR.SI, CONTAR.SI.CONJUNTO y PROMEDIO.SI, protegiendo las fórmulas contra divisiones por cero con SI.ERROR.
+Requerimiento 1;Total Documentos: =CONTAR.SI() en Base_Documentos por proceso.
+Requerimiento 2;Documentos Vigentes: =CONTAR.SI.CONJUNTO() por proceso y estado 'Vigente'.
+Requerimiento 3;% Cobertura Vigente: Vigentes / Total formateado en porcentaje con un decimal.
+Requerimiento 4;Promedio Días Revisión: =PROMEDIO.SI() por proceso.
+Requerimiento 5;"Blindaje contra Errores: PA-05 Gestión Ambiental no tiene documentos (0/0 genera #¡DIV/0!). Aplica =SI.ERROR(Vigentes/Total; 0) y =SI.ERROR(PROMEDIO.SI(...); 0)."
+Dificultad Clave / Regla Técnica;Un informe directivo no puede contener errores #¡DIV/0!. El uso de SI.ERROR es obligatorio para aprobar la auditoría de la hoja.

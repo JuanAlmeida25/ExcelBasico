@@ -1,0 +1,12 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;4.3
+Título del Caso;Matriz RACI de gobernanza y auditoría de duplicidad de roles
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;En la planta ocurrieron incidentes de calidad porque nadie asumió la aprobación del retiro de lotes defectuosos debido a confusión en la asignación de roles.
+2. Misión del Aprendiz;"Construir la matriz RACI para 8 actividades del SIG, aplicar validación por lista (R;A;C;I), formato condicional de 4 colores y programar fórmula de auditoría de gobernanza."
+Requerimiento 1;"Restricción Matricial: Configurar validación de datos en cuadrícula (actividades vs roles) restringida a R; A; C; I."
+Requerimiento 2;Formato Condicional: 4 colores diferenciados: R (Azul), A (Púrpura / Nivel decisorio), C (Ámbar), I (Gris).
+Requerimiento 3;Regla de Gobernanza: Cada actividad debe tener EXACTAMENTE UN Aprobador ('A').
+Requerimiento 4;"Fórmula de Auditoría: En Control Auditoría Gobernanza programar: =SI(CONTAR.SI(B2:G2;'A')=1; 'CONFORME'; SI(CONTAR.SI(B2:G2;'A')=0; 'ERROR: Falta Aprobador'; 'ERROR: Múltiples Aprobadores'))."
+Requerimiento 5;Corrección: Resaltar en rojo los errores y corregir las letras para que todas las actividades queden en estado CONFORME.
+Dificultad Clave / Regla Técnica;La fórmula lógica horizontal debe contar la letra 'A' en cada fila y diagnosticar con precisión si falta o sobra autoridad aprobatoria.

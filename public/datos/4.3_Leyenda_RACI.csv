@@ -1,0 +1,5 @@
+﻿Letra;Rol RACI;Responsabilidad en el SIG
+R;Responsable;Ejecuta materialmente la actividad del SIG
+A;Aprobador;Autoridad final que aprueba y responde ante auditoría (único por actividad)
+C;Consultado;Experto técnico consultado antes de la toma de decisiones
+I;Informado;Personal notificado de los resultados de la actividad

@@ -1,0 +1,9 @@
+﻿Código;Indicador;Proceso;Meta (%);Resultado Real (%);Brecha (Resultado - Meta);Estado Cualitativo (=SI);Semáforo (Formato Condicional)
+IND-01;Documentos vigentes;Gestión de la calidad;90;80;;;
+IND-02;Satisfacción del cliente;Comercial y ventas;85;88;;;
+IND-03;Cumplimiento del plan de auditorías;Gestión de la calidad;100;95;;;
+IND-04;Acciones correctivas cerradas a tiempo;Gestión de la calidad;80;70;;;
+IND-05;Cumplimiento del plan de capacitación;Talento humano;90;92;;;
+IND-06;Entregas a tiempo;Logística y distribución;95;96;;;
+IND-07;Proveedores evaluados;Compras;100;85;;;
+IND-08;Mantenimientos preventivos ejecutados;Mantenimiento;90;70;;;

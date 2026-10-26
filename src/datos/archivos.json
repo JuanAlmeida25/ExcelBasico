@@ -11,7 +11,7 @@
         "archivo": "1.1_Retos.csv"
       }
     ],
-    "nota": "Usa la hoja Datos para responder los retos de la hoja Retos."
+    "nota": "Exploración del entorno de Excel, reconocimiento de celdas, rangos y cinta de opciones."
   },
   "1.2": {
     "xlsx": "1.2_Registro_SIG_fuente.xlsx",
@@ -29,7 +29,7 @@
         "archivo": "1.2_Responsables.csv"
       }
     ],
-    "nota": "Estos son los datos fuente: con ellos arma tu propio Registro_SIG.xlsx."
+    "nota": "Creación del libro Registro_SIG.xlsx e ingreso de datos estructurados de procesos y líderes."
   },
   "1.3": {
     "xlsx": "1.3_Formatos_condicionales.xlsx",
@@ -43,43 +43,43 @@
         "archivo": "1.3_Procesos.csv"
       }
     ],
-    "nota": "Las fechas y números vienen sin formato. El proceso Mantenimiento no tiene responsable: resáltalo."
+    "nota": "Aplicación de formatos de celda y reglas de formato condicional para resaltar alertas."
   },
   "1.4": {
     "xlsx": "1.4_Formulas_basicas.xlsx",
     "csv": [
       {
-        "hoja": "Horas_Documentacion",
-        "archivo": "1.4_Horas_Documentacion.csv"
-      },
-      {
-        "hoja": "Parametros",
-        "archivo": "1.4_Parametros.csv"
-      },
-      {
-        "hoja": "Resumen",
-        "archivo": "1.4_Resumen.csv"
+        "hoja": "Presupuesto_SIG",
+        "archivo": "1.4_Presupuesto_SIG.csv"
       }
     ],
-    "nota": "El costo = Horas × Valor hora. Fija el valor hora con referencia absoluta ($B$2)."
+    "nota": "Cálculo del costo de documentación con tarifa fija ($B$2) y resumen con SUMA, PROMEDIO y CONTAR en una sola hoja."
   },
   "2.1": {
     "xlsx": "2.1_Funcion_SI.xlsx",
     "csv": [
       {
-        "hoja": "Documentos",
-        "archivo": "2.1_Documentos.csv"
+        "hoja": "Enunciado_Caso",
+        "archivo": "2.1_Enunciado_Caso.csv"
       },
       {
         "hoja": "Parametros",
         "archivo": "2.1_Parametros.csv"
+      },
+      {
+        "hoja": "Control_Vigencias",
+        "archivo": "2.1_Control_Vigencias.csv"
       }
     ],
-    "nota": "Usa la fecha de corte 22/10/2026 de la hoja Parametros, no HOY(), para que a todos les dé igual."
+    "nota": "Control de vigencias documentales y clasificación de criticidad mediante fórmulas lógicas condicionales con función SI."
   },
   "2.2": {
     "xlsx": "2.2_BUSCARV_consolidado.xlsx",
     "csv": [
+      {
+        "hoja": "Enunciado_Caso",
+        "archivo": "2.2_Enunciado_Caso.csv"
+      },
       {
         "hoja": "Documentos",
         "archivo": "2.2_Documentos.csv"
@@ -93,94 +93,138 @@
         "archivo": "2.2_Responsables.csv"
       },
       {
-        "hoja": "Consolidado",
-        "archivo": "2.2_Consolidado.csv"
+        "hoja": "Consolidado_Auditoria",
+        "archivo": "2.2_Consolidado_Auditoria.csv"
       }
     ],
-    "nota": "Completa la hoja Consolidado trayendo el proceso y el responsable con BUSCARV o BUSCARX."
+    "nota": "Consolidación relacional de documentos, procesos y líderes mediante BUSCARV/BUSCARX con control de errores."
   },
   "2.3": {
     "xlsx": "2.3_Tablas_y_filtros.xlsx",
     "csv": [
       {
-        "hoja": "Documentos",
-        "archivo": "2.3_Documentos.csv"
+        "hoja": "Enunciado_Caso",
+        "archivo": "2.3_Enunciado_Caso.csv"
+      },
+      {
+        "hoja": "Parametros",
+        "archivo": "2.3_Parametros.csv"
+      },
+      {
+        "hoja": "Datos_Crudos",
+        "archivo": "2.3_Datos_Crudos.csv"
+      },
+      {
+        "hoja": "Consultas_Auditoria",
+        "archivo": "2.3_Consultas_Auditoria.csv"
       }
     ],
-    "nota": "Selecciona los datos, convierte en tabla con Ctrl+T y filtra por proceso, estado y fecha."
+    "nota": "Estructuración del inventario en Tablas de Excel con referencias estructuradas, filtros y subtotales dinámicos."
   },
   "2.4": {
     "xlsx": "2.4_Graficos.xlsx",
     "csv": [
       {
-        "hoja": "Documentos",
-        "archivo": "2.4_Documentos.csv"
+        "hoja": "Enunciado_Caso",
+        "archivo": "2.4_Enunciado_Caso.csv"
       },
       {
-        "hoja": "Resumen",
-        "archivo": "2.4_Resumen.csv"
+        "hoja": "Base_Documentos",
+        "archivo": "2.4_Base_Documentos.csv"
+      },
+      {
+        "hoja": "Informe_Grafico",
+        "archivo": "2.4_Informe_Grafico.csv"
       }
     ],
-    "nota": "Llena la hoja Resumen con CONTAR.SI y desde ahí saca los dos gráficos."
+    "nota": "Construcción de tablas de frecuencias con CONTAR.SI y diseño de gráficos ejecutivos de barras y circular."
   },
   "3.1": {
     "xlsx": "3.1_Tabla_dinamica.xlsx",
     "csv": [
       {
-        "hoja": "Documentos",
-        "archivo": "3.1_Documentos.csv"
+        "hoja": "Enunciado_Caso",
+        "archivo": "3.1_Enunciado_Caso.csv"
+      },
+      {
+        "hoja": "Base_Auditoria",
+        "archivo": "3.1_Base_Auditoria.csv"
+      },
+      {
+        "hoja": "Diagnostico_Dinamico",
+        "archivo": "3.1_Diagnostico_Dinamico.csv"
       }
     ],
-    "nota": "Proceso en filas, Estado en columnas, cuenta de Código en valores. Agrega segmentaciones por Tipo de proceso."
+    "nota": "Análisis multidimensional de madurez documental mediante Tabla Dinámica con jerarquías y segmentadores."
   },
   "3.2": {
     "xlsx": "3.2_Conteo_condicional.xlsx",
     "csv": [
       {
-        "hoja": "Documentos",
-        "archivo": "3.2_Documentos.csv"
+        "hoja": "Enunciado_Caso",
+        "archivo": "3.2_Enunciado_Caso.csv"
       },
       {
-        "hoja": "Indicadores_Proceso",
-        "archivo": "3.2_Indicadores_Proceso.csv"
+        "hoja": "Base_Documentos",
+        "archivo": "3.2_Base_Documentos.csv"
+      },
+      {
+        "hoja": "Tablero_Eficiencia",
+        "archivo": "3.2_Tablero_Eficiencia.csv"
       }
     ],
-    "nota": "Ojo: Gestión ambiental no tiene documentos. Usa SI.ERROR para que el % no te dé #¡DIV/0!."
+    "nota": "Cálculo de indicadores de rendimiento procesal con funciones estadísticas y blindaje contra divisiones entre cero."
   },
   "3.3": {
     "xlsx": "3.3_Matriz_indicadores.xlsx",
     "csv": [
       {
-        "hoja": "Indicadores",
-        "archivo": "3.3_Indicadores.csv"
+        "hoja": "Enunciado_Caso",
+        "archivo": "3.3_Enunciado_Caso.csv"
       },
       {
-        "hoja": "Reglas_Semaforo",
-        "archivo": "3.3_Reglas_Semaforo.csv"
+        "hoja": "Reglas_Tolerancia",
+        "archivo": "3.3_Reglas_Tolerancia.csv"
+      },
+      {
+        "hoja": "Matriz_Semaforo",
+        "archivo": "3.3_Matriz_Semaforo.csv"
       }
     ],
-    "nota": "El semáforo: verde si Resultado ≥ Meta, amarillo si está a 10 puntos o menos, rojo si está más abajo."
+    "nota": "Construcción de matriz de indicadores con cálculo de brechas y semaforización condicional en 3 niveles."
   },
   "3.4": {
     "xlsx": "3.4_Validacion_datos.xlsx",
     "csv": [
       {
-        "hoja": "Listas",
-        "archivo": "3.4_Listas.csv"
+        "hoja": "Enunciado_Caso",
+        "archivo": "3.4_Enunciado_Caso.csv"
       },
       {
-        "hoja": "Registro",
-        "archivo": "3.4_Registro.csv"
+        "hoja": "Listas_Maestras",
+        "archivo": "3.4_Listas_Maestras.csv"
+      },
+      {
+        "hoja": "Formulario_Captura",
+        "archivo": "3.4_Formulario_Captura.csv"
+      },
+      {
+        "hoja": "Auditoria_Registros",
+        "archivo": "3.4_Auditoria_Registros.csv"
       }
     ],
-    "nota": "La hoja Registro trae errores de digitación a propósito. Crea las listas desplegables con la hoja Listas y corrígelos."
+    "nota": "Blindaje de captura de datos con listas desplegables, restricciones estrictas y auditoría de registros."
   },
   "4.1": {
     "xlsx": "4.1_Matriz_procesos.xlsx",
     "csv": [
       {
-        "hoja": "Matriz_Procesos",
-        "archivo": "4.1_Matriz_Procesos.csv"
+        "hoja": "Enunciado_Caso",
+        "archivo": "4.1_Enunciado_Caso.csv"
+      },
+      {
+        "hoja": "Matriz_Caracterizacion",
+        "archivo": "4.1_Matriz_Caracterizacion.csv"
       },
       {
         "hoja": "Procesos",
@@ -191,56 +235,72 @@
         "archivo": "4.1_Responsables.csv"
       },
       {
-        "hoja": "Documentos",
-        "archivo": "4.1_Documentos.csv"
+        "hoja": "Inventario_Documentos",
+        "archivo": "4.1_Inventario_Documentos.csv"
       },
       {
-        "hoja": "Indicadores",
-        "archivo": "4.1_Indicadores.csv"
+        "hoja": "Catalogo_Indicadores",
+        "archivo": "4.1_Catalogo_Indicadores.csv"
       }
     ],
-    "nota": "Completa la matriz con las otras hojas. Gestión ambiental no tiene documentos: que se note en rojo."
+    "nota": "Matriz de caracterización articulando procesos, líderes, cobertura documental y alertas en rojo."
   },
   "4.2": {
     "xlsx": "4.2_Matriz_riesgos.xlsx",
     "csv": [
       {
-        "hoja": "Riesgos",
-        "archivo": "4.2_Riesgos.csv"
+        "hoja": "Enunciado_Caso",
+        "archivo": "4.2_Enunciado_Caso.csv"
       },
       {
-        "hoja": "Escala",
-        "archivo": "4.2_Escala.csv"
+        "hoja": "Escala_Severidad",
+        "archivo": "4.2_Escala_Severidad.csv"
+      },
+      {
+        "hoja": "Matriz_Riesgos",
+        "archivo": "4.2_Matriz_Riesgos.csv"
       }
     ],
-    "nota": "Nivel de riesgo = Probabilidad × Impacto. Clasifícalo con la hoja Escala y colorea con formato condicional."
+    "nota": "Evaluación cuantitativa de riesgos (Probabilidad × Impacto), clasificación por severidad y semáforo de 4 colores."
   },
   "4.3": {
     "xlsx": "4.3_Matriz_RACI.xlsx",
     "csv": [
       {
-        "hoja": "RACI",
-        "archivo": "4.3_RACI.csv"
+        "hoja": "Enunciado_Caso",
+        "archivo": "4.3_Enunciado_Caso.csv"
       },
       {
-        "hoja": "Leyenda",
-        "archivo": "4.3_Leyenda.csv"
+        "hoja": "Leyenda_RACI",
+        "archivo": "4.3_Leyenda_RACI.csv"
+      },
+      {
+        "hoja": "Matriz_RACI",
+        "archivo": "4.3_Matriz_RACI.csv"
       }
     ],
-    "nota": "La primera fila va de ejemplo. Cada actividad debe tener exactamente una A (Aprobador)."
+    "nota": "Diseño de matriz RACI de gobernanza con validación de roles y fórmula de auditoría."
   },
   "4.4": {
     "xlsx": "4.4_Cuadro_de_mando.xlsx",
     "csv": [
       {
-        "hoja": "Indicadores",
-        "archivo": "4.4_Indicadores.csv"
+        "hoja": "Enunciado_Caso",
+        "archivo": "4.4_Enunciado_Caso.csv"
       },
       {
-        "hoja": "Reglas_Semaforo",
-        "archivo": "4.4_Reglas_Semaforo.csv"
+        "hoja": "Criterios_Semaforo",
+        "archivo": "4.4_Criterios_Semaforo.csv"
+      },
+      {
+        "hoja": "Datos_Historicos",
+        "archivo": "4.4_Datos_Historicos.csv"
+      },
+      {
+        "hoja": "Dashboard_Gerencial",
+        "archivo": "4.4_Dashboard_Gerencial.csv"
       }
     ],
-    "nota": "% Cumplimiento = T3 / Meta. La tendencia compara T3 contra T2 (▲ sube, ▼ baja)."
+    "nota": "Construcción de Cuadro de Mando Integral con tarjetas KPI, análisis de tendencias y gráfico comparativo."
   }
 }

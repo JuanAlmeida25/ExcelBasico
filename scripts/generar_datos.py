@@ -234,6 +234,26 @@ def escribir_xlsx(ruta, hojas):
             for celda in fila:
                 if isinstance(celda.value, date):
                     celda.number_format = "DD/MM/YYYY"
+
+        if nombre_hoja == "Presupuesto_SIG":
+            hoja.freeze_panes = "A5"
+            hoja.merge_cells("C1:E1")
+            hoja.merge_cells("C2:E2")
+            for celda in hoja[4]:
+                celda.fill = VERDE_EXCEL
+                celda.font = FUENTE_ENCABEZADO
+                celda.alignment = Alignment(vertical="center", wrap_text=True)
+            hoja["B2"].number_format = "$#,##0"
+            hoja["B2"].font = Font(bold=True)
+            hoja["C2"].alignment = Alignment(vertical="center", wrap_text=True)
+            for r in range(21, 25):
+                hoja.cell(row=r, column=3).font = Font(bold=True)
+                hoja.cell(row=r, column=3).alignment = Alignment(horizontal="right")
+            hoja.column_dimensions["A"].width = 16
+            hoja.column_dimensions["B"].width = 38
+            hoja.column_dimensions["C"].width = 32
+            hoja.column_dimensions["D"].width = 22
+            hoja.column_dimensions["E"].width = 22
     libro.properties.creator = "Guía TIC Excel - Ficha 3312002"
     libro.save(ruta)
 
@@ -283,13 +303,27 @@ def hoja_parametros_estado():
     )
 
 
+def hoja_enunciado(codigo, titulo, situacion, mision, requerimientos, reto_tecnico):
+    filas = [
+        ("Código de Actividad", codigo),
+        ("Título del Caso", titulo),
+        ("Organización", "Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión"),
+        ("1. Situación Problema", situacion),
+        ("2. Misión del Aprendiz", mision),
+    ]
+    for idx, req in enumerate(requerimientos, start=1):
+        filas.append((f"Requerimiento {idx}", req))
+    filas.append(("Dificultad Clave / Regla Técnica", reto_tecnico))
+    return ("Enunciado_Caso", ["Sección", "Detalle del Requerimiento / Parámetros del Caso"], filas)
+
+
 def actividades():
     d = DOCUMENTOS
 
     return {
         "1.1": {
             "archivo": "1.1_Explorando_entorno",
-            "nota": "Usa la hoja Datos para responder los retos de la hoja Retos.",
+            "nota": "Exploración del entorno de Excel, reconocimiento de celdas, rangos y cinta de opciones.",
             "hojas": [
                 ("Datos", ["ID", "Nombre", "Cargo", "Correo"],
                  [(c, n, cargo, correo(n)) for c, n, cargo in RESPONSABLES]),
@@ -306,7 +340,7 @@ def actividades():
         },
         "1.2": {
             "archivo": "1.2_Registro_SIG_fuente",
-            "nota": "Estos son los datos fuente: con ellos arma tu propio Registro_SIG.xlsx.",
+            "nota": "Creación del libro Registro_SIG.xlsx e ingreso de datos estructurados de procesos y líderes.",
             "hojas": [
                 hoja_procesos(con_responsable_id=False),
                 ("Documentos", ["Código", "Documento", "Código proceso", "Fecha de aprobación", "Versión"],
@@ -316,7 +350,7 @@ def actividades():
         },
         "1.3": {
             "archivo": "1.3_Formatos_condicionales",
-            "nota": "Las fechas y números vienen sin formato. El proceso Mantenimiento no tiene responsable: resáltalo.",
+            "nota": "Aplicación de formatos de celda y reglas de formato condicional para resaltar alertas.",
             "hojas": [
                 ("Documentos", ["Código", "Documento", "Versión", "Fecha de aprobación", "Fecha de vencimiento"],
                  [(x["codigo"], x["nombre"], x["version"], x["aprobado"], x["vence"]) for x in d]),
@@ -326,177 +360,369 @@ def actividades():
         },
         "1.4": {
             "archivo": "1.4_Formulas_basicas",
-            "nota": "El costo = Horas × Valor hora. Fija el valor hora con referencia absoluta ($B$2).",
+            "nota": "Cálculo del costo de documentación con tarifa fija ($B$2) y resumen con SUMA, PROMEDIO y CONTAR en una sola hoja.",
             "hojas": [
-                ("Horas_Documentacion", ["Código", "Documento", "Proceso", "Horas de elaboración", "Costo"],
-                 [(x["codigo"], x["nombre"], NOMBRE_PROCESO[x["proceso"]], 4 + (x["dias_revision"] % 7) * 2, None)
-                  for x in d[:15]]),
-                ("Parametros", ["Parámetro", "Valor"], [("Valor hora de elaboración", 28500)]),
-                ("Resumen", ["Medida", "Resultado"], [
-                    ("Total de horas", None),
-                    ("Promedio de horas por documento", None),
-                    ("Cantidad de documentos", None),
-                    ("Costo total", None),
-                ]),
+                ("Presupuesto_SIG",
+                 ["Parámetro", "Valor", "Instrucciones de la Actividad", "", ""],
+                 [
+                     ("Tarifa fija por hora ($)", 28500, "1. En la columna 'Costo ($)' calcula =Horas * $B$2 (fijando B2 con $). 2. Completa el resumen al final con SUMA, PROMEDIO y CONTAR.", None, None),
+                     ("", "", "", "", ""),
+                     ("Código", "Documento", "Proceso", "Horas de elaboración", "Costo ($)"),
+                 ] + [
+                     (x["codigo"], x["nombre"], NOMBRE_PROCESO[x["proceso"]], 4 + (x["dias_revision"] % 7) * 2, None)
+                     for x in d[:15]
+                 ] + [
+                     ("", "", "", "", ""),
+                     ("", "", "Total de horas", None, None),
+                     ("", "", "Promedio de horas", None, None),
+                     ("", "", "Costo total liquidado", None, None),
+                     ("", "", "Cantidad de documentos", None, None),
+                 ]),
             ],
         },
         "2.1": {
             "archivo": "2.1_Funcion_SI",
-            "nota": f"Usa la fecha de corte {FECHA_CORTE:%d/%m/%Y} de la hoja Parametros, no HOY(), para que a todos les dé igual.",
+            "nota": "Control de vigencias documentales y clasificación de criticidad mediante fórmulas lógicas condicionales con función SI.",
             "hojas": [
-                ("Documentos", ["Código", "Documento", "Código proceso", "Fecha de vencimiento", "Días para vencer", "Estado"],
-                 [(x["codigo"], x["nombre"], x["proceso"], x["vence"], None, None) for x in d]),
+                hoja_enunciado(
+                    "2.1",
+                    "Control de vigencias y semáforo de criticidad documental",
+                    "La auditoría externa de certificación ISO 9001 / ISO 14001 está próxima. Un solo documento crítico vencido generará una No Conformidad Mayor para Lácteos del Caribe.",
+                    "Automatizar el control de vigencias de los 24 documentos del inventario evaluando fechas límite con =SI() anidada y determinando prioridad de acción.",
+                    [
+                        "Días Restantes: Restar la fecha de vencimiento menos la fecha fija de corte (Parametros!$B$2).",
+                        "Estado Documental: Usar =SI() anidado: si Días < 0 -> 'Vencido'; si Días <= 30 -> 'Por vencer'; de lo contrario -> 'Vigente'.",
+                        "Prioridad de Acción SIG: Si Estado = 'Vencido' Y Criticidad = 'Alta' -> 'URGENTE: Bloquear Proceso'; si está vencido o por vencer -> 'Atención Inmediata'; de lo contrario -> 'Al día'."
+                    ],
+                    "Los documentos vencidos tienen días negativos. El orden de las condiciones en =SI() debe evaluar primero < 0 para no clasificar incorrectamente los archivos vencidos."
+                ),
                 hoja_parametros_estado(),
+                ("Control_Vigencias", ["Código", "Documento", "Proceso", "Criticidad", "Fecha de vencimiento", "Días para vencer", "Estado Documental", "Prioridad de Acción SIG"],
+                 [(x["codigo"], x["nombre"], NOMBRE_PROCESO[x["proceso"]],
+                   "Alta" if x["tipo"] in ("Manual", "Plan", "Política") or "Pasteurización" in x["nombre"] else ("Media" if x["tipo"] == "Procedimiento" else "Operativa"),
+                   x["vence"], None, None, None)
+                  for x in d]),
             ],
         },
         "2.2": {
             "archivo": "2.2_BUSCARV_consolidado",
-            "nota": "Completa la hoja Consolidado trayendo el proceso y el responsable con BUSCARV o BUSCARX.",
+            "nota": "Consolidación relacional de documentos, procesos y líderes mediante BUSCARV/BUSCARX con control de errores.",
             "hojas": [
+                hoja_enunciado(
+                    "2.2",
+                    "Consolidación relacional de auditoría con blindaje de errores",
+                    "La información del SIG está fragmentada en 3 hojas independientes: inventario de documentos (códigos), catálogo de procesos y directorio de responsables.",
+                    "Construir la hoja Consolidado_Auditoria cruzando las fuentes con BUSCARV o BUSCARX, envolviendo con SI.ERROR para reemplazar errores #N/D por 'SIN ASIGNAR'.",
+                    [
+                        "Cruce de Proceso: Extraer Nombre del Proceso y Macroproceso (Tipo) desde la hoja Procesos.",
+                        "Cruce de Responsable: Traer Nombre del Responsable y Correo Corporativo desde la hoja Responsables cruzando el ID responsable.",
+                        "Tratamiento de Excepciones: El proceso PA-03 Mantenimiento no tiene responsable asignado y generará #N/D. Envolver con =SI.ERROR(BUSCARV(...); 'SIN ASIGNAR')."
+                    ],
+                    "En BUSCARV el código buscado debe estar en la columna 1 del rango y el 4to argumento debe ser coincidencia exacta (FALSO o 0). Todo el cruce de líderes debe protegerse con SI.ERROR."
+                ),
                 ("Documentos", ["Código", "Documento", "Código proceso"],
                  [(x["codigo"], x["nombre"], x["proceso"]) for x in d]),
                 hoja_procesos(),
                 hoja_responsables(),
-                ("Consolidado", ["Código documento", "Documento", "Proceso", "Responsable"],
-                 [(x["codigo"], x["nombre"], None, None) for x in d]),
+                ("Consolidado_Auditoria", ["Código Documento", "Documento", "Código Proceso", "Nombre del Proceso", "Macroproceso (Tipo)", "Responsable Líder", "Correo Corporativo"],
+                 [(x["codigo"], x["nombre"], x["proceso"], None, None, None, None) for x in d]),
             ],
         },
         "2.3": {
             "archivo": "2.3_Tablas_y_filtros",
-            "nota": "Selecciona los datos, convierte en tabla con Ctrl+T y filtra por proceso, estado y fecha.",
+            "nota": "Estructuración del inventario en Tablas de Excel con referencias estructuradas, filtros y subtotales dinámicos.",
             "hojas": [
-                ("Documentos", ["Código", "Documento", "Tipo", "Proceso", "Versión", "Fecha de aprobación", "Fecha de vencimiento", "Estado"],
-                 [(x["codigo"], x["nombre"], x["tipo"], NOMBRE_PROCESO[x["proceso"]], x["version"], x["aprobado"], x["vence"], x["estado"])
+                hoja_enunciado(
+                    "2.3",
+                    "Auditoría interactiva con Tablas de Excel y subtotales dinámicos",
+                    "En el Comité de Calidad mensual se requiere auditar el estado documental en tiempo real mediante filtros sin desconfigurar fórmulas ni rangos.",
+                    "Transformar el listado plano en una Tabla Oficial de Excel nombrada Tabla_SIG, agregar columna calculada estructurada, activar fila de subtotales y resolver 3 retos de auditoría.",
+                    [
+                        "Tabla Oficial: Convertir Datos_Crudos en Tabla con Ctrl+T y nombrarla Tabla_SIG.",
+                        "Columna Estructurada: Crear columna Dias_Faltantes con fórmula de tabla: [@Fecha de vencimiento] - Parametros!$B$2.",
+                        "Fila de Subtotales: Activar totales dinámicos con SUBTOTALES para recuento y promedio de días de revisión.",
+                        "Consultas de Comité: Filtrar la tabla y responder las 3 preguntas en la hoja Consultas_Auditoria."
+                    ],
+                    "Las fórmulas normales (SUMA/CONTAR) calculan filas ocultas. Comprueba que la fila de totales use SUBTOTALES (códigos 103/109) para reflejar solo lo filtrado."
+                ),
+                ("Parametros", ["Parámetro", "Valor"], [("Fecha de corte de auditoría", FECHA_CORTE)]),
+                ("Datos_Crudos", ["Código", "Documento", "Tipo", "Proceso", "Tipo de proceso", "Versión", "Fecha de aprobación", "Fecha de vencimiento", "Estado", "Días de revisión"],
+                 [(x["codigo"], x["nombre"], x["tipo"], NOMBRE_PROCESO[x["proceso"]], TIPO_PROCESO[x["proceso"]], x["version"], x["aprobado"], x["vence"], x["estado"], x["dias_revision"])
                   for x in d]),
+                ("Consultas_Auditoria", ["N°", "Pregunta de Auditoría en Comité", "Tu Respuesta Formulada / Filtrada"], [
+                    (1, "¿Cuántos documentos en estado 'Vencido' pertenecen a procesos de tipo 'Misional'?", None),
+                    (2, "¿Cuál es el promedio de días de revisión para los documentos del proceso 'Seguridad y salud en el trabajo'?", None),
+                    (3, "Aplica un filtro por Estado = 'Por vencer'. ¿Qué valor dinámico muestra la fila de subtotales para el recuento total?", None),
+                ]),
             ],
         },
         "2.4": {
             "archivo": "2.4_Graficos",
-            "nota": "Llena la hoja Resumen con CONTAR.SI y desde ahí saca los dos gráficos.",
+            "nota": "Construcción de tablas de frecuencias con CONTAR.SI y diseño de gráficos ejecutivos de barras y circular.",
             "hojas": [
-                ("Documentos", ["Código", "Documento", "Proceso", "Estado"],
+                hoja_enunciado(
+                    "2.4",
+                    "Dashboard visual ejecutivo y reporte de distribución SIG",
+                    "El Comité Directivo dispone de solo 5 minutos para evaluar el estado documental. Se requiere un informe gráfico ejecutivo de 1 página con tablas de frecuencias formuladas.",
+                    "Construir 2 tablas de frecuencias con =CONTAR.SI() en Informe_Grafico y diseñar un Gráfico de Columnas (carga por proceso) y un Gráfico Circular (proporción de estados).",
+                    [
+                        "Frecuencias por Proceso: Calcular la cantidad de documentos por proceso con =CONTAR.SI().",
+                        "Frecuencias por Estado: Calcular cantidad y % de participación por estado (Vigente, Por vencer, Vencido) con =CONTAR.SI().",
+                        "Gráfico de Columnas: Representar la carga documental por proceso con títulos claros y etiquetas numéricas.",
+                        "Gráfico Circular / Anillos: Representar la proporción de vigencias destacando el sector 'Vencido' en color rojo de alerta."
+                    ],
+                    "No se aceptan gráficos generados contando filas manualmente. Sus series deben estar enlazadas a las tablas formuladas con CONTAR.SI()."
+                ),
+                ("Base_Documentos", ["Código", "Documento", "Proceso", "Estado"],
                  [(x["codigo"], x["nombre"], NOMBRE_PROCESO[x["proceso"]], x["estado"]) for x in d]),
-                ("Resumen", ["Proceso", "Cantidad de documentos", "", "Estado", "Cantidad"],
-                 [(n, None, None, e, None) for n, e in zip(
-                     [p[1] for p in PROCESOS],
-                     ["Vigente", "Por vencer", "Vencido"] + [None] * (len(PROCESOS) - 3),
+                ("Informe_Grafico", ["Proceso", "Total Documentos (=CONTAR.SI)", "", "Estado Documental", "Cantidad (=CONTAR.SI)", "% Participación"],
+                 [(p[1], None, None, e, None, None) for p, e in zip(
+                     PROCESOS,
+                     ["Vigente", "Por vencer", "Vencido"] + [None] * (len(PROCESOS) - 3)
                  )]),
             ],
         },
         "3.1": {
             "archivo": "3.1_Tabla_dinamica",
-            "nota": "Proceso en filas, Estado en columnas, cuenta de Código en valores. Agrega segmentaciones por Tipo de proceso.",
+            "nota": "Análisis multidimensional de madurez documental mediante Tabla Dinámica con jerarquías y segmentadores.",
             "hojas": [
-                ("Documentos", ["Código", "Documento", "Tipo de documento", "Proceso", "Tipo de proceso", "Responsable",
-                                "Fecha de vencimiento", "Estado"],
+                hoja_enunciado(
+                    "3.1",
+                    "Análisis multidimensional y diagnóstico SIG con Tablas Dinámicas",
+                    "Para la Revisión por la Dirección (ISO 9001:2015), la Coordinación SIG debe diagnosticar qué macroprocesos concentran el mayor cuello de botella documental.",
+                    "Construir una Tabla Dinámica en la hoja Diagnostico_Dinamico con jerarquía de filas, vista porcentual de filas, segmentadores de datos (Slicers) y conclusión ejecutiva.",
+                    [
+                        "Crear Tabla Dinámica: En hoja Diagnostico_Dinamico con origen en Base_Auditoria.",
+                        "Jerarquía y Valores: Filas = 'Tipo de proceso' y 'Proceso'; Columnas = 'Estado'; Valores = Recuento de 'Código'.",
+                        "Vista Porcentual: Duplicar campo de valor y configurarlo como '% del total de filas' para identificar la tasa de riesgo por proceso.",
+                        "Segmentadores Interactivos: Agregar segmentación por 'Tipo de proceso' y 'Responsable'.",
+                        "Conclusión Diagnóstica: Redactar en la celda designada cuál es el proceso más crítico y la acción preventiva propuesta."
+                    ],
+                    "Configura la base de porcentaje como '% del total de filas' (no del total general) para que cada proceso sume 100% y la comparación sea rigurosa."
+                ),
+                ("Base_Auditoria", ["Código", "Documento", "Tipo de documento", "Proceso", "Tipo de proceso", "Responsable", "Fecha de vencimiento", "Estado"],
                  [(x["codigo"], x["nombre"], x["tipo"], NOMBRE_PROCESO[x["proceso"]], TIPO_PROCESO[x["proceso"]],
                    NOMBRE_RESPONSABLE.get(RESPONSABLE_PROCESO[x["proceso"]], "Sin asignar"), x["vence"], x["estado"])
                   for x in d]),
+                ("Diagnostico_Dinamico", ["Paso / Elemento del Dashboard", "Instrucciones de Construcción y Entrega"], [
+                    ("Espacio para Tabla Dinámica", "Inserta aquí la Tabla Dinámica jerárquica a partir de Base_Auditoria (rango A1:H25)."),
+                    ("Configuración de Filas", "Nivel 1: Tipo de proceso | Nivel 2: Proceso"),
+                    ("Configuración de Columnas", "Campo: Estado (Vigente, Por vencer, Vencido)"),
+                    ("Configuración de Valores", "Recuento de Código y % del total de filas"),
+                    ("Segmentadores de Datos", "Inserta Slicers para 'Tipo de proceso' y 'Responsable'"),
+                    ("Conclusión Diagnóstica", "Escribe aquí tu análisis gerencial: ¿Qué proceso requiere auditoría extraordinaria inmediata?"),
+                ]),
             ],
         },
         "3.2": {
             "archivo": "3.2_Conteo_condicional",
-            "nota": "Ojo: Gestión ambiental no tiene documentos. Usa SI.ERROR para que el % no te dé #¡DIV/0!.",
+            "nota": "Cálculo de indicadores de rendimiento procesal con funciones estadísticas y blindaje contra divisiones entre cero.",
             "hojas": [
-                ("Documentos", ["Código", "Proceso", "Estado", "Días de revisión"],
+                hoja_enunciado(
+                    "3.2",
+                    "Métricas de rendimiento procesal y estadísticas condicionales",
+                    "El SIG evalúa la eficiencia de los procesos de Lácteos del Caribe midiendo la tasa de vigencia documental y los tiempos de revisión técnica.",
+                    "Construir el tablero de métricas por proceso usando CONTAR.SI, CONTAR.SI.CONJUNTO y PROMEDIO.SI, protegiendo las fórmulas contra divisiones por cero con SI.ERROR.",
+                    [
+                        "Total Documentos: =CONTAR.SI() en Base_Documentos por proceso.",
+                        "Documentos Vigentes: =CONTAR.SI.CONJUNTO() por proceso y estado 'Vigente'.",
+                        "% Cobertura Vigente: Vigentes / Total formateado en porcentaje con un decimal.",
+                        "Promedio Días Revisión: =PROMEDIO.SI() por proceso.",
+                        "Blindaje contra Errores: PA-05 Gestión Ambiental no tiene documentos (0/0 genera #¡DIV/0!). Aplica =SI.ERROR(Vigentes/Total; 0) y =SI.ERROR(PROMEDIO.SI(...); 0)."
+                    ],
+                    "Un informe directivo no puede contener errores #¡DIV/0!. El uso de SI.ERROR es obligatorio para aprobar la auditoría de la hoja."
+                ),
+                ("Base_Documentos", ["Código", "Proceso", "Estado", "Días de revisión"],
                  [(x["codigo"], NOMBRE_PROCESO[x["proceso"]], x["estado"], x["dias_revision"]) for x in d]),
-                ("Indicadores_Proceso", ["Proceso", "Total documentos", "Vigentes", "% Vigentes", "Promedio días de revisión"],
-                 [(p[1], *vacio(4)) for p in PROCESOS]),
+                ("Tablero_Eficiencia", ["Código", "Proceso", "Total Documentos (=CONTAR.SI)", "Vigentes (=CONTAR.SI.CONJUNTO)", "% Cobertura Vigente", "Promedio Días Revisión (=PROMEDIO.SI)"],
+                 [(c, n, None, None, None, None) for c, n, _, _ in PROCESOS]),
             ],
         },
         "3.3": {
             "archivo": "3.3_Matriz_indicadores",
-            "nota": "El semáforo: verde si Resultado ≥ Meta, amarillo si está a 10 puntos o menos, rojo si está más abajo.",
+            "nota": "Construcción de matriz de indicadores con cálculo de brechas y semaforización condicional en 3 niveles.",
             "hojas": [
-                ("Indicadores", ["Indicador", "Fórmula", "Meta (%)", "Resultado (%)", "Semáforo"],
-                 [(i[0], i[1], i[3], i[6], None) for i in INDICADORES]),
-                ("Reglas_Semaforo", ["Color", "Condición"], [
-                    ("Verde", "Resultado ≥ Meta"),
-                    ("Amarillo", "Meta - 10 ≤ Resultado < Meta"),
-                    ("Rojo", "Resultado < Meta - 10"),
+                hoja_enunciado(
+                    "3.3",
+                    "Matriz de indicadores y semaforización dinámica de metas",
+                    "Los 8 procesos reportaron resultados frente a sus metas operativas. Se requiere una matriz que califique automáticamente la eficacia y semaforice las desviaciones.",
+                    "Estructurar la matriz de indicadores calculando la brecha (Resultado - Meta), evaluando el estado cualitativo con SI anidado y aplicando formato condicional de 3 semáforos.",
+                    [
+                        "Cálculo de la Brecha: =Resultado - Meta (muestra la desviación matemática frente a la meta corporativa).",
+                        "Estado Cualitativo con SI anidado: si Resultado >= Meta -> 'Conforme'; si Resultado >= Meta - 10 -> 'En Observación'; de lo contrario -> 'Crítico'.",
+                        "Semáforo Condicional: Aplicar formato condicional: Verde (Conforme), Amarillo (En Observación) y Rojo (Crítico).",
+                        "Alerta CAPA: Resaltar en negrita y rojo los indicadores en estado Crítico que requieran plan de acción correctiva inmediato."
+                    ],
+                    "Cada indicador tiene una meta distinta (80%, 90%, 95%, 100%). No compares contra un número fijo: las fórmulas condicionales deben comparar celdas relativas (Resultado vs Meta)."
+                ),
+                ("Reglas_Tolerancia", ["Nivel de Estado", "Condición Matemática", "Acción Requerida", "Color del Semáforo"], [
+                    ("Conforme", "Resultado ≥ Meta", "Mantener seguimiento regular", "Verde"),
+                    ("En Observación", "Meta - 10 ≤ Resultado < Meta", "Revisión en comité de proceso", "Amarillo"),
+                    ("Crítico", "Resultado < Meta - 10", "Apertura obligatoria de Acción Correctiva (CAPA)", "Rojo"),
                 ]),
+                ("Matriz_Semaforo", ["Código", "Indicador", "Proceso", "Meta (%)", "Resultado Real (%)", "Brecha (Resultado - Meta)", "Estado Cualitativo (=SI)", "Semáforo (Formato Condicional)"],
+                 [(f"IND-{idx:02d}", i[0], NOMBRE_PROCESO[i[2]], i[3], i[6], None, None, None) for idx, i in enumerate(INDICADORES, 1)]),
             ],
         },
         "3.4": {
             "archivo": "3.4_Validacion_datos",
-            "nota": "La hoja Registro trae errores de digitación a propósito. Crea las listas desplegables con la hoja Listas y corrígelos.",
+            "nota": "Blindaje de captura de datos con listas desplegables, restricciones estrictas y auditoría de registros.",
             "hojas": [
-                ("Listas", ["Procesos", "Estados", "Responsables"],
+                hoja_enunciado(
+                    "3.4",
+                    "Blindaje de captura y aseguramiento de calidad de datos SIG",
+                    "El personal registra novedades con constantes errores de digitación (nombres cortados, códigos inválidos, fechas incongruentes), arruinando búsquedas y reportes.",
+                    "Blindar el formulario de captura con validaciones de lista, longitud, fecha y entero, configurar mensajes de alto restrictivos y corregir 8 registros corruptos.",
+                    [
+                        "Listas Desplegables: En Proceso y Estado, configurar validación por lista referenciando Listas_Maestras.",
+                        "Longitud de Código: En Código, restringir la longitud del texto a exactamente 12 caracteres (ej. PM-01-PR-01).",
+                        "Fechas y Versiones: Validar Fecha entre 01/01/2020 y 31/12/2026, y Versión número entero >= 1.",
+                        "Mensajes y Alertas: Configurar Mensaje de Entrada orientativo y Mensaje de Error estilo 'Detener / Alto'.",
+                        "Auditoría con Círculos: En Auditoria_Registros, activar 'Rodear con un círculo datos no válidos' y corregir los 8 registros corruptos."
+                    ],
+                    "El estilo de alerta debe ser 'Detener' (no Información ni Advertencia) para bloquear físicamente el guardado de datos inválidos."
+                ),
+                ("Listas_Maestras", ["Procesos Oficiales", "Estados Válidos", "Responsables Autorizados"],
                  [(p[1], e, r[1]) for p, e, r in zip(
                      PROCESOS,
                      ["Vigente", "Por vencer", "Vencido"] + [None] * (len(PROCESOS) - 3),
                      RESPONSABLES + [(None, None, None)] * (len(PROCESOS) - len(RESPONSABLES)),
                  )]),
-                ("Registro", ["Código", "Documento", "Proceso", "Estado", "Responsable"], [
-                    ("PM-01-PR-01", "Control de producción", "Produccion", "Por vencer", "Andrés Brito"),
-                    ("PE-02-MA-01", "Manual del SIG", "Gestión de la calidad", "vijente", "Laura Pimienta"),
-                    ("PA-02-FO-01", "Orden de compra", "  Compras", "Vigente", "Camilo Iguaran"),
-                    ("PM-02-PR-01", "Atención de PQRS", "Comercial", "Por vencer", "Marelvis Ospino"),
-                    ("PA-04-IN-01", "Trabajo en alturas", "SST", "Vencido", "Daniela E."),
-                    ("PM-03-PR-01", "Despacho y entrega", "Logística y distribución", "vencido", "Kevin Fragoso"),
-                    ("PA-01-PR-01", "Selección y contratación", "Talento Humano", "Vencido", "Yesenia Uriana"),
-                    ("PE-01-PO-01", "Política del SIG", "Direccionamiento estratégico", "Vigente", "Rafael Mendoza"),
-                    (None, None, None, None, None),
-                    (None, None, None, None, None),
+                ("Formulario_Captura", ["Código (12 caracteres)", "Documento", "Proceso (Lista)", "Fecha Aprobación (2020-2026)", "Versión (Entero >=1)", "Estado (Lista)", "Responsable"], [
+                    (None, None, None, None, None, None, None) for _ in range(8)
+                ]),
+                ("Auditoria_Registros", ["Código", "Documento", "Proceso", "Fecha Aprobación", "Versión", "Estado", "Responsable"], [
+                    ("PM-01-PR-01", "Control de producción", "Produccion", "15/11/2024", 3, "Por vencer", "Andrés Brito"),
+                    ("PE-02-MA-01", "Manual del SIG", "Gestión de la calidad", "01/03/2024", 4, "vijente", "Laura Pimienta"),
+                    ("PA-02-FO-01", "Orden de compra", "  Compras", "05/05/2025", 5, "Vigente", "Camilo Iguarán"),
+                    ("PM-02-PR-01", "Atención de PQRS", "Comercial", "08/08/2024", 3, "Por vencer", "Marelvis Ospino"),
+                    ("PA-04-IN-01", "Trabajo en alturas", "SST", "20/10/2023", 2, "Vencido", "Daniela Epiayú"),
+                    ("PM-03-PR-01", "Despacho y entrega", "Logística y distribución", "22/05/2024", 0, "vencido", "Kevin Fragozo"),
+                    ("PA-01-PR-01", "Selección y contratación", "Talento Humano", "15/07/2024", 4, "Vencido", "Yesenia Uriana"),
+                    ("PE-01-PO-01", "Política del SIG", "Direccionamiento estratégico", "10/02/2030", 3, "Vigente", "Rafael Mendoza"),
+                    ("PE-01-PL-1", "Plan estratégico 2025-2028", "Direccionamiento estratégico", "15/01/2025", 1, "Por vencer", "Rafael Mendoza"),
+                    ("PM-01-FO-01", "Registro de temperatura", "Producción", "01/09/2025", 5, "Vigente", "Andrés Brito"),
                 ]),
             ],
         },
         "4.1": {
             "archivo": "4.1_Matriz_procesos",
-            "nota": "Completa la matriz con las otras hojas. Gestión ambiental no tiene documentos: que se note en rojo.",
+            "nota": "Matriz de caracterización articulando procesos, líderes, cobertura documental y alertas en rojo.",
             "hojas": [
-                ("Matriz_Procesos", ["Código", "Proceso", "Tipo", "Responsable", "Documentos asociados", "Indicador"],
-                 [(c, n, *vacio(4)) for c, n, _, _ in PROCESOS]),
+                hoja_enunciado(
+                    "4.1",
+                    "Matriz maestra de caracterización e interacción de procesos SIG",
+                    "Para la auditoría de renovación ISO 9001, Bureau Veritas exige el Mapa de Interacción y Caracterización de Procesos con responsables, cobertura documental e indicadores.",
+                    "Integrar en Matriz_Caracterizacion los 10 procesos corporativos desde 4 fuentes, calculando cobertura documental con CONTAR.SI y alertando procesos sin documentación.",
+                    [
+                        "Cruce de Responsable: Traer el Líder oficial desde Maestro_Responsables con BUSCARV o BUSCARX.",
+                        "Cobertura Documental: Contar los documentos reales de cada proceso con =CONTAR.SI(Inventario_Documentos!$C$2:$C$50; Codigo_Proceso).",
+                        "Indicador Asignado: Vincular el indicador principal desde Catalogo_Indicadores con BUSCARV.",
+                        "Alerta Condicional: Configurar formato condicional con fórmula (=$E2=0) para resaltar en rojo cualquier proceso con 0 documentos (Gestión Ambiental)."
+                    ],
+                    "Articula las cuatro hojas sin romper las referencias relativas ni perder la sincronización al filtrar procesos."
+                ),
+                ("Matriz_Caracterizacion", ["Código", "Proceso", "Tipo de Proceso", "Responsable Líder", "Documentos Asociados (=CONTAR.SI)", "Indicador Principal", "Alerta Cobertura"],
+                 [(c, n, t, None, None, None, None) for c, n, t, _ in PROCESOS]),
                 hoja_procesos(),
                 hoja_responsables(),
-                ("Documentos", ["Código", "Documento", "Código proceso"],
+                ("Inventario_Documentos", ["Código", "Documento", "Código proceso"],
                  [(x["codigo"], x["nombre"], x["proceso"]) for x in d]),
-                ("Indicadores", ["Indicador", "Código proceso"], [(i[0], i[2]) for i in INDICADORES]),
+                ("Catalogo_Indicadores", ["Indicador", "Código proceso"], [(i[0], i[2]) for i in INDICADORES]),
             ],
         },
         "4.2": {
             "archivo": "4.2_Matriz_riesgos",
-            "nota": "Nivel de riesgo = Probabilidad × Impacto. Clasifícalo con la hoja Escala y colorea con formato condicional.",
+            "nota": "Evaluación cuantitativa de riesgos (Probabilidad × Impacto), clasificación por severidad y semáforo de 4 colores.",
             "hojas": [
-                ("Riesgos", ["Código", "Descripción", "Proceso", "Probabilidad (1-5)", "Impacto (1-5)",
-                             "Nivel de riesgo", "Nivel", "Control", "Responsable"],
-                 [(c, desc, NOMBRE_PROCESO[p], prob, imp, None, None, ctrl, NOMBRE_RESPONSABLE[r])
-                  for c, desc, p, prob, imp, ctrl, r in RIESGOS]),
-                ("Escala", ["Desde", "Hasta", "Nivel", "Color"], [
-                    (1, 4, "Bajo", "Verde"),
-                    (5, 9, "Medio", "Amarillo"),
-                    (10, 16, "Alto", "Naranja"),
-                    (17, 25, "Extremo", "Rojo"),
+                hoja_enunciado(
+                    "4.2",
+                    "Matriz cuantitativa de evaluación y control de riesgos SIG",
+                    "Lácteos del Caribe enfrenta riesgos operativos y de SST: amoníaco en cavas, contaminación en pasteurización, alturas y sanciones ambientales.",
+                    "Construir la matriz cuantitativa de riesgos con cálculo de severidad (P×I), clasificación por escala de severidad, semaforización de 4 colores y control obligatorio.",
+                    [
+                        "Validación de Escalas: Restringir Probabilidad e Impacto a números enteros del 1 al 5.",
+                        "Severidad Inherente: Formular Nivel de Riesgo = Probabilidad * Impacto (1 a 25).",
+                        "Clasificación Automática: Clasificar con SI anidado o BUSCARV aproximado apoyado en Escala_Severidad: 1-4 Bajo, 5-9 Medio, 10-16 Alto, 17-25 Extremo.",
+                        "Semaforización 4 Colores: Verde (Bajo), Amarillo (Medio), Naranja (Alto) y Rojo (Extremo).",
+                        "Acción Inmediata: Si el riesgo es Alto o Extremo -> 'CONTROL PRIORITARIO REQUERIDO'; de lo contrario -> 'Monitoreo Periódico'."
+                    ],
+                    "Configura las 4 reglas condicionales ordenadamente para que los riesgos extremos (rojos) no queden ocultos por rangos menores."
+                ),
+                ("Escala_Severidad", ["Rango Mínimo", "Rango Máximo", "Nivel Cualitativo", "Color Asociado", "Acción de Control"], [
+                    (1, 4, "Bajo", "Verde", "Monitoreo periódico"),
+                    (5, 9, "Medio", "Amarillo", "Procedimiento estándar y seguimiento"),
+                    (10, 16, "Alto", "Naranja", "Control preventivo inmediato y responsable"),
+                    (17, 25, "Extremo", "Rojo", "Control prioritario urgente y plan de contingencia"),
                 ]),
+                ("Matriz_Riesgos", ["Código", "Descripción del Riesgo", "Proceso", "Probabilidad (1-5)", "Impacto (1-5)", "Nivel de Riesgo (=P*I)", "Clasificación Severidad", "Tipo de Control", "Responsable", "Acción Inmediata"],
+                 [(c, desc, NOMBRE_PROCESO[p], prob, imp, None, None, ctrl, NOMBRE_RESPONSABLE[r], None)
+                  for c, desc, p, prob, imp, ctrl, r in RIESGOS]),
             ],
         },
         "4.3": {
             "archivo": "4.3_Matriz_RACI",
-            "nota": "La primera fila va de ejemplo. Cada actividad debe tener exactamente una A (Aprobador).",
+            "nota": "Diseño de matriz RACI de gobernanza con validación de roles y fórmula de auditoría.",
             "hojas": [
-                ("RACI", ["Actividad"] + ROLES_RACI,
-                 [(ACTIVIDADES_RACI[0], "I", "A", "R", None, None, "C")]
-                 + [(actividad, *vacio(len(ROLES_RACI))) for actividad in ACTIVIDADES_RACI[1:]]),
-                ("Leyenda", ["Letra", "Significado", "Qué hace"], [
-                    ("R", "Responsable", "Ejecuta la actividad"),
-                    ("A", "Aprobador", "Da el visto bueno final y responde por el resultado"),
-                    ("C", "Consultado", "Aporta su opinión antes de hacerla"),
-                    ("I", "Informado", "Se le avisa cuando está lista"),
+                hoja_enunciado(
+                    "4.3",
+                    "Matriz RACI de gobernanza y auditoría de duplicidad de roles",
+                    "En la planta ocurrieron incidentes de calidad porque nadie asumió la aprobación del retiro de lotes defectuosos debido a confusión en la asignación de roles.",
+                    "Construir la matriz RACI para 8 actividades del SIG, aplicar validación por lista (R;A;C;I), formato condicional de 4 colores y programar fórmula de auditoría de gobernanza.",
+                    [
+                        "Restricción Matricial: Configurar validación de datos en cuadrícula (actividades vs roles) restringida a R; A; C; I.",
+                        "Formato Condicional: 4 colores diferenciados: R (Azul), A (Púrpura / Nivel decisorio), C (Ámbar), I (Gris).",
+                        "Regla de Gobernanza: Cada actividad debe tener EXACTAMENTE UN Aprobador ('A').",
+                        "Fórmula de Auditoría: En Control Auditoría Gobernanza programar: =SI(CONTAR.SI(B2:G2;'A')=1; 'CONFORME'; SI(CONTAR.SI(B2:G2;'A')=0; 'ERROR: Falta Aprobador'; 'ERROR: Múltiples Aprobadores')).",
+                        "Corrección: Resaltar en rojo los errores y corregir las letras para que todas las actividades queden en estado CONFORME."
+                    ],
+                    "La fórmula lógica horizontal debe contar la letra 'A' en cada fila y diagnosticar con precisión si falta o sobra autoridad aprobatoria."
+                ),
+                ("Leyenda_RACI", ["Letra", "Rol RACI", "Responsabilidad en el SIG"], [
+                    ("R", "Responsable", "Ejecuta materialmente la actividad del SIG"),
+                    ("A", "Aprobador", "Autoridad final que aprueba y responde ante auditoría (único por actividad)"),
+                    ("C", "Consultado", "Experto técnico consultado antes de la toma de decisiones"),
+                    ("I", "Informado", "Personal notificado de los resultados de la actividad"),
+                ]),
+                ("Matriz_RACI", ["Actividad"] + ROLES_RACI + ["Control Auditoría Gobernanza"], [
+                    (ACTIVIDADES_RACI[0], "I", "A", "R", "C", "C", "I", None),
+                    (ACTIVIDADES_RACI[1], "A", "A", "R", "I", "I", "I", None),  # doble A deliberada
+                    (ACTIVIDADES_RACI[2], "I", "R", "C", "I", "I", "I", None),  # falta A deliberada
+                    (ACTIVIDADES_RACI[3], "I", "A", "C", "R", "I", "I", None),
+                    (ACTIVIDADES_RACI[4], "I", "A", "I", "R", "I", "I", None),
+                    (ACTIVIDADES_RACI[5], "I", "A", "R", "C", "I", "I", None),
+                    (ACTIVIDADES_RACI[6], "A", "R", "C", "I", "I", "I", None),
+                    (ACTIVIDADES_RACI[7], "I", "A", "R", "I", "I", "I", None),
                 ]),
             ],
         },
         "4.4": {
             "archivo": "4.4_Cuadro_de_mando",
-            "nota": "% Cumplimiento = T3 / Meta. La tendencia compara T3 contra T2 (▲ sube, ▼ baja).",
+            "nota": "Construcción de Cuadro de Mando Integral con tarjetas KPI, análisis de tendencias y gráfico comparativo.",
             "hojas": [
-                ("Indicadores", ["Indicador", "Proceso", "Meta (%)", "T1 (%)", "T2 (%)", "T3 (%)",
-                                 "% Cumplimiento", "Semáforo", "Tendencia"],
-                 [(i[0], NOMBRE_PROCESO[i[2]], i[3], i[4], i[5], i[6], *vacio(3)) for i in INDICADORES]),
-                ("Reglas_Semaforo", ["Color", "Condición"], [
-                    ("Verde", "% Cumplimiento ≥ 100%"),
-                    ("Amarillo", "90% ≤ % Cumplimiento < 100%"),
-                    ("Rojo", "% Cumplimiento < 90%"),
+                hoja_enunciado(
+                    "4.4",
+                    "Cuadro de mando integral (Dashboard Ejecutivo SIG)",
+                    "Al cierre del periodo, la Gerencia General y la Junta Directiva exigen un Dashboard de Control Gerencial de alto impacto visual para evaluar el SIG.",
+                    "Diseñar el Cuadro de Mando Integral calculando % cumplimiento, tendencias dinámicas con símbolos tipográficos, 3 tarjetas KPI ejecutivas y gráfico comparativo.",
+                    [
+                        "% Cumplimiento T3: Dividir =T3 / Meta con formato porcentual.",
+                        "Tendencia T3 vs T2: Evaluar con SI anidado: si T3 > T2 -> '▲ Favorable'; si T3 < T2 -> '▼ Desfavorable'; si T3 = T2 -> '― Estable'.",
+                        "Semáforo Gerencial: Verde (>= 100%), Amarillo (90% a 99.9%), Rojo (< 90%).",
+                        "Tarjetas KPI Ejecutivas: Diseñar en cabecera: a) % Promedio Cumplimiento SIG, b) Indicadores en Crisis (Rojos), c) Metas Cumplidas.",
+                        "Gráfico Comparativo: Columnas agrupadas comparando serie Meta vs serie Resultado Real T3 con leyenda y etiquetas claras."
+                    ],
+                    "Integra cálculos matemáticos, caracteres tipográficos de tendencia (▲, ▼, ―) y un gráfico de doble serie con estética corporativa."
+                ),
+                ("Criterios_Semaforo", ["Rango Cumplimiento", "Color Semáforo", "Significado Gerencial"], [
+                    ("≥ 100%", "Verde", "Meta superada o cumplida a cabalidad"),
+                    ("90% a 99.9%", "Amarillo", "Desempeño cercano a la meta (en tolerancia)"),
+                    ("< 90%", "Rojo", "Desempeño crítico (incumplimiento de meta)"),
                 ]),
+                ("Datos_Historicos", ["Código", "Indicador", "Proceso", "Meta (%)", "T1 (%)", "T2 (%)", "T3 (%)"],
+                 [(f"IND-{idx:02d}", i[0], NOMBRE_PROCESO[i[2]], i[3], i[4], i[5], i[6]) for idx, i in enumerate(INDICADORES, 1)]),
+                ("Dashboard_Gerencial", ["Indicador", "Proceso", "Meta (%)", "T1 (%)", "T2 (%)", "T3 (%)", "% Cumplimiento T3", "Tendencia T3 vs T2", "Semáforo Gerencial"],
+                 [(i[0], NOMBRE_PROCESO[i[2]], i[3], i[4], i[5], i[6], None, None, None) for i in INDICADORES]),
             ],
         },
     }

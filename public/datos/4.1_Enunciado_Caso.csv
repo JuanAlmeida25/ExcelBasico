@@ -1,0 +1,11 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;4.1
+Título del Caso;Matriz maestra de caracterización e interacción de procesos SIG
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;Para la auditoría de renovación ISO 9001, Bureau Veritas exige el Mapa de Interacción y Caracterización de Procesos con responsables, cobertura documental e indicadores.
+2. Misión del Aprendiz;Integrar en Matriz_Caracterizacion los 10 procesos corporativos desde 4 fuentes, calculando cobertura documental con CONTAR.SI y alertando procesos sin documentación.
+Requerimiento 1;Cruce de Responsable: Traer el Líder oficial desde Maestro_Responsables con BUSCARV o BUSCARX.
+Requerimiento 2;"Cobertura Documental: Contar los documentos reales de cada proceso con =CONTAR.SI(Inventario_Documentos!$C$2:$C$50; Codigo_Proceso)."
+Requerimiento 3;Indicador Asignado: Vincular el indicador principal desde Catalogo_Indicadores con BUSCARV.
+Requerimiento 4;Alerta Condicional: Configurar formato condicional con fórmula (=$E2=0) para resaltar en rojo cualquier proceso con 0 documentos (Gestión Ambiental).
+Dificultad Clave / Regla Técnica;Articula las cuatro hojas sin romper las referencias relativas ni perder la sincronización al filtrar procesos.

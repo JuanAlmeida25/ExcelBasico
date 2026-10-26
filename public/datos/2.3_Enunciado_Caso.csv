@@ -1,0 +1,11 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;2.3
+Título del Caso;Auditoría interactiva con Tablas de Excel y subtotales dinámicos
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;En el Comité de Calidad mensual se requiere auditar el estado documental en tiempo real mediante filtros sin desconfigurar fórmulas ni rangos.
+2. Misión del Aprendiz;Transformar el listado plano en una Tabla Oficial de Excel nombrada Tabla_SIG, agregar columna calculada estructurada, activar fila de subtotales y resolver 3 retos de auditoría.
+Requerimiento 1;Tabla Oficial: Convertir Datos_Crudos en Tabla con Ctrl+T y nombrarla Tabla_SIG.
+Requerimiento 2;Columna Estructurada: Crear columna Dias_Faltantes con fórmula de tabla: [@Fecha de vencimiento] - Parametros!$B$2.
+Requerimiento 3;Fila de Subtotales: Activar totales dinámicos con SUBTOTALES para recuento y promedio de días de revisión.
+Requerimiento 4;Consultas de Comité: Filtrar la tabla y responder las 3 preguntas en la hoja Consultas_Auditoria.
+Dificultad Clave / Regla Técnica;Las fórmulas normales (SUMA/CONTAR) calculan filas ocultas. Comprueba que la fila de totales use SUBTOTALES (códigos 103/109) para reflejar solo lo filtrado.

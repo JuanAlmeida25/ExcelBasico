@@ -1,0 +1,12 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;4.4
+Título del Caso;Cuadro de mando integral (Dashboard Ejecutivo SIG)
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;Al cierre del periodo, la Gerencia General y la Junta Directiva exigen un Dashboard de Control Gerencial de alto impacto visual para evaluar el SIG.
+2. Misión del Aprendiz;Diseñar el Cuadro de Mando Integral calculando % cumplimiento, tendencias dinámicas con símbolos tipográficos, 3 tarjetas KPI ejecutivas y gráfico comparativo.
+Requerimiento 1;% Cumplimiento T3: Dividir =T3 / Meta con formato porcentual.
+Requerimiento 2;"Tendencia T3 vs T2: Evaluar con SI anidado: si T3 > T2 -> '▲ Favorable'; si T3 < T2 -> '▼ Desfavorable'; si T3 = T2 -> '― Estable'."
+Requerimiento 3;Semáforo Gerencial: Verde (>= 100%), Amarillo (90% a 99.9%), Rojo (< 90%).
+Requerimiento 4;Tarjetas KPI Ejecutivas: Diseñar en cabecera: a) % Promedio Cumplimiento SIG, b) Indicadores en Crisis (Rojos), c) Metas Cumplidas.
+Requerimiento 5;Gráfico Comparativo: Columnas agrupadas comparando serie Meta vs serie Resultado Real T3 con leyenda y etiquetas claras.
+Dificultad Clave / Regla Técnica;Integra cálculos matemáticos, caracteres tipográficos de tendencia (▲, ▼, ―) y un gráfico de doble serie con estética corporativa.

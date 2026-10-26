@@ -63,9 +63,9 @@ export const fases = [
       {
         codigo: '1.4',
         nombre: 'Fórmulas y funciones elementales',
-        descripcion: 'Practicar suma, promedio, contar y referencias relativas/absolutas aplicadas a los datos registrados.',
-        evidencia: 'Hoja de cálculo con fórmulas básicas operando correctamente.',
-        formulas: ['=SUMA()', '=PROMEDIO()', '=CONTAR()', '$A$1']
+        descripcion: 'Calcular el costo de elaboración multiplicando las horas por la tarifa fija (<code>$B$2</code>) y obtener el total, promedio y cantidad de documentos en una sola hoja.',
+        evidencia: 'Hoja <code>Presupuesto_SIG</code> con fórmulas de costo y resumen operando correctamente.',
+        formulas: ['=SUMA()', '=PROMEDIO()', '=CONTAR()', '$B$2']
       }
     ]
   },
@@ -81,31 +81,31 @@ export const fases = [
     actividades: [
       {
         codigo: '2.1',
-        nombre: 'Función SI y SI anidada',
-        descripcion: 'Crear una columna <code>Estado</code> que clasifique automáticamente los documentos según su fecha de vencimiento (Vigente, Por vencer, Vencido) usando <code>=SI()</code> anidada.',
-        evidencia: 'Columna <code>Estado</code> funcionando con al menos 3 condiciones.',
-        formulas: ['=SI()']
+        nombre: 'Función SI y SI anidada: Control de vigencias y criticidad',
+        descripcion: 'Evaluar vencimientos y clasificar la prioridad de acción mediante <code>=SI()</code> anidada y fechas límite. Sigue los parámetros y el problema detallado en la hoja <code>Enunciado_Caso</code> del archivo.',
+        evidencia: 'Hoja <code>Control_Vigencias</code> con días restantes, estados y prioridades funcionando.',
+        formulas: ['=SI()', '=Y()', '$B$2', '<', '<=']
       },
       {
         codigo: '2.2',
-        nombre: 'BUSCARV / BUSCARX para consolidar',
-        descripcion: 'Vincular la hoja <code>Documentos</code> con la hoja <code>Procesos</code> para traer automáticamente el nombre del proceso asociado a cada documento mediante <code>BUSCARV</code> o <code>BUSCARX</code>.',
-        evidencia: 'Consolidado que muestre documento, proceso y responsable sin duplicar datos manualmente.',
-        formulas: ['=BUSCARV()', '=BUSCARX()']
+        nombre: 'BUSCARV / BUSCARX: Consolidación relacional de auditoría',
+        descripcion: 'Unificar las 3 fuentes de datos con <code>BUSCARV</code> o <code>BUSCARX</code>, blindando con <code>SI.ERROR</code> para que procesos sin responsable no generen <code>#N/D</code>. Revisa las directrices en <code>Enunciado_Caso</code>.',
+        evidencia: 'Consolidado relacional completo y formateado sin errores <code>#N/D</code>.',
+        formulas: ['=BUSCARV()', '=BUSCARX()', '=SI.ERROR()', 'FALSO / 0']
       },
       {
         codigo: '2.3',
-        nombre: 'Tablas de datos y filtros',
-        descripcion: 'Convertir el rango de datos en una Tabla con formato (Ctrl+T). Aplicar filtros por proceso, estado y fecha. Generar subtotales por proceso.',
-        evidencia: 'Tabla filtrada y subtotales por proceso.',
-        formulas: ['Ctrl+T', '=SUBTOTALES()']
+        nombre: 'Tablas de datos, filtros y subtotales dinámicos',
+        descripcion: 'Convertir datos crudos a tabla oficial (Ctrl+T), usar referencias estructuradas (<code>[@Campo]</code>), activar subtotales y resolver los 3 retos de auditoría planteados en la hoja <code>Consultas_Auditoria</code>.',
+        evidencia: 'Tabla estructurada con subtotales activos y respuestas a las consultas de auditoría.',
+        formulas: ['Ctrl+T', '=SUBTOTALES()', '[@Columna]']
       },
       {
         codigo: '2.4',
-        nombre: 'Gráficos básicos para informes',
-        descripcion: 'Crear un gráfico de columnas que muestre la cantidad de documentos por proceso y un gráfico circular con la distribución porcentual de estados.',
-        evidencia: 'Dos gráficos insertados y titulados correctamente.',
-        formulas: []
+        nombre: 'Gráficos básicos para informes: Dashboard ejecutivo',
+        descripcion: 'Construir tablas de frecuencias con <code>=CONTAR.SI()</code> e insertar dos gráficos ejecutivos formateados (columnas por proceso y circular de estados) según las instrucciones de <code>Enunciado_Caso</code>.',
+        evidencia: 'Dos gráficos vinculados a tablas de frecuencias formuladas, con títulos y etiquetas claras.',
+        formulas: ['=CONTAR.SI()']
       }
     ]
   },
@@ -121,31 +121,31 @@ export const fases = [
     actividades: [
       {
         codigo: '3.1',
-        nombre: 'Tabla dinámica de documentos por proceso y estado',
-        descripcion: 'Insertar una tabla dinámica que cruce <code>Proceso</code> (filas) con <code>Estado</code> (columnas) y cuente los documentos. Agregar segmentaciones de datos (slicers) para filtrar interactivamente.',
-        evidencia: 'Tabla dinámica funcional con segmentación por proceso.',
-        formulas: []
+        nombre: 'Tabla dinámica: Diagnóstico multidimensional de madurez',
+        descripcion: 'Construir una tabla dinámica jerárquica, configurar la vista porcentual como % del total de filas, insertar segmentadores de datos (slicers) y responder al diagnóstico gerencial en la hoja <code>Diagnostico_Dinamico</code>.',
+        evidencia: 'Tabla dinámica jerárquica con vista porcentual, segmentadores y diagnóstico redactado.',
+        formulas: ['Tabla dinámica', 'Jerarquía de filas', '% de filas', 'Slicers']
       },
       {
         codigo: '3.2',
-        nombre: 'Funciones estadísticas y de conteo condicional',
-        descripcion: 'Calcular el porcentaje de documentos vigentes por proceso usando <code>CONTAR.SI</code> y <code>SUMAR.SI</code>. Aplicar <code>PROMEDIO.SI</code> para obtener el tiempo promedio de revisión por proceso.',
-        evidencia: 'Hoja con indicadores calculados y formateados como porcentaje.',
-        formulas: ['=CONTAR.SI()', '=SUMAR.SI()', '=PROMEDIO.SI()']
+        nombre: 'Funciones estadísticas condicionales con protección de error',
+        descripcion: 'Estructurar el tablero de eficiencia con <code>CONTAR.SI</code>, <code>CONTAR.SI.CONJUNTO</code> y <code>PROMEDIO.SI</code>. Resolver el reto técnico de Gestión ambiental (0 documentos) aplicando <code>SI.ERROR</code> para evitar <code>#¡DIV/0!</code>.',
+        evidencia: 'Tablero de métricas formulado y 100% protegido contra divisiones por cero.',
+        formulas: ['=CONTAR.SI()', '=CONTAR.SI.CONJUNTO()', '=PROMEDIO.SI()', '=SI.ERROR()']
       },
       {
         codigo: '3.3',
-        nombre: 'Matriz de indicadores básica',
-        descripcion: 'Construir una hoja llamada <code>Indicadores</code> con columnas: Indicador, Fórmula, Meta, Resultado, Semáforo. El semáforo debe cambiar de color automáticamente según el resultado (verde ≥ meta, amarillo cercano, rojo por debajo) usando formato condicional.',
-        evidencia: 'Matriz de indicadores con semáforo funcional.',
-        formulas: []
+        nombre: 'Matriz de indicadores básica y semáforo de metas',
+        descripcion: 'Construir la matriz de control calculando brechas (Resultado - Meta), evaluando con <code>=SI()</code> anidada y aplicando formato condicional con semáforos de 3 niveles según las reglas de tolerancia del archivo.',
+        evidencia: 'Matriz de indicadores con brechas, evaluación cualitativa y semáforos funcionales.',
+        formulas: ['=Resultado - Meta', '=SI() anidado', 'Formato condicional']
       },
       {
         codigo: '3.4',
-        nombre: 'Validación de datos para asegurar calidad de la información',
-        descripcion: 'Implementar listas desplegables en las columnas <code>Proceso</code>, <code>Estado</code> y <code>Responsable</code> para evitar errores de digitación.',
-        evidencia: 'Celdas con validación de datos configurada.',
-        formulas: []
+        nombre: 'Validación de datos y aseguramiento de calidad',
+        descripcion: 'Blindar el formulario de captura con validaciones de lista, fechas, enteros y longitud de texto con alertas tipo Detener. Auditar y corregir los 8 registros defectuosos en <code>Auditoria_Registros</code> usando círculos de invalidez.',
+        evidencia: 'Formulario con validación activa, mensajes de alto y hoja de auditoría corregida.',
+        formulas: ['Validación de datos', 'Listas desplegables', 'Rodear datos no válidos']
       }
     ]
   },
@@ -161,31 +161,31 @@ export const fases = [
     actividades: [
       {
         codigo: '4.1',
-        nombre: 'Matriz de identificación de procesos',
-        descripcion: 'Crear una matriz que relacione Proceso → Tipo (Estratégico/Misional/Apoyo) → Responsable → Documentos asociados → Indicador. Usar validación de datos y formato condicional para resaltar procesos sin documentación asociada.',
-        evidencia: 'Matriz de procesos completa y formateada.',
-        formulas: []
+        nombre: 'Matriz de identificación y caracterización de procesos',
+        descripcion: 'Integrar los 10 procesos corporativos desde 4 fuentes, calculando cobertura documental con <code>CONTAR.SI</code> y alertando en rojo procesos con 0 documentos mediante formato condicional con fórmula (<code>=$E2=0</code>).',
+        evidencia: 'Matriz de procesos completa con fórmulas relacionales, conteo y alerta condicional.',
+        formulas: ['=BUSCARV()', '=CONTAR.SI()', 'Formato condicional con fórmula']
       },
       {
         codigo: '4.2',
-        nombre: 'Matriz de riesgos (probabilidad × impacto)',
-        descripcion: 'Construir una matriz de riesgos con las columnas: Código del riesgo, Descripción, Probabilidad (1-5), Impacto (1-5), Nivel de riesgo (=Probabilidad×Impacto), Nivel (Bajo/Medio/Alto/Extremo), Control, Responsable. Aplicar formato condicional para colorear el nivel de riesgo (verde, amarillo, naranja, rojo).',
-        evidencia: 'Matriz de riesgos con cálculo automático del nivel y colores condicionales.',
-        formulas: ['=Probabilidad*Impacto']
+        nombre: 'Matriz de riesgos: Probabilidad × Impacto cuantitativa',
+        descripcion: 'Construir la matriz cuantitativa de riesgos calculando severidad (P × I), clasificando en 4 niveles (Bajo a Extremo) con fórmula y aplicando semáforo de 4 colores. Resolver el caso detallado en <code>Enunciado_Caso</code>.',
+        evidencia: 'Matriz de riesgos con escalas validadas (1-5), cálculo automático, 4 colores y controles.',
+        formulas: ['=Probabilidad*Impacto', '=SI() anidado / BUSCARV', 'Formato condicional 4 colores']
       },
       {
         codigo: '4.3',
-        nombre: 'Matriz RACI (Responsable, Aprobador, Consultado, Informado)',
-        descripcion: 'Diseñar una matriz que cruce Actividades del SIG (filas) con Roles (columnas), asignando R, A, C o I según corresponda. Usar validación de datos para restringir las letras a R, A, C, I. Aplicar formato condicional para que cada letra tenga un color distintivo.',
-        evidencia: 'Matriz RACI completa con roles y actividades del SIG.',
-        formulas: []
+        nombre: 'Matriz RACI: Gobernanza y auditoría de duplicidad',
+        descripcion: 'Construir la matriz RACI restringiendo celdas a R, A, C, I y programar la fórmula de auditoría de gobernanza (exactamente una "A" por actividad) para detectar y corregir conflictos de autoridad del caso.',
+        evidencia: 'Matriz RACI completa con validación, 4 colores y fórmula de auditoría sin errores.',
+        formulas: ['=CONTAR.SI(rango; "A")', '=SI() anidado', 'Validación R;A;C;I']
       },
       {
         codigo: '4.4',
-        nombre: 'Matriz de seguimiento a indicadores (cuadro de mando)',
-        descripcion: 'Integrar la matriz de indicadores de la Fase 3 en una hoja resumen que muestre: Indicador, Meta, Resultado, % Cumplimiento, Semáforo, Tendencia. Insertar un gráfico de barras comparativo Meta vs. Resultado y una tarjeta de resumen con el promedio general de cumplimiento.',
-        evidencia: 'Cuadro de mando con gráfico y semáforos funcionando.',
-        formulas: []
+        nombre: 'Matriz de seguimiento a indicadores: Cuadro de mando',
+        descripcion: 'Construir el Dashboard Gerencial calculando % de cumplimiento, tendencias con símbolos (▲, ▼, ―), 3 tarjetas KPI ejecutivas y gráfico comparativo Meta vs. Resultado, siguiendo las especificaciones de <code>Enunciado_Caso</code>.',
+        evidencia: 'Dashboard ejecutivo con tarjetas KPI, semáforos, tendencias y gráfico comparativo.',
+        formulas: ['=T3 / Meta', '=SI() anidado para tendencias', '=PROMEDIO()', '=CONTAR.SI()']
       }
     ]
   }

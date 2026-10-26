@@ -1,0 +1,7 @@
+﻿Paso / Elemento del Dashboard;Instrucciones de Construcción y Entrega
+Espacio para Tabla Dinámica;Inserta aquí la Tabla Dinámica jerárquica a partir de Base_Auditoria (rango A1:H25).
+Configuración de Filas;Nivel 1: Tipo de proceso | Nivel 2: Proceso
+Configuración de Columnas;Campo: Estado (Vigente, Por vencer, Vencido)
+Configuración de Valores;Recuento de Código y % del total de filas
+Segmentadores de Datos;Inserta Slicers para 'Tipo de proceso' y 'Responsable'
+Conclusión Diagnóstica;Escribe aquí tu análisis gerencial: ¿Qué proceso requiere auditoría extraordinaria inmediata?

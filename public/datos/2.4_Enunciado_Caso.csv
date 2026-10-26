@@ -1,0 +1,11 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;2.4
+Título del Caso;Dashboard visual ejecutivo y reporte de distribución SIG
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;El Comité Directivo dispone de solo 5 minutos para evaluar el estado documental. Se requiere un informe gráfico ejecutivo de 1 página con tablas de frecuencias formuladas.
+2. Misión del Aprendiz;Construir 2 tablas de frecuencias con =CONTAR.SI() en Informe_Grafico y diseñar un Gráfico de Columnas (carga por proceso) y un Gráfico Circular (proporción de estados).
+Requerimiento 1;Frecuencias por Proceso: Calcular la cantidad de documentos por proceso con =CONTAR.SI().
+Requerimiento 2;Frecuencias por Estado: Calcular cantidad y % de participación por estado (Vigente, Por vencer, Vencido) con =CONTAR.SI().
+Requerimiento 3;Gráfico de Columnas: Representar la carga documental por proceso con títulos claros y etiquetas numéricas.
+Requerimiento 4;Gráfico Circular / Anillos: Representar la proporción de vigencias destacando el sector 'Vencido' en color rojo de alerta.
+Dificultad Clave / Regla Técnica;No se aceptan gráficos generados contando filas manualmente. Sus series deben estar enlazadas a las tablas formuladas con CONTAR.SI().

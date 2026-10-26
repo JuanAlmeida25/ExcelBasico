@@ -1,0 +1,13 @@
+﻿Código;Descripción del Riesgo;Proceso;Probabilidad (1-5);Impacto (1-5);Nivel de Riesgo (=P*I);Clasificación Severidad;Tipo de Control;Responsable;Acción Inmediata
+R-01;Uso de documentos obsoletos en producción;Producción;4;4;;;Listado maestro y retiro de copias obsoletas;Andrés Brito;
+R-02;Incumplimiento de requisitos legales ambientales;Gestión ambiental;3;5;;;Matriz legal con seguimiento trimestral;Laura Pimienta;
+R-03;Accidente por trabajo en alturas;Seguridad y salud en el trabajo;2;5;;;Permisos de trabajo y uso de EPP certificado;Daniela Epiayú;
+R-04;Pérdida de clientes por PQRS sin respuesta;Comercial y ventas;3;4;;;Seguimiento semanal de PQRS abiertas;Marelvis Ospino;
+R-05;Materia prima no conforme del proveedor;Compras;3;3;;;Evaluación y reevaluación de proveedores;Camilo Iguarán;
+R-06;Falla de equipos por falta de mantenimiento;Mantenimiento;4;3;;;Plan de mantenimiento preventivo;Andrés Brito;
+R-07;Rotación de personal clave;Talento humano;2;3;;;Plan de sucesión y entrenamiento cruzado;Yesenia Uriana;
+R-08;Retrasos en entregas por fallas logísticas;Logística y distribución;3;2;;;Rutas alternas y vehículo de respaldo;Kevin Fragozo;
+R-09;Pérdida de información del SIG;Gestión de la calidad;2;4;;;Copias de seguridad semanales en la nube;Laura Pimienta;
+R-10;Contaminación cruzada del producto;Producción;2;5;;;Instructivo de limpieza y desinfección;Andrés Brito;
+R-11;Hallazgos de auditoría sin cierre;Gestión de la calidad;4;2;;;Plan de acción con fechas y responsables;Laura Pimienta;
+R-12;Derrame de químicos de limpieza;Seguridad y salud en el trabajo;1;4;;;Kit antiderrames y capacitación;Daniela Epiayú;

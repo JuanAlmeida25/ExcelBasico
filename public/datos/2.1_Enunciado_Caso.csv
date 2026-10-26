@@ -1,0 +1,10 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;2.1
+Título del Caso;Control de vigencias y semáforo de criticidad documental
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;La auditoría externa de certificación ISO 9001 / ISO 14001 está próxima. Un solo documento crítico vencido generará una No Conformidad Mayor para Lácteos del Caribe.
+2. Misión del Aprendiz;Automatizar el control de vigencias de los 24 documentos del inventario evaluando fechas límite con =SI() anidada y determinando prioridad de acción.
+Requerimiento 1;Días Restantes: Restar la fecha de vencimiento menos la fecha fija de corte (Parametros!$B$2).
+Requerimiento 2;"Estado Documental: Usar =SI() anidado: si Días < 0 -> 'Vencido'; si Días <= 30 -> 'Por vencer'; de lo contrario -> 'Vigente'."
+Requerimiento 3;"Prioridad de Acción SIG: Si Estado = 'Vencido' Y Criticidad = 'Alta' -> 'URGENTE: Bloquear Proceso'; si está vencido o por vencer -> 'Atención Inmediata'; de lo contrario -> 'Al día'."
+Dificultad Clave / Regla Técnica;Los documentos vencidos tienen días negativos. El orden de las condiciones en =SI() debe evaluar primero < 0 para no clasificar incorrectamente los archivos vencidos.

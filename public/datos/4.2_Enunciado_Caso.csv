@@ -1,0 +1,12 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;4.2
+Título del Caso;Matriz cuantitativa de evaluación y control de riesgos SIG
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;Lácteos del Caribe enfrenta riesgos operativos y de SST: amoníaco en cavas, contaminación en pasteurización, alturas y sanciones ambientales.
+2. Misión del Aprendiz;Construir la matriz cuantitativa de riesgos con cálculo de severidad (P×I), clasificación por escala de severidad, semaforización de 4 colores y control obligatorio.
+Requerimiento 1;Validación de Escalas: Restringir Probabilidad e Impacto a números enteros del 1 al 5.
+Requerimiento 2;Severidad Inherente: Formular Nivel de Riesgo = Probabilidad * Impacto (1 a 25).
+Requerimiento 3;Clasificación Automática: Clasificar con SI anidado o BUSCARV aproximado apoyado en Escala_Severidad: 1-4 Bajo, 5-9 Medio, 10-16 Alto, 17-25 Extremo.
+Requerimiento 4;Semaforización 4 Colores: Verde (Bajo), Amarillo (Medio), Naranja (Alto) y Rojo (Extremo).
+Requerimiento 5;"Acción Inmediata: Si el riesgo es Alto o Extremo -> 'CONTROL PRIORITARIO REQUERIDO'; de lo contrario -> 'Monitoreo Periódico'."
+Dificultad Clave / Regla Técnica;Configura las 4 reglas condicionales ordenadamente para que los riesgos extremos (rojos) no queden ocultos por rangos menores.

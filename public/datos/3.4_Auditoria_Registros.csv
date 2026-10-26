@@ -1,0 +1,11 @@
+﻿Código;Documento;Proceso;Fecha Aprobación;Versión;Estado;Responsable
+PM-01-PR-01;Control de producción;Produccion;15/11/2024;3;Por vencer;Andrés Brito
+PE-02-MA-01;Manual del SIG;Gestión de la calidad;01/03/2024;4;vijente;Laura Pimienta
+PA-02-FO-01;Orden de compra;  Compras;05/05/2025;5;Vigente;Camilo Iguarán
+PM-02-PR-01;Atención de PQRS;Comercial;08/08/2024;3;Por vencer;Marelvis Ospino
+PA-04-IN-01;Trabajo en alturas;SST;20/10/2023;2;Vencido;Daniela Epiayú
+PM-03-PR-01;Despacho y entrega;Logística y distribución;22/05/2024;0;vencido;Kevin Fragozo
+PA-01-PR-01;Selección y contratación;Talento Humano;15/07/2024;4;Vencido;Yesenia Uriana
+PE-01-PO-01;Política del SIG;Direccionamiento estratégico;10/02/2030;3;Vigente;Rafael Mendoza
+PE-01-PL-1;Plan estratégico 2025-2028;Direccionamiento estratégico;15/01/2025;1;Por vencer;Rafael Mendoza
+PM-01-FO-01;Registro de temperatura;Producción;01/09/2025;5;Vigente;Andrés Brito
