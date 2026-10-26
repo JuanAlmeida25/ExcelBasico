@@ -95,7 +95,7 @@ onMounted(cargar)
         <button type="button" class="boton-secundario" @click="salir">Salir</button>
       </template>
       <template v-else>
-        <p><strong>Para responder, ingresa con tu cuenta o créala.</strong> Leer el foro sí lo puede hacer cualquiera.</p>
+        <p><strong>Para responder, ingresa con tu cuenta o créala.</strong></p>
         <CuentaAprendiz />
       </template>
     </div>
