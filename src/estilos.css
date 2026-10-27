@@ -613,6 +613,43 @@ kbd {
   text-decoration: none;
 }
 
+/* ---------- Word y normas: muestras de "así sí / así no" ---------- */
+.comparar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.comparar.solo { grid-template-columns: minmax(0, 1fr); }
+.muestra {
+  padding: 14px 16px;
+  font-size: 0.92rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-top: 4px solid #16a34a;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+.muestra-mal { border-top-color: #ef4444; }
+.muestra-etiqueta { display: block; margin-bottom: 8px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--texto-suave); }
+/* las muestras imitan la hoja de Word, por eso van en letra con serifa */
+.muestra p, .muestra td, .muestra th, .muestra small { font-family: 'Times New Roman', Georgia, serif; }
+.muestra-apa { text-indent: 1.27cm; line-height: 2; text-align: left; }
+.muestra-justificado { text-align: justify; line-height: 1.2; }
+.muestra-portada { position: relative; padding-top: 28px; text-align: center; line-height: 2; }
+.muestra-icontec { line-height: 1.4; }
+.muestra-icontec p + p { margin-top: 6px; }
+.muestra-num { position: absolute; top: 0; right: 0; font-family: 'Times New Roman', serif; }
+.muestra-centro { text-align: center; }
+.muestra-referencias p { line-height: 2; padding-left: 1.27cm; text-indent: -1.27cm; }
+.muestra-referencias .muestra-centro { padding-left: 0; text-indent: 0; }
+.muestra hr { margin: 12px 0 6px; width: 35%; border: none; border-top: 1px solid var(--texto-suave); }
+.muestra-tabla table { margin: 6px 0; border-collapse: collapse; width: 100%; }
+.muestra-tabla th, .muestra-tabla td { padding: 4px 10px; text-align: left; }
+.muestra-tabla thead tr { border-top: 1px solid var(--texto); border-bottom: 1px solid var(--texto); }
+.muestra-tabla tbody tr:last-child { border-bottom: 1px solid var(--texto); }
+.tabla-normas { overflow-x: auto; border: 1px solid var(--borde); border-radius: 10px; }
+.tabla-normas table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+.tabla-normas th { padding: 8px 12px; text-align: left; color: #fff; background: var(--color-nivel); }
+.tabla-normas td { padding: 8px 12px; border-top: 1px solid var(--borde); vertical-align: top; }
+.tabla-normas td:first-child { font-weight: 600; }
+.tabla-normas tbody tr:nth-child(even) { background: var(--fondo); }
+
 /* ---------- Mini hoja de Excel de los ejemplos ---------- */
 .mini-hoja { border: 1px solid #c8d1cc; border-radius: 10px; overflow: hidden; background: var(--superficie); }
 .mini-formula {
@@ -955,6 +992,7 @@ button:disabled { opacity: 0.6; cursor: wait; }
   .teoria-cuerpo { grid-template-columns: 1fr; }
   .teoria-indice { position: static; max-height: 320px; }
   .tema { padding: 20px; }
+  .comparar { grid-template-columns: minmax(0, 1fr); }
   .mapa-niveles { grid-template-columns: repeat(2, 1fr); }
   .criterio { grid-template-columns: 1fr auto; }
   .criterio-barra { grid-column: 1 / -1; grid-row: 2; }
@@ -989,7 +1027,7 @@ button:disabled { opacity: 0.6; cursor: wait; }
   .teoria-indice, .ver-teoria, .tema-practica, .tema-navegacion { display: none !important; }
   .teoria-cuerpo { display: block; }
   .tema { box-shadow: none; break-inside: auto; margin-bottom: 20px; }
-  .mini-hoja, .sintaxis-formula { break-inside: avoid; }
+  .mini-hoja, .sintaxis-formula, .muestra, .tabla-normas { break-inside: avoid; }
   .contenedor-panel { padding-top: 0; }
   .solo-impresion { display: block; }
   ol.solo-impresion { padding-left: 20px; }

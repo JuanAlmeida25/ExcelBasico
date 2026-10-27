@@ -11,10 +11,12 @@ import EntregableFinal from './componentes/EntregableFinal.vue'
 import RecomendacionesDidacticas from './componentes/RecomendacionesDidacticas.vue'
 import NotaFinal from './componentes/NotaFinal.vue'
 import TeoriaGuia from './componentes/TeoriaGuia.vue'
+import GuiaWord from './componentes/GuiaWord.vue'
 import ForoFase from './componentes/ForoFase.vue'
 import AccesoAdmin from './componentes/AccesoAdmin.vue'
 import PanelProfe from './componentes/PanelProfe.vue'
 import { temas } from './datos/teoria.js'
+import { secciones, temasWord } from './datos/word.js'
 import { forosPorFase } from './datos/foro.js'
 import { useSesion } from './composables/useSesion.js'
 import { useProgreso } from './composables/useProgreso.js'
@@ -50,6 +52,7 @@ const pestanas = computed(() => [
   }),
   { id: 'evaluacion', icono: '📋', etiqueta: 'Evaluación' },
   { id: 'recomendaciones', icono: '💡', etiqueta: 'Recomendaciones' },
+  { id: 'word', icono: '📝', etiqueta: 'Word y normas' },
   // la pestaña del profe solo se pinta con el modo admin activo
   ...(esAdmin.value ? [{ id: 'panel', icono: '👨‍🏫', etiqueta: 'Panel del Profe' }] : [])
 ])
@@ -59,6 +62,8 @@ const { activa, ancla } = usePestanaActiva([...pestanas.value.map((pestana) => p
 
 // #teoria-buscarv → 'buscarv'; si no hay tema en el link, la teoría arranca con el primero
 const temaEnLink = computed(() => (ancla.value?.startsWith('teoria-') ? ancla.value.slice('teoria-'.length) : null))
+// lo mismo para Word: #word-apa-citas → 'apa-citas'
+const temaWordEnLink = computed(() => (ancla.value?.startsWith('word-') ? ancla.value.slice('word-'.length) : null))
 
 // a qué pestaña lleva el botón "Siguiente" al final de cada fase
 function siguienteDe(fase) {
@@ -124,6 +129,10 @@ function reiniciarConPermiso() {
   <main v-show="activa === 'recomendaciones'" class="panel contenedor contenedor-panel">
     <RecomendacionesDidacticas :recomendaciones="recomendaciones" />
     <NotaFinal :texto="notaFinal" />
+  </main>
+
+  <main v-show="activa === 'word'" class="panel contenedor contenedor-panel">
+    <GuiaWord :secciones="secciones" :temas="temasWord" :tema-activo="temaWordEnLink" />
   </main>
 
   <main v-show="activa === 'panel'" class="panel panel-admin contenedor contenedor-panel">
