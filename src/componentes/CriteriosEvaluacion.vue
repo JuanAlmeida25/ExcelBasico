@@ -12,11 +12,13 @@ const pesoMaximo = computed(() => Math.max(...props.criterios.map((item) => item
 <template>
   <section class="seccion">
     <h2><span class="celda">F6</span> Criterios de evaluación</h2>
+    <p>Cada fase cierra con un problema que se resuelve en Excel y se sube al Drive. Así pesa cada uno en la nota final:</p>
     <ul class="criterios">
       <li v-for="item in criterios" :key="item.criterio" class="criterio">
         <div class="criterio-texto">
           <strong>{{ item.criterio }}</strong>
-          <span>{{ item.evidencia }}</span>
+          <a v-if="item.enlace" :href="item.enlace">{{ item.evidencia }} →</a>
+          <span v-else>{{ item.evidencia }}</span>
         </div>
         <div class="criterio-barra" aria-hidden="true">
           <div :style="{ width: (item.ponderacion / pesoMaximo) * 100 + '%' }"></div>

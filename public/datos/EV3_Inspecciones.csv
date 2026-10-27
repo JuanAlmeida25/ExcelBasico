@@ -1,0 +1,31 @@
+﻿ID;Fecha;Mes;Sede;Proceso;Tipo de inspección;Ítems evaluados;Ítems cumplidos;% Cumplimiento;Inspector
+INS-01;03/07/2026;Julio;Riohacha;Producción;Inocuidad;20;17;;Laura Pimienta
+INS-02;05/07/2026;Julio;Maicao;Logística y distribución;Seguridad;27;21;;Daniela Epiayú
+INS-03;07/07/2026;Julio;Valledupar;Seguridad y salud en el trabajo;Ambiental;34;31;;Andrés Brito
+INS-04;09/07/2026;Julio;Santa Marta;Mantenimiento;Inocuidad;26;21;;Laura Pimienta
+INS-05;11/07/2026;Julio;Riohacha;Logística y distribución;Seguridad;33;31;;Daniela Epiayú
+INS-06;13/07/2026;Julio;Maicao;Seguridad y salud en el trabajo;Ambiental;25;18;;Andrés Brito
+INS-07;15/07/2026;Julio;Valledupar;Mantenimiento;Inocuidad;32;28;;Laura Pimienta
+INS-08;17/07/2026;Julio;Santa Marta;Producción;Seguridad;24;19;;Daniela Epiayú
+INS-09;19/07/2026;Julio;Riohacha;Seguridad y salud en el trabajo;Ambiental;31;29;;Andrés Brito
+INS-10;21/07/2026;Julio;Maicao;Mantenimiento;Inocuidad;23;17;;Laura Pimienta
+INS-11;03/08/2026;Agosto;Valledupar;Producción;Seguridad;30;26;;Daniela Epiayú
+INS-12;05/08/2026;Agosto;Santa Marta;Logística y distribución;Ambiental;22;19;;Andrés Brito
+INS-13;07/08/2026;Agosto;Riohacha;Mantenimiento;Inocuidad;29;26;;Laura Pimienta
+INS-14;09/08/2026;Agosto;Maicao;Producción;Seguridad;21;17;;Daniela Epiayú
+INS-15;11/08/2026;Agosto;Valledupar;Logística y distribución;Ambiental;28;24;;Andrés Brito
+INS-16;13/08/2026;Agosto;Santa Marta;Seguridad y salud en el trabajo;Inocuidad;20;17;;Laura Pimienta
+INS-17;15/08/2026;Agosto;Riohacha;Producción;Seguridad;27;24;;Daniela Epiayú
+INS-18;17/08/2026;Agosto;Maicao;Logística y distribución;Ambiental;34;26;;Andrés Brito
+INS-19;19/08/2026;Agosto;Valledupar;Seguridad y salud en el trabajo;Inocuidad;26;21;;Laura Pimienta
+INS-20;21/08/2026;Agosto;Santa Marta;Mantenimiento;Seguridad;33;27;;Daniela Epiayú
+INS-21;03/09/2026;Septiembre;Riohacha;Logística y distribución;Ambiental;25;24;;Andrés Brito
+INS-22;05/09/2026;Septiembre;Maicao;Seguridad y salud en el trabajo;Inocuidad;32;24;;Laura Pimienta
+INS-23;07/09/2026;Septiembre;Valledupar;Mantenimiento;Seguridad;24;21;;Daniela Epiayú
+INS-24;09/09/2026;Septiembre;Santa Marta;Producción;Ambiental;31;25;;Andrés Brito
+INS-25;11/09/2026;Septiembre;Riohacha;Seguridad y salud en el trabajo;Inocuidad;23;21;;Laura Pimienta
+INS-26;13/09/2026;Septiembre;Maicao;Mantenimiento;Seguridad;30;22;;Daniela Epiayú
+INS-27;15/09/2026;Septiembre;Valledupar;Producción;Ambiental;22;19;;Andrés Brito
+INS-28;17/09/2026;Septiembre;Santa Marta;Logística y distribución;Inocuidad;29;23;;Laura Pimienta
+INS-29;19/09/2026;Septiembre;Riohacha;Mantenimiento;Seguridad;21;19;;Daniela Epiayú
+INS-30;21/09/2026;Septiembre;Maicao;Producción;Ambiental;28;22;;Andrés Brito

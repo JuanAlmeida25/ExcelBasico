@@ -1,0 +1,13 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;EV2
+Título del Caso;Seguimiento a hallazgos de la auditoría interna
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;La auditoría interna dejó 15 hallazgos abiertos en distintos procesos. La lista solo tiene códigos: nadie sabe de qué proceso es cada uno, quién responde, ni cuáles ya se vencieron. En un mes llega el auditor externo y lo primero que va a pedir es el estado de las acciones correctivas.
+2. Misión del Aprendiz;Completar la hoja Hallazgos cruzando la información con BUSCARV, calcular el estado y la prioridad de cada hallazgo con funciones lógicas, convertir la lista en tabla con filtros y presentar el resumen en un gráfico.
+Requerimiento 1;Cruce de información (25 puntos): En la columna Proceso trae el nombre del proceso desde la hoja Procesos y en la columna Responsable trae el nombre desde la hoja Responsables. Uno de los hallazgos tiene un ID de responsable que no existe: envuelve la fórmula para que muestre 'SIN ASIGNAR' en vez de #N/D.
+Requerimiento 2;"Estado del hallazgo (25 puntos): Con un SI anidado: si tiene Fecha de cierre → 'Cerrado'; si la Fecha de compromiso es anterior a la fecha de corte (Parametros!$B$2) → 'Vencido'; si faltan 15 días o menos (Parametros!$B$3) → 'Por vencer'; si no → 'En término'."
+Requerimiento 3;"Prioridad (15 puntos): Si el hallazgo es una 'No conformidad mayor' Y está 'Vencido' → 'Escalar a gerencia'; si solo está 'Vencido' → 'Atención inmediata'; en los demás casos → 'Seguimiento normal'."
+Requerimiento 4;Tabla y filtros (15 puntos): Convierte la lista en tabla, actívale la fila de totales y deja filtrados solo los hallazgos que no están cerrados. La fila de totales debe contar cuántos quedan visibles.
+Requerimiento 5;Resumen gráfico (20 puntos): En la hoja Resumen cuenta cuántos hallazgos hay en cada estado e inserta un gráfico de columnas con título, rótulos de datos y sin leyenda innecesaria.
+Dificultad Clave / Regla Técnica;El orden de las preguntas en el SI anidado importa: primero se pregunta si está cerrado. Si preguntas primero por la fecha, un hallazgo que se cerró a tiempo pero tiene fecha de compromiso vieja sale como 'Vencido'.
+Entrega;Guarda el libro como EV2_Apellido_Nombre.xlsx y súbelo al Drive.

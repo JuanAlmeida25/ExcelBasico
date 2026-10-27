@@ -7,17 +7,18 @@ import DatosGenerales from './componentes/DatosGenerales.vue'
 import MapaNiveles from './componentes/MapaNiveles.vue'
 import FaseActividades from './componentes/FaseActividades.vue'
 import CriteriosEvaluacion from './componentes/CriteriosEvaluacion.vue'
-import EntregableFinal from './componentes/EntregableFinal.vue'
 import RecomendacionesDidacticas from './componentes/RecomendacionesDidacticas.vue'
 import NotaFinal from './componentes/NotaFinal.vue'
 import TeoriaGuia from './componentes/TeoriaGuia.vue'
 import GuiaWord from './componentes/GuiaWord.vue'
 import ForoFase from './componentes/ForoFase.vue'
+import EvaluacionFase from './componentes/EvaluacionFase.vue'
 import AccesoAdmin from './componentes/AccesoAdmin.vue'
 import PanelProfe from './componentes/PanelProfe.vue'
 import { temas } from './datos/teoria.js'
 import { secciones, temasWord } from './datos/word.js'
 import { forosPorFase } from './datos/foro.js'
+import evaluaciones from './datos/evaluaciones.json'
 import { useSesion } from './composables/useSesion.js'
 import { useProgreso } from './composables/useProgreso.js'
 import { usePestanaActiva } from './composables/usePestanaActiva.js'
@@ -26,7 +27,6 @@ import {
   datosGenerales,
   fases,
   criterios,
-  entregable,
   recomendaciones,
   notaFinal
 } from './datos/guia.js'
@@ -118,12 +118,12 @@ function reiniciarConPermiso() {
       @alternar="alternar"
     >
       <ForoFase v-if="forosPorFase[fase.id]" :fase="fase.id" />
+      <EvaluacionFase v-if="evaluaciones[fase.id]" :fase="fase" :evaluacion="evaluaciones[fase.id]" />
     </FaseActividades>
   </main>
 
   <main v-show="activa === 'evaluacion'" class="panel contenedor contenedor-panel">
     <CriteriosEvaluacion :criterios="criterios" />
-    <EntregableFinal :entregable="entregable" />
   </main>
 
   <main v-show="activa === 'recomendaciones'" class="panel contenedor contenedor-panel">

@@ -1,0 +1,160 @@
+{
+  "1": {
+    "codigo": "EV1",
+    "archivo": "EV1_Plan_Capacitacion",
+    "titulo": "Presupuesto del plan de capacitación del SIG",
+    "situacion": "La gerencia de Lácteos del Caribe S.A.S. aprobó el plan de capacitación del SIG para el segundo semestre, pero nadie sabe cuánto va a costar. Además, hay capacitaciones sin responsable y otras cuya fecha ya pasó. La coordinadora SIG necesita el presupuesto listo para la reunión del lunes.",
+    "mision": "Organizar la hoja Plan_Capacitacion, calcular el costo de cada capacitación con referencias absolutas, armar el resumen del plan y dejar resaltadas las alertas con formato condicional.",
+    "requerimientos": [
+      {
+        "titulo": "Organización y formatos",
+        "detalle": "Dale formato a los encabezados de la tabla (fila 5): negrita, color de relleno y ajustar texto. Revisa que la Fecha programada tenga formato dd/mm/aaaa, y dale formato de moneda sin decimales a B2, B3 y a las columnas de costos (H, I y J).",
+        "herramientas": ["Ctrl + 1", "Formato de fecha", "Formato moneda"],
+        "puntos": 20
+      },
+      {
+        "titulo": "Costos con referencias absolutas",
+        "detalle": "Costo instructor (H) = Horas × valor de la hora (B2). Costo refrigerios (I) = Asistentes × valor del refrigerio (B3). Costo total (J) = Costo instructor + Costo refrigerios. Escribe la fórmula en la fila 6 y arrástrala hasta la 17: si no fijaste B2 y B3, los resultados se dañan.",
+        "herramientas": ["=E6*$B$2", "=F6*$B$3", "$B$2", "$B$3"],
+        "puntos": 30
+      },
+      {
+        "titulo": "Resumen del plan",
+        "detalle": "En las celdas de la columna B junto a cada etiqueta del resumen (filas 19 a 23) calcula: total de horas, total de asistentes, costo total del plan, costo promedio por capacitación y cantidad de capacitaciones.",
+        "herramientas": ["=SUMA()", "=PROMEDIO()", "=CONTAR()"],
+        "puntos": 25
+      },
+      {
+        "titulo": "Alertas con formato condicional",
+        "detalle": "Resalta en rojo las celdas vacías de la columna Responsable, en amarillo las capacitaciones con costo total mayor a $1.000.000 y en gris las fechas programadas anteriores a la fecha de corte (22/10/2026).",
+        "herramientas": ["Celdas en blanco", "Mayor que", "Es menor que"],
+        "puntos": 25
+      }
+    ],
+    "reglaTecnica": "Sin el signo $ en B2 y B3, al arrastrar la fórmula Excel corre la referencia a B3, B4, B5… y los costos de abajo salen en cero o en cualquier cosa. Revisa la última fila antes de entregar.",
+    "entrega": "EV1_Apellido_Nombre.xlsx"
+  },
+  "2": {
+    "codigo": "EV2",
+    "archivo": "EV2_Acciones_Correctivas",
+    "titulo": "Seguimiento a hallazgos de la auditoría interna",
+    "situacion": "La auditoría interna dejó 15 hallazgos abiertos en distintos procesos. La lista solo tiene códigos: nadie sabe de qué proceso es cada uno, quién responde, ni cuáles ya se vencieron. En un mes llega el auditor externo y lo primero que va a pedir es el estado de las acciones correctivas.",
+    "mision": "Completar la hoja Hallazgos cruzando la información con BUSCARV, calcular el estado y la prioridad de cada hallazgo con funciones lógicas, convertir la lista en tabla con filtros y presentar el resumen en un gráfico.",
+    "requerimientos": [
+      {
+        "titulo": "Cruce de información",
+        "detalle": "En la columna Proceso trae el nombre del proceso desde la hoja Procesos y en la columna Responsable trae el nombre desde la hoja Responsables. Uno de los hallazgos tiene un ID de responsable que no existe: envuelve la fórmula para que muestre 'SIN ASIGNAR' en vez de #N/D.",
+        "herramientas": ["=BUSCARV(;;;FALSO)", "=SI.ERROR()"],
+        "puntos": 25
+      },
+      {
+        "titulo": "Estado del hallazgo",
+        "detalle": "Con un SI anidado: si tiene Fecha de cierre → 'Cerrado'; si la Fecha de compromiso es anterior a la fecha de corte (Parametros!$B$2) → 'Vencido'; si faltan 15 días o menos (Parametros!$B$3) → 'Por vencer'; si no → 'En término'.",
+        "herramientas": ["=SI() anidado", "<>\"\"", "Parametros!$B$2"],
+        "puntos": 25
+      },
+      {
+        "titulo": "Prioridad",
+        "detalle": "Si el hallazgo es una 'No conformidad mayor' Y está 'Vencido' → 'Escalar a gerencia'; si solo está 'Vencido' → 'Atención inmediata'; en los demás casos → 'Seguimiento normal'.",
+        "herramientas": ["=SI()", "=Y()"],
+        "puntos": 15
+      },
+      {
+        "titulo": "Tabla y filtros",
+        "detalle": "Convierte la lista en tabla, actívale la fila de totales y deja filtrados solo los hallazgos que no están cerrados. La fila de totales debe contar cuántos quedan visibles.",
+        "herramientas": ["Ctrl + T", "Fila de totales", "=SUBTOTALES()"],
+        "puntos": 15
+      },
+      {
+        "titulo": "Resumen gráfico",
+        "detalle": "En la hoja Resumen cuenta cuántos hallazgos hay en cada estado e inserta un gráfico de columnas con título, rótulos de datos y sin leyenda innecesaria.",
+        "herramientas": ["=CONTAR.SI()", "Gráfico de columnas"],
+        "puntos": 20
+      }
+    ],
+    "reglaTecnica": "El orden de las preguntas en el SI anidado importa: primero se pregunta si está cerrado. Si preguntas primero por la fecha, un hallazgo que se cerró a tiempo pero tiene fecha de compromiso vieja sale como 'Vencido'.",
+    "entrega": "EV2_Apellido_Nombre.xlsx"
+  },
+  "3": {
+    "codigo": "EV3",
+    "archivo": "EV3_Inspecciones_Sedes",
+    "titulo": "Diagnóstico de las inspecciones en las sedes",
+    "situacion": "Lácteos del Caribe hizo 30 inspecciones de inocuidad, seguridad y ambiente entre julio y septiembre en sus sedes de Riohacha, Maicao, Valledupar y Santa Marta. La gerencia quiere saber qué sede y qué proceso están peor, y ya decidió que los registros nuevos no pueden seguir llegando con errores de digitación.",
+    "mision": "Calcular el cumplimiento de cada inspección, analizarlo con una tabla dinámica y funciones condicionales, clasificar las sedes con un semáforo y blindar la hoja de registro con validación de datos.",
+    "requerimientos": [
+      {
+        "titulo": "Cumplimiento por inspección",
+        "detalle": "En la hoja Inspecciones calcula el % de cumplimiento = Ítems cumplidos / Ítems evaluados, con formato de porcentaje.",
+        "herramientas": ["=H2/G2", "Formato %"],
+        "puntos": 10
+      },
+      {
+        "titulo": "Tabla dinámica",
+        "detalle": "En una hoja nueva llamada Dinamica arma una tabla dinámica con Sede y Proceso en filas y el promedio del % de cumplimiento en valores. Agrega una segmentación de datos por Mes.",
+        "herramientas": ["Tabla dinámica", "Promedio", "Segmentación de datos"],
+        "puntos": 25
+      },
+      {
+        "titulo": "Estadísticas por sede",
+        "detalle": "En la hoja Resumen_Sedes calcula para cada sede: número de inspecciones, promedio de cumplimiento e inspecciones con cumplimiento menor a 80%. Barranquilla todavía no tiene inspecciones: el promedio debe mostrar 'Sin datos' y no #¡DIV/0!.",
+        "herramientas": ["=CONTAR.SI()", "=PROMEDIO.SI()", "=CONTAR.SI.CONJUNTO()", "=SI.ERROR()"],
+        "puntos": 25
+      },
+      {
+        "titulo": "Semáforo de sedes",
+        "detalle": "Brecha = Promedio − Meta (85%). Estado: si la brecha es ≥ 0 → 'Cumple'; si es ≥ −5 puntos → 'En alerta'; si no → 'Crítico'. Pinta el estado con formato condicional verde, amarillo y rojo.",
+        "herramientas": ["=SI() anidado", "Formato condicional"],
+        "puntos": 20
+      },
+      {
+        "titulo": "Validación de datos",
+        "detalle": "En la hoja Registro_Nuevo pon listas desplegables en Sede, Proceso y Tipo (tomadas de la hoja Listas), y en Ítems cumplidos permite solo números enteros entre 0 y los Ítems evaluados de esa fila. Luego usa 'Rodear con un círculo datos no válidos' y corrige lo que salga marcado.",
+        "herramientas": ["Validación de datos", "Lista", "Número entero", "Rodear datos no válidos"],
+        "puntos": 20
+      }
+    ],
+    "reglaTecnica": "La tabla dinámica no se actualiza sola: si corriges un dato en Inspecciones, haz clic derecho sobre la dinámica > Actualizar. Y la brecha se compara en puntos porcentuales: −5 puntos es −0,05 si trabajas con porcentajes.",
+    "entrega": "EV3_Apellido_Nombre.xlsx"
+  },
+  "4": {
+    "codigo": "EV4",
+    "archivo": "EV4_Planta_Fonseca",
+    "titulo": "Matrices del SIG para la nueva planta de Fonseca",
+    "situacion": "Lácteos del Caribe va a abrir una planta de quesos en Fonseca, La Guajira. Antes de arrancar, la gerencia exige tres cosas: conocer los riesgos del proyecto, dejar claro quién hace qué, y un cuadro de mando con los indicadores de los primeros tres meses de montaje.",
+    "mision": "Construir la matriz de riesgos del proyecto, corregir y controlar la matriz RACI, armar el cuadro de mando de indicadores y escribir las conclusiones para la gerencia.",
+    "requerimientos": [
+      {
+        "titulo": "Matriz de riesgos",
+        "detalle": "En Riesgos_Proyecto calcula Nivel = Probabilidad × Impacto, la Clasificación según la hoja Escala_Severidad (Bajo 1-4, Medio 5-9, Alto 10-16, Extremo 17-25) y la Acción de control con BUSCARV aproximado sobre esa misma escala.",
+        "herramientas": ["=D2*E2", "=SI() anidado", "=BUSCARV(;;;VERDADERO)"],
+        "puntos": 20
+      },
+      {
+        "titulo": "Mapa de calor y conteo",
+        "detalle": "Pinta la Clasificación con formato condicional de cuatro colores (verde, amarillo, naranja y rojo) y en Resumen_Riesgos cuenta cuántos riesgos hay en cada nivel.",
+        "herramientas": ["Formato condicional", "=CONTAR.SI()"],
+        "puntos": 15
+      },
+      {
+        "titulo": "Matriz RACI controlada",
+        "detalle": "La matriz viene con errores a propósito. Pon validación de datos para que cada celda solo acepte R, A, C o I. En la columna Control escribe una fórmula que diga 'OK' si la actividad tiene exactamente una A y por lo menos una R; si no, 'Revisar'. Corrige las actividades que salgan en 'Revisar'.",
+        "herramientas": ["Validación de datos", "=CONTAR.SI(rango;\"A\")", "=SI(Y())"],
+        "puntos": 20
+      },
+      {
+        "titulo": "Cuadro de mando",
+        "detalle": "En Indicadores_Proyecto calcula % Cumplimiento = T3 / Meta, la Tendencia comparando T3 con T2 (▲ sube, ▼ baja, ► igual) y el semáforo según Criterios_Semaforo. En la hoja Cuadro_Mando calcula el promedio general de cumplimiento y cuántos indicadores quedaron en verde y en rojo, e inserta un gráfico de columnas Meta vs. T3.",
+        "herramientas": ["=G2/D2", "=SI() anidado", "=PROMEDIO()", "=CONTAR.SI()", "Gráfico de columnas"],
+        "puntos": 30
+      },
+      {
+        "titulo": "Conclusiones para la gerencia",
+        "detalle": "En la hoja Conclusiones escribe tres decisiones concretas que tomarías con base en tus matrices (por ejemplo, qué riesgo atender primero y por qué). Cada conclusión debe nombrar el dato que la respalda.",
+        "herramientas": ["Análisis", "Redacción"],
+        "puntos": 15
+      }
+    ],
+    "reglaTecnica": "BUSCARV con VERDADERO (coincidencia aproximada) solo funciona si la primera columna de la escala está ordenada de menor a mayor: busca el valor más grande que no se pase del nivel. En la RACI, el control debe revisar la fila completa de roles, no una sola celda.",
+    "entrega": "EV4_Apellido_Nombre.xlsx"
+  }
+}

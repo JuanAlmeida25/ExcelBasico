@@ -728,6 +728,247 @@ def actividades():
     }
 
 
+# ---------------------------------------------------------------------------
+# Evaluaciones por fase
+# ---------------------------------------------------------------------------
+
+# el texto del problema vive en el JSON que también lee la página: así el Excel y la web dicen lo mismo
+EVALUACIONES = json.loads((RAIZ / "src" / "datos" / "evaluaciones.json").read_text(encoding="utf-8"))
+
+# (código, tema, proceso, fecha, horas, asistentes, responsable) — dos sin responsable a propósito
+CAPACITACIONES = [
+    ("CAP-01", "Interpretación de la ISO 9001:2015", "Gestión de la calidad", "2026-08-05", 16, 25, "Laura Pimienta"),
+    ("CAP-02", "Formación de auditores internos", "Gestión de la calidad", "2026-09-10", 24, 12, "Laura Pimienta"),
+    ("CAP-03", "Buenas prácticas de manufactura", "Producción", "2026-10-15", 8, 40, "Andrés Brito"),
+    ("CAP-04", "Trabajo seguro en alturas", "Seguridad y salud en el trabajo", "2026-11-03", 20, 15, "Daniela Epiayú"),
+    ("CAP-05", "Manejo de residuos y reciclaje", "Gestión ambiental", "2026-11-12", 6, 35, ""),
+    ("CAP-06", "Servicio al cliente y PQRS", "Comercial y ventas", "2026-09-24", 8, 18, "Marelvis Ospino"),
+    ("CAP-07", "Plan de emergencias y evacuación", "Seguridad y salud en el trabajo", "2026-11-20", 4, 60, "Daniela Epiayú"),
+    ("CAP-08", "Control de documentos del SIG", "Gestión de la calidad", "2026-10-28", 6, 20, "Laura Pimienta"),
+    ("CAP-09", "Mantenimiento autónomo de equipos", "Mantenimiento", "2026-12-02", 12, 10, ""),
+    ("CAP-10", "Conducción preventiva", "Logística y distribución", "2026-11-25", 10, 14, "Kevin Fragozo"),
+    ("CAP-11", "Evaluación de proveedores", "Compras", "2026-12-09", 4, 6, "Camilo Iguarán"),
+    ("CAP-12", "Liderazgo para el SIG", "Direccionamiento estratégico", "2026-12-15", 16, 30, "Rafael Mendoza"),
+]
+
+# (id, detectado, proceso, tipo, descripción, responsable, compromiso, cierre)
+# H-05 trae un responsable que no existe (R09) para el SI.ERROR, y H-03 se cerró aunque su compromiso ya pasó
+HALLAZGOS = [
+    ("H-01", "2026-07-14", "PM-01", "No conformidad mayor", "Registros de temperatura incompletos en pasteurización", "R02", "2026-09-30", None),
+    ("H-02", "2026-07-14", "PE-02", "No conformidad menor", "Listado maestro de documentos desactualizado", "R01", "2026-08-31", "2026-08-25"),
+    ("H-03", "2026-07-15", "PA-04", "No conformidad mayor", "Trabajos en alturas sin permiso firmado", "R07", "2026-08-15", "2026-08-10"),
+    ("H-04", "2026-07-15", "PM-02", "Observación", "PQRS respondidas fuera de término", "R03", "2026-11-30", None),
+    ("H-05", "2026-07-16", "PA-03", "No conformidad menor", "Equipos sin hoja de vida actualizada", "R09", "2026-10-31", None),
+    ("H-06", "2026-07-16", "PA-02", "No conformidad menor", "Proveedores críticos sin reevaluación", "R06", "2026-10-10", None),
+    ("H-07", "2026-07-17", "PM-03", "Observación", "Listas de chequeo de vehículos sin firma", "R04", "2026-11-15", None),
+    ("H-08", "2026-07-17", "PA-01", "No conformidad menor", "Inducciones sin registro de asistencia", "R05", "2026-11-05", None),
+    ("H-09", "2026-07-18", "PE-01", "Observación", "Revisión por la dirección sin análisis de riesgos", "R08", "2026-12-15", None),
+    ("H-10", "2026-07-18", "PM-01", "No conformidad mayor", "Producto no conforme sin tratamiento documentado", "R02", "2026-10-30", None),
+    ("H-11", "2026-07-21", "PA-05", "No conformidad mayor", "Vertimientos sin permiso vigente", "R01", "2026-09-15", None),
+    ("H-12", "2026-07-21", "PA-04", "Observación", "Extintores con inspección vencida", "R07", "2026-08-30", "2026-09-05"),
+    ("H-13", "2026-07-22", "PE-02", "No conformidad menor", "Acciones correctivas sin análisis de causa", "R01", "2026-10-20", None),
+    ("H-14", "2026-07-22", "PM-02", "No conformidad menor", "Encuesta de satisfacción con muestra insuficiente", "R03", "2026-11-28", None),
+    ("H-15", "2026-07-23", "PA-01", "Observación", "Perfiles de cargo desactualizados", "R05", "2026-10-25", None),
+]
+
+SEDES = ["Riohacha", "Maicao", "Valledupar", "Santa Marta"]
+# Barranquilla está en las listas pero sin inspecciones, para que PROMEDIO.SI reviente y toque el SI.ERROR
+SEDES_LISTA = SEDES + ["Barranquilla"]
+PROCESOS_INSPECCION = ["Producción", "Logística y distribución", "Seguridad y salud en el trabajo", "Mantenimiento"]
+TIPOS_INSPECCION = ["Inocuidad", "Seguridad", "Ambiental"]
+MESES = [("Julio", 7), ("Agosto", 8), ("Septiembre", 9)]
+# qué tan juiciosa es cada sede, para que el semáforo no salga todo del mismo color
+CUMPLIMIENTO_BASE = {"Riohacha": 0.91, "Maicao": 0.76, "Valledupar": 0.86, "Santa Marta": 0.82}
+INSPECTORES = ["Laura Pimienta", "Daniela Epiayú", "Andrés Brito"]
+
+# (código, riesgo, proceso, probabilidad, impacto)
+RIESGOS_FONSECA = [
+    ("RP-01", "Retraso en el permiso ambiental de vertimientos", "Gestión ambiental", 4, 5),
+    ("RP-02", "Cortes de energía en la zona", "Producción", 4, 4),
+    ("RP-03", "Falta de mano de obra calificada en quesería", "Talento humano", 3, 3),
+    ("RP-04", "Leche cruda con calidad variable de proveedores locales", "Compras", 4, 3),
+    ("RP-05", "Accidentes durante el montaje de equipos", "Seguridad y salud en el trabajo", 3, 5),
+    ("RP-06", "Vías en mal estado para la distribución", "Logística y distribución", 3, 2),
+    ("RP-07", "Sobrecosto en la obra civil", "Direccionamiento estratégico", 2, 4),
+    ("RP-08", "Inundación por temporada de lluvias", "Producción", 2, 5),
+    ("RP-09", "Documentación del SIG incompleta al arrancar", "Gestión de la calidad", 5, 4),
+    ("RP-10", "Robo de herramientas en la obra", "Logística y distribución", 2, 2),
+    ("RP-11", "Ruido que moleste a la comunidad vecina", "Gestión ambiental", 1, 3),
+]
+
+ESCALA_SEVERIDAD = [
+    (1, 4, "Bajo", "Verde", "Monitoreo periódico"),
+    (5, 9, "Medio", "Amarillo", "Procedimiento estándar y seguimiento"),
+    (10, 16, "Alto", "Naranja", "Control preventivo inmediato y responsable"),
+    (17, 25, "Extremo", "Rojo", "Control prioritario urgente y plan de contingencia"),
+]
+
+ROLES_FONSECA = ["Gerente general", "Coordinadora SIG", "Líder de producción", "Contratista de obra", "Profesional SST"]
+# tres errores a propósito: dos A en la licencia, ninguna A en la inspección y una X en proveedores
+RACI_FONSECA = [
+    ("Aprobar el presupuesto del proyecto", "A", "R", "C", "I", "I"),
+    ("Tramitar el permiso ambiental", "A", "A", "I", None, "C"),
+    ("Elaborar el plan de montaje", "I", "C", "A", "R", "C"),
+    ("Documentar los procedimientos de la planta", "I", "A", "R", None, "C"),
+    ("Inspeccionar la seguridad en la obra", "I", "I", "C", "R", "R"),
+    ("Seleccionar proveedores de leche", "A", "R", "C", None, "X"),
+    ("Capacitar al personal nuevo", "I", "A", "R", None, "R"),
+    ("Medir los indicadores del proyecto", "C", "A", "R", "I", "R"),
+]
+
+# (código, indicador, proceso, meta, T1, T2, T3)
+INDICADORES_FONSECA = [
+    ("IP-01", "Avance de la obra civil (%)", "Direccionamiento estratégico", 100, 30, 62, 95),
+    ("IP-02", "Equipos instalados (%)", "Producción", 100, 20, 55, 80),
+    ("IP-03", "Personal contratado con inducción (%)", "Talento humano", 90, 40, 70, 92),
+    ("IP-04", "Documentos del SIG aprobados (%)", "Gestión de la calidad", 95, 35, 60, 58),
+    ("IP-05", "Proveedores de leche evaluados (%)", "Compras", 100, 50, 85, 100),
+    ("IP-06", "Días sin accidentes en la obra (%)", "Seguridad y salud en el trabajo", 100, 100, 96, 96),
+]
+
+
+def hoja_enunciado_evaluacion(evaluacion):
+    requerimientos = [f"{r['titulo']} ({r['puntos']} puntos): {r['detalle']}" for r in evaluacion["requerimientos"]]
+    nombre, encabezados, filas = hoja_enunciado(
+        evaluacion["codigo"], evaluacion["titulo"], evaluacion["situacion"],
+        evaluacion["mision"], requerimientos, evaluacion["reglaTecnica"],
+    )
+    return nombre, encabezados, filas + [("Entrega", f"Guarda el libro como {evaluacion['entrega']} y súbelo al Drive.")]
+
+
+def inspecciones():
+    filas = []
+    for i in range(30):
+        mes, numero_mes = MESES[i // 10]
+        sede = SEDES[i % 4]
+        evaluados = 20 + (i * 7) % 15
+        # un vaivén de -4 a +4 puntos para que no todas las de la misma sede saquen igual
+        tasa = CUMPLIMIENTO_BASE[sede] + ((i * 13) % 9 - 4) / 100
+        cumplidos = min(evaluados, round(evaluados * tasa))
+        filas.append((
+            f"INS-{i + 1:02d}", date(2026, numero_mes, 3 + (i % 10) * 2), mes, sede,
+            PROCESOS_INSPECCION[(i // 4 + i) % 4], TIPOS_INSPECCION[i % 3],
+            evaluados, cumplidos, None, INSPECTORES[i % 3],
+        ))
+    return filas
+
+
+def columnas_parejas(*listas):
+    # varias listas de distinto largo lado a lado, rellenando con vacío
+    largo = max(len(lista) for lista in listas)
+    return [tuple(lista[i] if i < len(lista) else None for lista in listas) for i in range(largo)]
+
+
+def evaluaciones():
+    ev = EVALUACIONES
+    return {
+        "EV1": {
+            "archivo": ev["1"]["archivo"],
+            "nota": "Problema de la Fase 1: presupuesto del plan de capacitación con formatos, referencias absolutas, resumen y formato condicional.",
+            "hojas": [
+                hoja_enunciado_evaluacion(ev["1"]),
+                ("Plan_Capacitacion", ["Parámetro", "Valor"] + [""] * 8,
+                 [
+                     ("Valor hora del instructor ($)", 45000) + tuple(vacio(8)),
+                     ("Refrigerio por asistente ($)", 8500) + tuple(vacio(8)),
+                     tuple(vacio(10)),
+                     ("Código", "Tema", "Proceso", "Fecha programada", "Horas", "Asistentes", "Responsable",
+                      "Costo instructor ($)", "Costo refrigerios ($)", "Costo total ($)"),
+                 ] + [
+                     (c, t, p, date.fromisoformat(f), h, a, r, None, None, None)
+                     for c, t, p, f, h, a, r in CAPACITACIONES
+                 ] + [
+                     tuple(vacio(10)),
+                     ("Total de horas", None) + tuple(vacio(8)),
+                     ("Total de asistentes", None) + tuple(vacio(8)),
+                     ("Costo total del plan ($)", None) + tuple(vacio(8)),
+                     ("Costo promedio por capacitación ($)", None) + tuple(vacio(8)),
+                     ("Cantidad de capacitaciones", None) + tuple(vacio(8)),
+                 ]),
+            ],
+        },
+        "EV2": {
+            "archivo": ev["2"]["archivo"],
+            "nota": "Problema de la Fase 2: seguimiento a hallazgos de auditoría con BUSCARV, SI anidado, tablas, filtros y gráfico.",
+            "hojas": [
+                hoja_enunciado_evaluacion(ev["2"]),
+                ("Parametros", ["Parámetro", "Valor"],
+                 [("Fecha de corte", FECHA_CORTE), ("Días para considerar 'Por vencer'", 15)]),
+                ("Hallazgos",
+                 ["ID", "Fecha de detección", "Código proceso", "Tipo", "Descripción", "ID responsable",
+                  "Fecha de compromiso", "Fecha de cierre", "Proceso", "Responsable", "Estado", "Prioridad"],
+                 [(i, date.fromisoformat(det), p, t, desc, r, date.fromisoformat(comp),
+                   date.fromisoformat(cierre) if cierre else None, None, None, None, None)
+                  for i, det, p, t, desc, r, comp, cierre in HALLAZGOS]),
+                hoja_procesos(),
+                hoja_responsables(),
+                ("Resumen", ["Estado", "Cantidad"],
+                 [("Cerrado", None), ("Vencido", None), ("Por vencer", None), ("En término", None), ("Total", None)]),
+            ],
+        },
+        "EV3": {
+            "archivo": ev["3"]["archivo"],
+            "nota": "Problema de la Fase 3: diagnóstico de inspecciones con tabla dinámica, funciones condicionales, semáforo y validación de datos.",
+            "hojas": [
+                hoja_enunciado_evaluacion(ev["3"]),
+                ("Inspecciones", ["ID", "Fecha", "Mes", "Sede", "Proceso", "Tipo de inspección",
+                                  "Ítems evaluados", "Ítems cumplidos", "% Cumplimiento", "Inspector"],
+                 inspecciones()),
+                ("Resumen_Sedes", ["Sede", "Inspecciones", "Promedio de cumplimiento", "Inspecciones < 80%",
+                                   "Meta", "Brecha", "Estado"],
+                 [(s, None, None, None, 0.85, None, None) for s in SEDES_LISTA]),
+                ("Listas", ["Sedes", "Procesos", "Tipos"],
+                 columnas_parejas(SEDES_LISTA, PROCESOS_INSPECCION, TIPOS_INSPECCION)),
+                # cinco errores de digitación esperando a que la validación los encierre en un círculo
+                ("Registro_Nuevo", ["ID", "Fecha", "Mes", "Sede", "Proceso", "Tipo de inspección",
+                                    "Ítems evaluados", "Ítems cumplidos", "Inspector"],
+                 [
+                     ("INS-31", date(2026, 10, 2), "Octubre", "Rioacha", "Producción", "Inocuidad", 25, 22, "Laura Pimienta"),
+                     ("INS-32", date(2026, 10, 5), "Octubre", "Maicao", "Mantenimiento", "Seguridad", 25, 28, "Andrés Brito"),
+                     ("INS-33", date(2026, 10, 7), "Octubre", "Valledupar", "Produccion", "Ambiental", 30, 27, "Daniela Epiayú"),
+                     ("INS-34", date(2026, 10, 9), "Octubre", "Santa Marta", "Logística y distribución", "Seguridad industrial", 22, 18, "Laura Pimienta"),
+                     ("INS-35", date(2026, 10, 14), "Octubre", "Riohacha", "Seguridad y salud en el trabajo", "Seguridad", 20, 19.5, "Daniela Epiayú"),
+                     ("INS-36", date(2026, 10, 16), "Octubre", "Barranquilla", "Producción", "Inocuidad", 24, 21, "Andrés Brito"),
+                 ]),
+            ],
+        },
+        "EV4": {
+            "archivo": ev["4"]["archivo"],
+            "nota": "Problema de la Fase 4: matriz de riesgos, RACI con control y cuadro de mando de la nueva planta de Fonseca.",
+            "hojas": [
+                hoja_enunciado_evaluacion(ev["4"]),
+                ("Escala_Severidad", ["Rango Mínimo", "Rango Máximo", "Nivel Cualitativo", "Color Asociado", "Acción de Control"],
+                 ESCALA_SEVERIDAD),
+                ("Riesgos_Proyecto", ["Código", "Riesgo", "Proceso", "Probabilidad (1-5)", "Impacto (1-5)",
+                                      "Nivel", "Clasificación", "Acción de control"],
+                 [r + (None, None, None) for r in RIESGOS_FONSECA]),
+                ("Resumen_Riesgos", ["Nivel", "Cantidad"], [(nivel, None) for _, _, nivel, _, _ in ESCALA_SEVERIDAD]),
+                ("Leyenda_RACI", ["Letra", "Rol RACI", "Qué significa"],
+                 [
+                     ("R", "Responsable", "Ejecuta la actividad"),
+                     ("A", "Aprobador", "Aprueba y responde por el resultado (solo uno por actividad)"),
+                     ("C", "Consultado", "Se le pide opinión antes de decidir"),
+                     ("I", "Informado", "Se le avisa del resultado"),
+                 ]),
+                ("Matriz_RACI", ["Actividad"] + ROLES_FONSECA + ["Control"], [fila + (None,) for fila in RACI_FONSECA]),
+                ("Criterios_Semaforo", ["Rango Cumplimiento", "Color Semáforo", "Significado Gerencial"],
+                 [
+                     ("≥ 100%", "Verde", "Meta superada o cumplida a cabalidad"),
+                     ("90% a 99.9%", "Amarillo", "Desempeño cercano a la meta (en tolerancia)"),
+                     ("< 90%", "Rojo", "Desempeño crítico (incumplimiento de meta)"),
+                 ]),
+                ("Indicadores_Proyecto", ["Código", "Indicador", "Proceso", "Meta", "T1", "T2", "T3",
+                                          "% Cumplimiento", "Tendencia", "Semáforo"],
+                 [i + (None, None, None) for i in INDICADORES_FONSECA]),
+                ("Cuadro_Mando", ["Dato", "Valor"],
+                 [("Promedio general de cumplimiento", None), ("Indicadores en verde", None), ("Indicadores en rojo", None)]),
+                ("Conclusiones", ["N°", "Decisión para la gerencia", "Dato que la respalda"],
+                 [(n, None, None) for n in (1, 2, 3)]),
+            ],
+        },
+    }
+
+
 def main():
     CARPETA_SALIDA.mkdir(parents=True, exist_ok=True)
     for viejo in CARPETA_SALIDA.glob("*"):
@@ -735,7 +976,7 @@ def main():
             viejo.unlink()
 
     indice = {}
-    for codigo, actividad in actividades().items():
+    for codigo, actividad in {**actividades(), **evaluaciones()}.items():
         nombre_xlsx = f"{actividad['archivo']}.xlsx"
         escribir_xlsx(CARPETA_SALIDA / nombre_xlsx, actividad["hojas"])
 
@@ -748,7 +989,7 @@ def main():
         indice[codigo] = {"xlsx": nombre_xlsx, "csv": csvs, "nota": actividad["nota"]}
 
     INDICE.write_text(json.dumps(indice, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Listo: {len(indice)} actividades, archivos en {CARPETA_SALIDA.relative_to(RAIZ)}")
+    print(f"Listo: {len(indice)} actividades y evaluaciones, archivos en {CARPETA_SALIDA.relative_to(RAIZ)}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,13 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;EV4
+Título del Caso;Matrices del SIG para la nueva planta de Fonseca
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;Lácteos del Caribe va a abrir una planta de quesos en Fonseca, La Guajira. Antes de arrancar, la gerencia exige tres cosas: conocer los riesgos del proyecto, dejar claro quién hace qué, y un cuadro de mando con los indicadores de los primeros tres meses de montaje.
+2. Misión del Aprendiz;Construir la matriz de riesgos del proyecto, corregir y controlar la matriz RACI, armar el cuadro de mando de indicadores y escribir las conclusiones para la gerencia.
+Requerimiento 1;Matriz de riesgos (20 puntos): En Riesgos_Proyecto calcula Nivel = Probabilidad × Impacto, la Clasificación según la hoja Escala_Severidad (Bajo 1-4, Medio 5-9, Alto 10-16, Extremo 17-25) y la Acción de control con BUSCARV aproximado sobre esa misma escala.
+Requerimiento 2;Mapa de calor y conteo (15 puntos): Pinta la Clasificación con formato condicional de cuatro colores (verde, amarillo, naranja y rojo) y en Resumen_Riesgos cuenta cuántos riesgos hay en cada nivel.
+Requerimiento 3;"Matriz RACI controlada (20 puntos): La matriz viene con errores a propósito. Pon validación de datos para que cada celda solo acepte R, A, C o I. En la columna Control escribe una fórmula que diga 'OK' si la actividad tiene exactamente una A y por lo menos una R; si no, 'Revisar'. Corrige las actividades que salgan en 'Revisar'."
+Requerimiento 4;Cuadro de mando (30 puntos): En Indicadores_Proyecto calcula % Cumplimiento = T3 / Meta, la Tendencia comparando T3 con T2 (▲ sube, ▼ baja, ► igual) y el semáforo según Criterios_Semaforo. En la hoja Cuadro_Mando calcula el promedio general de cumplimiento y cuántos indicadores quedaron en verde y en rojo, e inserta un gráfico de columnas Meta vs. T3.
+Requerimiento 5;Conclusiones para la gerencia (15 puntos): En la hoja Conclusiones escribe tres decisiones concretas que tomarías con base en tus matrices (por ejemplo, qué riesgo atender primero y por qué). Cada conclusión debe nombrar el dato que la respalda.
+Dificultad Clave / Regla Técnica;BUSCARV con VERDADERO (coincidencia aproximada) solo funciona si la primera columna de la escala está ordenada de menor a mayor: busca el valor más grande que no se pase del nivel. En la RACI, el control debe revisar la fila completa de roles, no una sola celda.
+Entrega;Guarda el libro como EV4_Apellido_Nombre.xlsx y súbelo al Drive.

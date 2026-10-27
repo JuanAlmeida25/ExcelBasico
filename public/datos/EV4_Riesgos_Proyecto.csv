@@ -1,0 +1,12 @@
+﻿Código;Riesgo;Proceso;Probabilidad (1-5);Impacto (1-5);Nivel;Clasificación;Acción de control
+RP-01;Retraso en el permiso ambiental de vertimientos;Gestión ambiental;4;5;;;
+RP-02;Cortes de energía en la zona;Producción;4;4;;;
+RP-03;Falta de mano de obra calificada en quesería;Talento humano;3;3;;;
+RP-04;Leche cruda con calidad variable de proveedores locales;Compras;4;3;;;
+RP-05;Accidentes durante el montaje de equipos;Seguridad y salud en el trabajo;3;5;;;
+RP-06;Vías en mal estado para la distribución;Logística y distribución;3;2;;;
+RP-07;Sobrecosto en la obra civil;Direccionamiento estratégico;2;4;;;
+RP-08;Inundación por temporada de lluvias;Producción;2;5;;;
+RP-09;Documentación del SIG incompleta al arrancar;Gestión de la calidad;5;4;;;
+RP-10;Robo de herramientas en la obra;Logística y distribución;2;2;;;
+RP-11;Ruido que moleste a la comunidad vecina;Gestión ambiental;1;3;;;

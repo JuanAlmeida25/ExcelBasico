@@ -1,0 +1,16 @@
+﻿ID;Fecha de detección;Código proceso;Tipo;Descripción;ID responsable;Fecha de compromiso;Fecha de cierre;Proceso;Responsable;Estado;Prioridad
+H-01;14/07/2026;PM-01;No conformidad mayor;Registros de temperatura incompletos en pasteurización;R02;30/09/2026;;;;;
+H-02;14/07/2026;PE-02;No conformidad menor;Listado maestro de documentos desactualizado;R01;31/08/2026;25/08/2026;;;;
+H-03;15/07/2026;PA-04;No conformidad mayor;Trabajos en alturas sin permiso firmado;R07;15/08/2026;10/08/2026;;;;
+H-04;15/07/2026;PM-02;Observación;PQRS respondidas fuera de término;R03;30/11/2026;;;;;
+H-05;16/07/2026;PA-03;No conformidad menor;Equipos sin hoja de vida actualizada;R09;31/10/2026;;;;;
+H-06;16/07/2026;PA-02;No conformidad menor;Proveedores críticos sin reevaluación;R06;10/10/2026;;;;;
+H-07;17/07/2026;PM-03;Observación;Listas de chequeo de vehículos sin firma;R04;15/11/2026;;;;;
+H-08;17/07/2026;PA-01;No conformidad menor;Inducciones sin registro de asistencia;R05;05/11/2026;;;;;
+H-09;18/07/2026;PE-01;Observación;Revisión por la dirección sin análisis de riesgos;R08;15/12/2026;;;;;
+H-10;18/07/2026;PM-01;No conformidad mayor;Producto no conforme sin tratamiento documentado;R02;30/10/2026;;;;;
+H-11;21/07/2026;PA-05;No conformidad mayor;Vertimientos sin permiso vigente;R01;15/09/2026;;;;;
+H-12;21/07/2026;PA-04;Observación;Extintores con inspección vencida;R07;30/08/2026;05/09/2026;;;;
+H-13;22/07/2026;PE-02;No conformidad menor;Acciones correctivas sin análisis de causa;R01;20/10/2026;;;;;
+H-14;22/07/2026;PM-02;No conformidad menor;Encuesta de satisfacción con muestra insuficiente;R03;28/11/2026;;;;;
+H-15;23/07/2026;PA-01;Observación;Perfiles de cargo desactualizados;R05;25/10/2026;;;;;

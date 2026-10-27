@@ -1,0 +1,23 @@
+﻿Parámetro;Valor;;;;;;;;
+Valor hora del instructor ($);45000;;;;;;;;
+Refrigerio por asistente ($);8500;;;;;;;;
+;;;;;;;;;
+Código;Tema;Proceso;Fecha programada;Horas;Asistentes;Responsable;Costo instructor ($);Costo refrigerios ($);Costo total ($)
+CAP-01;Interpretación de la ISO 9001:2015;Gestión de la calidad;05/08/2026;16;25;Laura Pimienta;;;
+CAP-02;Formación de auditores internos;Gestión de la calidad;10/09/2026;24;12;Laura Pimienta;;;
+CAP-03;Buenas prácticas de manufactura;Producción;15/10/2026;8;40;Andrés Brito;;;
+CAP-04;Trabajo seguro en alturas;Seguridad y salud en el trabajo;03/11/2026;20;15;Daniela Epiayú;;;
+CAP-05;Manejo de residuos y reciclaje;Gestión ambiental;12/11/2026;6;35;;;;
+CAP-06;Servicio al cliente y PQRS;Comercial y ventas;24/09/2026;8;18;Marelvis Ospino;;;
+CAP-07;Plan de emergencias y evacuación;Seguridad y salud en el trabajo;20/11/2026;4;60;Daniela Epiayú;;;
+CAP-08;Control de documentos del SIG;Gestión de la calidad;28/10/2026;6;20;Laura Pimienta;;;
+CAP-09;Mantenimiento autónomo de equipos;Mantenimiento;02/12/2026;12;10;;;;
+CAP-10;Conducción preventiva;Logística y distribución;25/11/2026;10;14;Kevin Fragozo;;;
+CAP-11;Evaluación de proveedores;Compras;09/12/2026;4;6;Camilo Iguarán;;;
+CAP-12;Liderazgo para el SIG;Direccionamiento estratégico;15/12/2026;16;30;Rafael Mendoza;;;
+;;;;;;;;;
+Total de horas;;;;;;;;;
+Total de asistentes;;;;;;;;;
+Costo total del plan ($);;;;;;;;;
+Costo promedio por capacitación ($);;;;;;;;;
+Cantidad de capacitaciones;;;;;;;;;

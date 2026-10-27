@@ -302,5 +302,121 @@
       }
     ],
     "nota": "Construcción de Cuadro de Mando Integral con tarjetas KPI, análisis de tendencias y gráfico comparativo."
+  },
+  "EV1": {
+    "xlsx": "EV1_Plan_Capacitacion.xlsx",
+    "csv": [
+      {
+        "hoja": "Enunciado_Caso",
+        "archivo": "EV1_Enunciado_Caso.csv"
+      },
+      {
+        "hoja": "Plan_Capacitacion",
+        "archivo": "EV1_Plan_Capacitacion.csv"
+      }
+    ],
+    "nota": "Problema de la Fase 1: presupuesto del plan de capacitación con formatos, referencias absolutas, resumen y formato condicional."
+  },
+  "EV2": {
+    "xlsx": "EV2_Acciones_Correctivas.xlsx",
+    "csv": [
+      {
+        "hoja": "Enunciado_Caso",
+        "archivo": "EV2_Enunciado_Caso.csv"
+      },
+      {
+        "hoja": "Parametros",
+        "archivo": "EV2_Parametros.csv"
+      },
+      {
+        "hoja": "Hallazgos",
+        "archivo": "EV2_Hallazgos.csv"
+      },
+      {
+        "hoja": "Procesos",
+        "archivo": "EV2_Procesos.csv"
+      },
+      {
+        "hoja": "Responsables",
+        "archivo": "EV2_Responsables.csv"
+      },
+      {
+        "hoja": "Resumen",
+        "archivo": "EV2_Resumen.csv"
+      }
+    ],
+    "nota": "Problema de la Fase 2: seguimiento a hallazgos de auditoría con BUSCARV, SI anidado, tablas, filtros y gráfico."
+  },
+  "EV3": {
+    "xlsx": "EV3_Inspecciones_Sedes.xlsx",
+    "csv": [
+      {
+        "hoja": "Enunciado_Caso",
+        "archivo": "EV3_Enunciado_Caso.csv"
+      },
+      {
+        "hoja": "Inspecciones",
+        "archivo": "EV3_Inspecciones.csv"
+      },
+      {
+        "hoja": "Resumen_Sedes",
+        "archivo": "EV3_Resumen_Sedes.csv"
+      },
+      {
+        "hoja": "Listas",
+        "archivo": "EV3_Listas.csv"
+      },
+      {
+        "hoja": "Registro_Nuevo",
+        "archivo": "EV3_Registro_Nuevo.csv"
+      }
+    ],
+    "nota": "Problema de la Fase 3: diagnóstico de inspecciones con tabla dinámica, funciones condicionales, semáforo y validación de datos."
+  },
+  "EV4": {
+    "xlsx": "EV4_Planta_Fonseca.xlsx",
+    "csv": [
+      {
+        "hoja": "Enunciado_Caso",
+        "archivo": "EV4_Enunciado_Caso.csv"
+      },
+      {
+        "hoja": "Escala_Severidad",
+        "archivo": "EV4_Escala_Severidad.csv"
+      },
+      {
+        "hoja": "Riesgos_Proyecto",
+        "archivo": "EV4_Riesgos_Proyecto.csv"
+      },
+      {
+        "hoja": "Resumen_Riesgos",
+        "archivo": "EV4_Resumen_Riesgos.csv"
+      },
+      {
+        "hoja": "Leyenda_RACI",
+        "archivo": "EV4_Leyenda_RACI.csv"
+      },
+      {
+        "hoja": "Matriz_RACI",
+        "archivo": "EV4_Matriz_RACI.csv"
+      },
+      {
+        "hoja": "Criterios_Semaforo",
+        "archivo": "EV4_Criterios_Semaforo.csv"
+      },
+      {
+        "hoja": "Indicadores_Proyecto",
+        "archivo": "EV4_Indicadores_Proyecto.csv"
+      },
+      {
+        "hoja": "Cuadro_Mando",
+        "archivo": "EV4_Cuadro_Mando.csv"
+      },
+      {
+        "hoja": "Conclusiones",
+        "archivo": "EV4_Conclusiones.csv"
+      }
+    ],
+    "nota": "Problema de la Fase 4: matriz de riesgos, RACI con control y cuadro de mando de la nueva planta de Fonseca."
   }
 }

@@ -1,0 +1,5 @@
+﻿Letra;Rol RACI;Qué significa
+R;Responsable;Ejecuta la actividad
+A;Aprobador;Aprueba y responde por el resultado (solo uno por actividad)
+C;Consultado;Se le pide opinión antes de decidir
+I;Informado;Se le avisa del resultado

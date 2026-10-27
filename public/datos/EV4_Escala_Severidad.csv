@@ -1,0 +1,5 @@
+﻿Rango Mínimo;Rango Máximo;Nivel Cualitativo;Color Asociado;Acción de Control
+1;4;Bajo;Verde;Monitoreo periódico
+5;9;Medio;Amarillo;Procedimiento estándar y seguimiento
+10;16;Alto;Naranja;Control preventivo inmediato y responsable
+17;25;Extremo;Rojo;Control prioritario urgente y plan de contingencia

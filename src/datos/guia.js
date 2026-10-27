@@ -192,25 +192,12 @@ export const fases = [
 ]
 
 export const criterios = [
-  { criterio: 'Manejo correcto del entorno y registro de datos', ponderacion: 15, evidencia: 'Fase 1 completa' },
-  { criterio: 'Aplicación de funciones lógicas y búsqueda', ponderacion: 20, evidencia: 'Fase 2 completa' },
-  { criterio: 'Uso de tablas dinámicas y análisis de datos', ponderacion: 20, evidencia: 'Fase 3 completa' },
-  { criterio: 'Construcción de matrices SIG con formato condicional y validación', ponderacion: 35, evidencia: 'Fase 4 completa (matriz de riesgos y RACI)' },
-  { criterio: 'Presentación y claridad de la información', ponderacion: 10, evidencia: 'Todos los archivos entregados' }
+  { criterio: 'Manejo correcto del entorno y registro de datos', ponderacion: 15, evidencia: 'Evaluación de la Fase 1: presupuesto del plan de capacitación', enlace: '#fase-1-evaluacion' },
+  { criterio: 'Aplicación de funciones lógicas y búsqueda', ponderacion: 20, evidencia: 'Evaluación de la Fase 2: seguimiento a hallazgos de auditoría', enlace: '#fase-2-evaluacion' },
+  { criterio: 'Uso de tablas dinámicas y análisis de datos', ponderacion: 20, evidencia: 'Evaluación de la Fase 3: diagnóstico de inspecciones', enlace: '#fase-3-evaluacion' },
+  { criterio: 'Construcción de matrices SIG con formato condicional y validación', ponderacion: 35, evidencia: 'Evaluación de la Fase 4: matrices de la planta de Fonseca', enlace: '#fase-4-evaluacion' },
+  { criterio: 'Presentación y claridad de la información', ponderacion: 10, evidencia: 'Se revisa en las 4 evaluaciones: hojas ordenadas, formatos claros y nada escrito a mano que debía ir con fórmula' }
 ]
-
-export const entregable = {
-  archivo: 'SIG_Excel_Coordinacion_Ficha3312002.xlsx',
-  hojas: [
-    { nombre: 'Registro_SIG', fase: 'Fase 1', descripcion: 'Las hojas Procesos, Documentos y Responsables con sus datos, formatos y fórmulas básicas.' },
-    { nombre: 'Consolidado', fase: 'Fase 2', descripcion: 'Documento, proceso y responsable unidos con BUSCARV/BUSCARX, columna Estado, filtros y gráficos.' },
-    { nombre: 'Indicadores', fase: 'Fase 3', descripcion: 'Matriz de indicadores con semáforo, conteos condicionales y validación de datos.' },
-    { nombre: 'Matriz_Procesos', fase: 'Fase 4', descripcion: 'Proceso → Tipo → Responsable → Documentos → Indicador, resaltando los procesos sin documentación.' },
-    { nombre: 'Matriz_Riesgos', fase: 'Fase 4', descripcion: 'Probabilidad × Impacto con nivel automático y colores verde, amarillo, naranja y rojo.' },
-    { nombre: 'Matriz_RACI', fase: 'Fase 4', descripcion: 'Actividades del SIG contra roles, con R, A, C, I validadas y cada letra con su color.' },
-    { nombre: 'Cuadro_Mando', fase: 'Fase 4', descripcion: 'Meta vs. Resultado, % de cumplimiento, semáforos, tendencia y tarjeta con el promedio general.' }
-  ]
-}
 
 export const recomendaciones = [
   { icono: '🎯', titulo: 'Contextualizar siempre', texto: 'Cada actividad debe usar datos reales o simulados de un SIG (procesos, documentos, riesgos, roles), evitando ejercicios genéricos.' },

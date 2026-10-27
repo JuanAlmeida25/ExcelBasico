@@ -1,0 +1,12 @@
+﻿Sección;Detalle del Requerimiento / Parámetros del Caso
+Código de Actividad;EV1
+Título del Caso;Presupuesto del plan de capacitación del SIG
+Organización;Lácteos del Caribe S.A.S. - Sistema Integrado de Gestión
+1. Situación Problema;La gerencia de Lácteos del Caribe S.A.S. aprobó el plan de capacitación del SIG para el segundo semestre, pero nadie sabe cuánto va a costar. Además, hay capacitaciones sin responsable y otras cuya fecha ya pasó. La coordinadora SIG necesita el presupuesto listo para la reunión del lunes.
+2. Misión del Aprendiz;Organizar la hoja Plan_Capacitacion, calcular el costo de cada capacitación con referencias absolutas, armar el resumen del plan y dejar resaltadas las alertas con formato condicional.
+Requerimiento 1;Organización y formatos (20 puntos): Dale formato a los encabezados de la tabla (fila 5): negrita, color de relleno y ajustar texto. Revisa que la Fecha programada tenga formato dd/mm/aaaa, y dale formato de moneda sin decimales a B2, B3 y a las columnas de costos (H, I y J).
+Requerimiento 2;Costos con referencias absolutas (30 puntos): Costo instructor (H) = Horas × valor de la hora (B2). Costo refrigerios (I) = Asistentes × valor del refrigerio (B3). Costo total (J) = Costo instructor + Costo refrigerios. Escribe la fórmula en la fila 6 y arrástrala hasta la 17: si no fijaste B2 y B3, los resultados se dañan.
+Requerimiento 3;Resumen del plan (25 puntos): En las celdas de la columna B junto a cada etiqueta del resumen (filas 19 a 23) calcula: total de horas, total de asistentes, costo total del plan, costo promedio por capacitación y cantidad de capacitaciones.
+Requerimiento 4;Alertas con formato condicional (25 puntos): Resalta en rojo las celdas vacías de la columna Responsable, en amarillo las capacitaciones con costo total mayor a $1.000.000 y en gris las fechas programadas anteriores a la fecha de corte (22/10/2026).
+Dificultad Clave / Regla Técnica;Sin el signo $ en B2 y B3, al arrastrar la fórmula Excel corre la referencia a B3, B4, B5… y los costos de abajo salen en cero o en cualquier cosa. Revisa la última fila antes de entregar.
+Entrega;Guarda el libro como EV1_Apellido_Nombre.xlsx y súbelo al Drive.
