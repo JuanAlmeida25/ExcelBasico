@@ -84,12 +84,5 @@ export const api = {
 
   entrarAdmin: (clave) => pedir('admin', { metodo: 'POST', cuerpo: { clave } }),
   sesionAdmin: () => pedir('admin?accion=sesion'),
-  cerrarSesionesAdmin: () => pedir('admin?accion=salir', { metodo: 'POST' }),
-  resumenAdmin: () => pedir('admin?accion=resumen'),
-
-  respuestas: (fase) => pedir(`foro?fase=${fase}`),
-  responder: (pregunta, texto) => pedir('foro', { metodo: 'POST', cuerpo: { pregunta, texto } }),
-  borrarRespuesta: (id) => pedir(`foro?id=${encodeURIComponent(id)}`, { metodo: 'DELETE' }),
-  calificar: (id, calificacion, retroalimentacion) =>
-    pedir(`foro?id=${encodeURIComponent(id)}`, { metodo: 'PATCH', cuerpo: { calificacion, retroalimentacion } })
+  cerrarSesionesAdmin: () => pedir('admin?accion=salir', { metodo: 'POST' })
 }

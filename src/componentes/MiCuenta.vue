@@ -61,7 +61,7 @@ function guardarFirma() {
 <template>
   <section v-if="aprendiz" class="mi-cuenta">
     <h2>👤 Mi cuenta</h2>
-    <p class="cuenta-ayuda">Con tu sesión abierta, el foro sabe quién eres y el profe te pone la asistencia.</p>
+    <p class="cuenta-ayuda">Con tu sesión abierta, el profe sabe quién eres y te pone la asistencia.</p>
 
     <dl class="mi-cuenta-datos">
       <div><dt>Nombre</dt><dd>{{ aprendiz.nombre }}</dd></div>
@@ -85,8 +85,8 @@ function guardarFirma() {
     <div v-if="!aprendiz.aprobado" class="mi-cuenta-pendiente">
       <h3>⏳ Tu cuenta está pendiente</h3>
       <p>
-        El profe tiene que aprobarla en clase (así nadie se registra con la cédula de otro). Mientras tanto ya puedes ver la guía
-        y responder el foro; la firma y la asistencia se habilitan cuando te aprueben.
+        El profe tiene que aprobarla en clase (así nadie se registra con la cédula de otro). Mientras tanto puedes seguir con la guía;
+        la firma y la asistencia se habilitan cuando te aprueben.
       </p>
       <button type="button" class="boton-secundario" :disabled="revisando" @click="revisar">
         {{ revisando ? 'Revisando…' : '🔄 ¿Ya me aprobaron?' }}

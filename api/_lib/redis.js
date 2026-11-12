@@ -6,7 +6,7 @@ function credenciales() {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL
   const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN
   if (!url || !token) {
-    const error = new Error('El foro no tiene base de datos conectada todavía.')
+    const error = new Error('La guía no tiene base de datos conectada todavía.')
     error.status = 503
     throw error
   }

@@ -171,7 +171,7 @@ onMounted(cargar)
     </div>
 
     <p v-if="cargando" class="panel-nota">Cargando aprendices…</p>
-    <p v-else-if="!aprendices.length" class="panel-nota">Todavía nadie se ha registrado. Apenas abran la guía, les sale la pantalla para registrarse.</p>
+    <p v-else-if="!aprendices.length" class="panel-nota">Todavía nadie se ha registrado. Diles que le den al botón 🔑 Entrar de arriba y luego a «Es mi primera vez».</p>
     <p v-else-if="!filtrados.length" class="panel-nota">Nadie coincide con «{{ busqueda }}».</p>
 
     <div v-else class="tabla-scroll">

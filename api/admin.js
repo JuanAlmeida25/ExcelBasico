@@ -1,27 +1,17 @@
-// Perfil de administrador (el profe), igualito al del foro de Licenciamiento.
+// Perfil de administrador (el profe).
 //   POST   /api/admin                    { clave } → sesión de 8 horas
 //   GET    /api/admin?accion=sesion      → { admin, configurado }
 //   POST   /api/admin?accion=salir       → cierra TODAS las sesiones del admin (en todos los equipos)
-//   GET    /api/admin?accion=resumen     → aprendices y respuestas para el Panel del Profe
 // Borrar cuentas, reiniciar PIN y demás ya viven en /api/aprendices.
 
-import { redis, redisVarios, parsearHash } from './_lib/redis.js'
-import { endpoint, esAdmin, exigirAdmin, versionAdmin, LLAVE_VERSION_ADMIN } from './_lib/http.js'
-import { LLAVE_INDICE_APRENDICES, leerAprendices, datosPublicos } from './_lib/aprendices.js'
+import { redis, redisVarios } from './_lib/redis.js'
+import { endpoint, esAdmin, versionAdmin, LLAVE_VERSION_ADMIN } from './_lib/http.js'
 import {
   adminConfigurado, esClaveAdmin, crearSesion, ipDe, contarIntento, MENSAJE_LIMITE
 } from './_lib/seguridad.js'
 
 const MAX_FALLOS = 8
 const VENTANA_FALLOS = 15 * 60
-
-async function resumen(req, res) {
-  if (!(await exigirAdmin(req, res))) return
-  const documentos = await redis(['SMEMBERS', LLAVE_INDICE_APRENDICES])
-  const [registros, respuestas] = await Promise.all([leerAprendices(documentos), redis(['HGETALL', 'foro:respuestas'])])
-  const cuentas = registros.map(datosPublicos)
-  res.json({ cuentas, respuestas: Object.values(parsearHash(respuestas)) })
-}
 
 export default endpoint({
   async POST(req, res) {
@@ -43,7 +33,6 @@ export default endpoint({
   },
 
   async GET(req, res) {
-    if (req.query.accion === 'resumen') return resumen(req, res)
     res.json({ admin: await esAdmin(req), configurado: adminConfigurado() })
   }
 })

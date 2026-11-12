@@ -1,53 +1,5 @@
-// Panel del Profe: arma la tabla por aprendiz y el CSV de notas.
+// Panel del Profe: el CSV que se descarga para abrir en Excel.
 // Lógica pura (sin Vue ni navegador) para poder probarla con node --test.
-
-import { NOTA_APROBATORIA } from '../datos/foro.js'
-
-export const ESTADOS = [
-  { id: 'sin-calificar', nombre: 'Sin calificar' },
-  { id: 'aprobado', nombre: 'Aprobado' },
-  { id: 'no-aprobado', nombre: 'No aprobado' },
-  { id: 'sin-respuestas', nombre: 'Sin respuestas' }
-]
-
-export function estadoNota(calificacion) {
-  if (calificacion === null || calificacion === undefined) return 'sin-calificar'
-  return Number(calificacion) >= NOTA_APROBATORIA ? 'aprobado' : 'no-aprobado'
-}
-
-// Una fila por cuenta. La nota es el promedio de las respuestas calificadas, y el estado
-// queda "sin calificar" mientras falte calificar alguna de las que respondió.
-// Si alguien borró su cuenta pero tiene respuestas, igual aparece (marcado sin cuenta).
-// Cada quien se reconoce por su documento; las respuestas de las cuentas viejas solo traen "usuario".
-export function resumenPorAprendiz(cuentas, respuestas, totalPreguntas) {
-  const filas = new Map()
-  const filaDe = (documento, nombre, conCuenta) => {
-    if (!filas.has(documento)) {
-      filas.set(documento, { documento, nombre, conCuenta, respondidas: 0, totalPreguntas, notas: [], pendientes: 0 })
-    }
-    return filas.get(documento)
-  }
-
-  for (const cuenta of cuentas || []) filaDe(cuenta.documento, cuenta.nombre, true)
-
-  for (const respuesta of respuestas || []) {
-    // las viejas ya limpias no traen ni documento ni usuario: las agrupa la huella que quedó en su id (pregunta:viejo-…)
-    const quien = respuesta.documento || respuesta.usuario || String(respuesta.id).split(':').slice(1).join(':')
-    const fila = filaDe(quien, respuesta.nombre, false)
-    fila.respondidas++
-    if (respuesta.calificacion === null || respuesta.calificacion === undefined) fila.pendientes++
-    else fila.notas.push(Number(respuesta.calificacion))
-  }
-
-  return [...filas.values()]
-    .map(({ notas, pendientes, ...fila }) => {
-      const nota = notas.length ? Math.round(notas.reduce((a, b) => a + b, 0) / notas.length) : null
-      let estado = 'sin-respuestas'
-      if (fila.respondidas) estado = pendientes ? 'sin-calificar' : estadoNota(nota)
-      return { ...fila, nota, pendientes, estado }
-    })
-    .sort((x, y) => x.nombre.localeCompare(y.nombre, 'es'))
-}
 
 // Excel en español (Colombia) separa columnas con punto y coma
 const SEPARADOR = ';'

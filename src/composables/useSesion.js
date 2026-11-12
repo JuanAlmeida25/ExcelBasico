@@ -1,7 +1,7 @@
 import { ref, readonly } from 'vue'
 import { api, sesionGuardada, sesionAdminGuardada, guardarSesion, guardarSesionAdmin } from '../servicios/api.js'
 
-// Estado compartido por toda la página: la puerta de entrada, el foro y la barra de arriba ven la misma sesión
+// Estado compartido por toda la página: el botón de entrar, Mi cuenta y la barra de arriba ven la misma sesión
 const aprendiz = ref(sesionGuardada()?.aprendiz ?? null) // { nombre, documento, tipoDocumento, ficha, tieneFirma }
 const esAdmin = ref(Boolean(sesionAdminGuardada()))
 let revisada = false

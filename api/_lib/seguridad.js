@@ -1,4 +1,4 @@
-// Sesiones firmadas, clave de admin, huellas privadas y límites de intentos.
+// Sesiones firmadas, clave de admin y límites de intentos.
 // Lo de aquí no toca la base de datos (salvo limitar), para poder probarlo con node --test.
 
 import crypto from 'node:crypto'
@@ -41,10 +41,6 @@ function secreto() {
 }
 
 const firmar = (texto) => crypto.createHmac('sha256', secreto()).update(texto).digest('base64url')
-
-// Una huella que no deja adivinar lo de adentro: sirve para mostrar ids sin regalar el documento de nadie.
-// (Un sha256 pelado no sirve: los documentos son puros números y se sacan probando.)
-export const huellaPrivada = (texto) => firmar(`huella:${texto}`).slice(0, 22)
 
 // Token: tipo.sujeto.expira.firma. El sujeto va en base64url para que un usuario con puntos no lo descuadre.
 export function crearSesion(tipo, sujeto, ahora = Date.now()) {

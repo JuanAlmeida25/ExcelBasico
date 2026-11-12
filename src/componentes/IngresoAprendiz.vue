@@ -1,12 +1,16 @@
 <script setup>
-import { ref, computed, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useSesion } from '../composables/useSesion.js'
 import { TIPOS_DOCUMENTO } from '../datos/tiposDocumento.js'
 import { portada } from '../datos/guia.js'
 import { pinTrivial, MENSAJE_PIN_TRIVIAL } from '../utils/pin.js'
 
-// La puerta de la guía: sin entrar con documento y PIN no se ve nada (salvo el profe con su clave)
+// Entrar o registrarse con documento y PIN. Vive en la ventanita del botón 🔑 Entrar
+const emit = defineEmits(['cerrar'])
 const { registrar, entrar } = useSesion()
+
+const primerCampo = ref(null)
+onMounted(() => primerCampo.value?.focus())
 
 const modo = ref('entrar')
 const nombre = ref('')
@@ -70,7 +74,7 @@ async function enviar() {
     if (modo.value === 'registro') {
       await registrar({ nombre: nombre.value, documento: documento.value, tipoDocumento: tipoDocumento.value, ficha: ficha.value, pin: pin.value })
       // recién registrado le falta la firma: que caiga directo en "Mi cuenta".
-      // Va con el hash y no con un emit: apenas hay sesión esta puerta se desmonta y el aviso se perdería
+      // Va con el hash y no con un emit: apenas hay sesión esta ventanita se cierra y el aviso se perdería
       window.location.hash = 'cuenta'
     } else {
       await entrar(documento.value, pin.value)
@@ -91,11 +95,13 @@ async function enviar() {
 </script>
 
 <template>
-  <section class="ingreso">
-    <p class="ingreso-icono" aria-hidden="true">📗</p>
-    <h1>{{ portada.titulo }} · {{ portada.herramienta }}</h1>
+  <section class="ingreso" role="dialog" aria-modal="true" aria-labelledby="titulo-ingreso">
+    <div class="ingreso-cabeza">
+      <h2 id="titulo-ingreso">🔑 Entra a tu cuenta</h2>
+      <button type="button" class="ingreso-cerrar" aria-label="Cerrar" @click="emit('cerrar')">✕</button>
+    </div>
     <p class="ingreso-sub">Ficha {{ portada.ficha }} · {{ portada.programa }}</p>
-    <p>Para ver la guía, entra con tu <strong>documento</strong> y tu <strong>PIN de 4 números</strong>. ¿Primera vez? Regístrate, es un minuto.</p>
+    <p>Con tu cuenta firmas una sola vez y el profe te pone la asistencia. Entra con tu <strong>documento</strong> y tu <strong>PIN de 4 números</strong>. ¿Primera vez? Regístrate, es un minuto.</p>
 
     <div class="cuenta-modos" role="tablist" aria-label="Entrar o registrarse">
       <button type="button" role="tab" :aria-selected="modo === 'entrar'" :class="{ activo: modo === 'entrar' }" @click="cambiarModo('entrar')">
@@ -123,6 +129,7 @@ async function enviar() {
       <label>
         Número de documento
         <input
+          ref="primerCampo"
           :value="documento"
           inputmode="numeric"
           autocomplete="username"
@@ -170,7 +177,7 @@ async function enviar() {
       </div>
 
       <p v-if="modo === 'registro'" class="cuenta-ayuda">
-        🤫 Nada de 1234 ni tu cumpleaños, y no se lo digas a nadie: con tu PIN, otro podría responder el foro por ti.
+        🤫 Nada de 1234 ni tu cumpleaños, y no se lo digas a nadie: con tu PIN, otro podría entrar a tu cuenta.
         Si se te olvida, el profe te da uno nuevo.
       </p>
       <p v-else class="cuenta-ayuda">Tienes 3 intentos. Si fallas los 3, tu cuenta se bloquea 15 minutos.</p>

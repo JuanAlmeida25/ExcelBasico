@@ -13,7 +13,6 @@ beforeEach(() => {
   globalThis.fetch = redisFalso.envolverFetch(fetchOriginal)
   process.env.KV_REST_API_URL = URL_MEMORIA
   process.env.KV_REST_API_TOKEN = 'token'
-  process.env.SESION_SECRETO = 'x'.repeat(40)
   const { ejecutar } = redisFalso
   ejecutar(['SADD', 'usuarios', 'ana'])
   ejecutar(['SET', 'usuario:ana', JSON.stringify({ usuario: 'ana', nombre: 'Ana', hash: 'scrypt$aa$bb' })])
@@ -22,20 +21,24 @@ beforeEach(() => {
 })
 
 test('sin --confirmar solo cuenta y no toca nada', async () => {
-  assert.deepEqual(await limpiarCuentasViejas(), { cuentas: 1, respuestas: 1, hecho: false })
+  assert.deepEqual(await limpiarCuentasViejas(), { cuentas: 1, respuestas: 2, hecho: false, foroBorrado: false })
   assert.ok(redisFalso.datos.has('usuario:ana'))
 })
 
-test('con --confirmar borra las cuentas y le quita el usuario a las respuestas viejas, sin perder la nota', async () => {
+test('con --confirmar borra las cuentas viejas, pero el foro se queda si no lo piden', async () => {
   await limpiarCuentasViejas({ confirmar: true })
   assert.equal(redisFalso.datos.has('usuario:ana'), false)
   assert.equal(redisFalso.datos.has('usuarios'), false)
-  const respuestas = [...redisFalso.datos.get('foro:respuestas').values()].map(JSON.parse)
-  assert.equal(respuestas.length, 2)
-  const vieja = respuestas.find((r) => r.nombre === 'Ana')
-  assert.equal(vieja.usuario, undefined)
-  assert.ok(!vieja.id.includes('ana'))
-  assert.equal(vieja.calificacion, 90)
-  // la nueva ni se toca
-  assert.ok(respuestas.some((r) => r.id === 'f1-p1:xyz'))
+  assert.equal(redisFalso.datos.get('foro:respuestas').size, 2)
+})
+
+test('con --borrar-foro también se van las respuestas del foro', async () => {
+  const resultado = await limpiarCuentasViejas({ confirmar: true, borrarForo: true })
+  assert.equal(resultado.foroBorrado, true)
+  assert.equal(redisFalso.datos.has('foro:respuestas'), false)
+})
+
+test('--borrar-foro sin --confirmar no borra nada', async () => {
+  await limpiarCuentasViejas({ borrarForo: true })
+  assert.equal(redisFalso.datos.get('foro:respuestas').size, 2)
 })

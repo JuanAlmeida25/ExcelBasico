@@ -1,45 +1,36 @@
-// Limpieza de una sola vez: borra las cuentas viejas de usuario y contraseña que quedaron en Redis
-// y les quita el "usuario" a las respuestas viejas del foro (la nota, el nombre y el texto se quedan).
+// Limpieza de una sola vez: borra las cuentas viejas de usuario y contraseña que quedaron en Redis.
 // Es por la Ley 1581: si ya no se usan, no hay por qué guardarlas.
+// El foro ya no existe en la guía, pero sus respuestas (con notas) siguen en Redis: solo se borran si lo pides.
 //
-//   node --env-file=.env.local scripts/limpiar_cuentas_viejas.js              → solo cuenta lo que haría
-//   node --env-file=.env.local scripts/limpiar_cuentas_viejas.js --confirmar  → lo hace de verdad
+//   node --env-file=.env.local scripts/limpiar_cuentas_viejas.js                           → solo cuenta lo que haría
+//   node --env-file=.env.local scripts/limpiar_cuentas_viejas.js --confirmar               → borra las cuentas viejas
+//   node --env-file=.env.local scripts/limpiar_cuentas_viejas.js --confirmar --borrar-foro → y también las respuestas del foro
 //
-// Necesita KV_REST_API_URL, KV_REST_API_TOKEN y SESION_SECRETO (los de producción: `vercel env pull .env.local`).
+// Necesita KV_REST_API_URL y KV_REST_API_TOKEN (los de producción: `vercel env pull .env.local`).
 
-import { redis, redisVarios, parsearHash } from '../api/_lib/redis.js'
-import { huellaPrivada } from '../api/_lib/seguridad.js'
+import { redis } from '../api/_lib/redis.js'
 
 const HASH_FORO = 'foro:respuestas'
 
-export async function limpiarCuentasViejas({ confirmar = false } = {}) {
+export async function limpiarCuentasViejas({ confirmar = false, borrarForo = false } = {}) {
   const usuarios = await redis(['SMEMBERS', 'usuarios'])
-  const respuestas = Object.values(parsearHash(await redis(['HGETALL', HASH_FORO])))
-  // Las viejas se reconocen porque traen "usuario" y no "documento"
-  const viejas = respuestas.filter((r) => r.usuario && !r.documento)
+  const respuestas = await redis(['HLEN', HASH_FORO])
 
   if (confirmar) {
     if (usuarios.length) await redis(['DEL', 'usuarios', ...usuarios.map((u) => `usuario:${u}`)])
-    for (const vieja of viejas) {
-      const { usuario, ...resto } = vieja
-      // El id viejo era pregunta:usuario; el nuevo no deja ver quién era, igual que los de documento
-      const limpia = { ...resto, id: `${vieja.pregunta}:viejo-${huellaPrivada(usuario)}` }
-      await redisVarios([
-        ['HSET', HASH_FORO, limpia.id, JSON.stringify(limpia)],
-        ['HDEL', HASH_FORO, vieja.id],
-      ])
-    }
+    if (borrarForo) await redis(['DEL', HASH_FORO])
   }
-  return { cuentas: usuarios.length, respuestas: viejas.length, hecho: confirmar }
+  return { cuentas: usuarios.length, respuestas, hecho: confirmar, foroBorrado: confirmar && borrarForo }
 }
 
 // Solo corre si lo llaman directo desde la terminal (las pruebas lo importan sin correrlo)
 if (import.meta.url === `file://${process.argv[1]}`) {
   const confirmar = process.argv.includes('--confirmar')
-  const { cuentas, respuestas } = await limpiarCuentasViejas({ confirmar })
+  const borrarForo = process.argv.includes('--borrar-foro')
+  const { cuentas, respuestas, foroBorrado } = await limpiarCuentasViejas({ confirmar, borrarForo })
   console.log(
     confirmar
-      ? `Listo: se borraron ${cuentas} cuentas viejas y se limpiaron ${respuestas} respuestas del foro.`
-      : `Hay ${cuentas} cuentas viejas y ${respuestas} respuestas del foro con usuario viejo. Para limpiarlas, corre otra vez con --confirmar.`
+      ? `Listo: se borraron ${cuentas} cuentas viejas.${foroBorrado ? ` Y ${respuestas} respuestas del foro.` : ''}`
+      : `Hay ${cuentas} cuentas viejas y ${respuestas} respuestas del foro guardadas. Para borrar las cuentas, corre otra vez con --confirmar (y --borrar-foro si también quieres borrar el foro).`
   )
 }

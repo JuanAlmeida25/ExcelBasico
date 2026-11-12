@@ -1,5 +1,5 @@
 // Un Redis de mentiras en memoria que contesta como la API REST de Upstash (traído de Razonar,
-// con los comandos de hash que usa el foro). Lo usan las pruebas y `npm run dev` (vite.config.js).
+// con los comandos de hash que usan los perfiles). Lo usan las pruebas y `npm run dev` (vite.config.js).
 
 export const URL_MEMORIA = 'http://redis.memoria.local'
 
@@ -92,6 +92,8 @@ export function crearRedisMemoria({ reloj = () => Date.now() } = {}) {
       }
       case 'HDEL':
         return datos.get(llave) instanceof Map && datos.get(llave).delete(args[1]) ? 1 : 0
+      case 'HLEN':
+        return datos.get(llave) instanceof Map ? datos.get(llave).size : 0
       case 'HGETALL':
         return datos.get(llave) instanceof Map ? [...datos.get(llave)].flat() : []
       default:

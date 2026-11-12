@@ -11,15 +11,13 @@ import RecomendacionesDidacticas from './componentes/RecomendacionesDidacticas.v
 import NotaFinal from './componentes/NotaFinal.vue'
 import TeoriaGuia from './componentes/TeoriaGuia.vue'
 import GuiaWord from './componentes/GuiaWord.vue'
-import ForoFase from './componentes/ForoFase.vue'
 import EvaluacionFase from './componentes/EvaluacionFase.vue'
 import AccesoAdmin from './componentes/AccesoAdmin.vue'
 import PanelProfe from './componentes/PanelProfe.vue'
-import IngresoAprendiz from './componentes/IngresoAprendiz.vue'
+import AccesoAprendiz from './componentes/AccesoAprendiz.vue'
 import MiCuenta from './componentes/MiCuenta.vue'
 import { temas } from './datos/teoria.js'
 import { secciones, temasWord } from './datos/word.js'
-import { forosPorFase } from './datos/foro.js'
 import evaluaciones from './datos/evaluaciones.json'
 import { useSesion } from './composables/useSesion.js'
 import { useProgreso } from './composables/useProgreso.js'
@@ -34,11 +32,6 @@ import {
 } from './datos/guia.js'
 
 const { aprendiz, esAdmin } = useSesion()
-
-// La puerta: la guía solo se ve con sesión de aprendiz o de admin.
-// Ojo, es una puerta de la página, no del servidor: la teoría va en el paquete igual. Lo que sí protege
-// el servidor es el foro, las notas y la asistencia.
-const puedeEntrar = computed(() => Boolean(aprendiz.value || esAdmin.value))
 
 const codigos = fases.flatMap((fase) => fase.actividades.map((actividad) => actividad.codigo))
 const { hechas, cantidadHechas, porcentaje, alternar, reiniciar } = useProgreso(codigos)
@@ -88,12 +81,6 @@ function reiniciarConPermiso() {
 </script>
 
 <template>
-  <div v-if="!puedeEntrar" class="puerta">
-    <div class="puerta-admin"><AccesoAdmin /></div>
-    <IngresoAprendiz />
-  </div>
-
-  <template v-else>
   <div class="cabecera-fija">
     <BarraFormulas
       :hechas="cantidadHechas"
@@ -103,6 +90,7 @@ function reiniciarConPermiso() {
     />
     <div class="fila-pestanas">
       <PestanasGuia :pestanas="pestanas" :activa="activa" />
+      <AccesoAprendiz />
       <AccesoAdmin />
     </div>
   </div>
@@ -132,7 +120,6 @@ function reiniciarConPermiso() {
       :siguiente="siguienteDe(fase)"
       @alternar="alternar"
     >
-      <ForoFase v-if="forosPorFase[fase.id]" :fase="fase.id" />
       <EvaluacionFase v-if="evaluaciones[fase.id]" :fase="fase" :evaluacion="evaluaciones[fase.id]" />
     </FaseActividades>
   </main>
@@ -158,7 +145,7 @@ function reiniciarConPermiso() {
 
   <main v-show="activa === 'cuenta'" class="panel contenedor contenedor-panel">
     <MiCuenta v-if="aprendiz" />
-    <p v-else class="foro-estado">🛡️ Estás como administrador: aquí no hay cuenta de aprendiz que mostrar.</p>
+    <p v-else-if="esAdmin" class="foro-estado">🛡️ Estás como administrador: aquí no hay cuenta de aprendiz que mostrar.</p>
+    <p v-else class="foro-estado">🔑 Todavía no has entrado. Dale al botón <strong>Entrar</strong> de arriba.</p>
   </main>
-  </template>
 </template>

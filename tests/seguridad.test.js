@@ -1,21 +1,12 @@
 import { test, beforeEach } from 'node:test'
 import assert from 'node:assert/strict'
 import {
-  crearSesion, leerSesion, esClaveAdmin, adminConfigurado, huellaPrivada, DURACION_SESION
+  crearSesion, leerSesion, esClaveAdmin, adminConfigurado, DURACION_SESION
 } from '../api/_lib/seguridad.js'
 
 beforeEach(() => {
   process.env.SESION_SECRETO = 'x'.repeat(40)
   delete process.env.ADMIN_KEY
-})
-
-test('la huella privada no deja ver el documento y cambia con el secreto', () => {
-  const huella = huellaPrivada('1020304050')
-  assert.equal(huella, huellaPrivada('1020304050'))
-  assert.ok(!huella.includes('1020304050'))
-  assert.notEqual(huella, huellaPrivada('1020304051'))
-  process.env.SESION_SECRETO = 'y'.repeat(40)
-  assert.notEqual(huella, huellaPrivada('1020304050'))
 })
 
 test('la sesión firmada devuelve el usuario, aunque tenga puntos', () => {
