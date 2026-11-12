@@ -1,29 +1,8 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import {
-  validarUsuario, validarNombre, validarClave, validarRespuesta, validarCalificacion
+  validarRespuesta, validarCalificacion
 } from '../api/_lib/validar.js'
-
-test('el usuario se pasa a minúscula y sin espacios alrededor', () => {
-  assert.equal(validarUsuario('  Juan.Perez ').valor, 'juan.perez')
-})
-
-test('usuarios con tildes, espacios o muy cortos no pasan', () => {
-  for (const malo of ['jo', 'josé', 'juan perez', 'a'.repeat(31), '', null, '<script>']) {
-    assert.ok(validarUsuario(malo).error, `debió rechazar ${malo}`)
-  }
-})
-
-test('el nombre se limpia de espacios dobles', () => {
-  assert.equal(validarNombre('  Ana   María  Pérez ').valor, 'Ana María Pérez')
-  assert.ok(validarNombre('Al').error)
-})
-
-test('la contraseña no se recorta y respeta el mínimo', () => {
-  assert.equal(validarClave('  abc  ').valor, '  abc  ')
-  assert.ok(validarClave('12345').error)
-  assert.ok(validarClave(123456).error)
-})
 
 test('la respuesta del foro tiene mínimo y máximo', () => {
   assert.ok(validarRespuesta('corta').error)

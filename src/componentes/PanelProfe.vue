@@ -4,6 +4,8 @@ import { api } from '../servicios/api.js'
 import { useSesion } from '../composables/useSesion.js'
 import { resumenPorAprendiz, generarCsv, ESTADOS } from '../utils/panel.js'
 import { idsPreguntas } from '../datos/foro.js'
+import PanelAprendices from './PanelAprendices.vue'
+import PanelAsistencia from './PanelAsistencia.vue'
 
 const { atenderError } = useSesion()
 
@@ -11,6 +13,14 @@ const filas = ref([])
 const cargando = ref(false)
 const error = ref('')
 const filtro = ref('todos')
+
+// El panel tiene tres partes; cada una pide sus datos cuando se abre
+const vistas = [
+  { id: 'foro', nombre: '💬 Foro y notas' },
+  { id: 'aprendices', nombre: '👥 Aprendices' },
+  { id: 'asistencia', nombre: '✅ Asistencia' }
+]
+const vista = ref('foro')
 
 const filtros = [{ id: 'todos', nombre: 'Todos' }, ...ESTADOS]
 const nombreEstado = (id) => ESTADOS.find((e) => e.id === id)?.nombre || id
@@ -44,23 +54,10 @@ async function cargar() {
   }
 }
 
-async function borrarCuenta(fila) {
-  const aviso = `¿Borrar la cuenta de ${fila.nombre} (@${fila.usuario})?\n\n` +
-    'Sus respuestas y notas se quedan. Si se registra otra vez con el mismo usuario, las recupera.'
-  if (!confirm(aviso)) return
-  try {
-    await api.borrarCuenta(fila.usuario)
-    await cargar()
-  } catch (e) {
-    atenderError(e, true)
-    alert(e.message)
-  }
-}
-
 function exportarCsv() {
   const csv = generarCsv(filas.value, [
     { titulo: 'Aprendiz', valor: (f) => f.nombre },
-    { titulo: 'Usuario', valor: (f) => f.usuario },
+    { titulo: 'Documento', valor: (f) => f.documento },
     { titulo: 'Respondidas', valor: (f) => `${f.respondidas}/${f.totalPreguntas}` },
     { titulo: 'Nota promedio', valor: (f) => f.nota },
     { titulo: 'Por calificar', valor: (f) => f.pendientes },
@@ -81,9 +78,9 @@ onMounted(cargar)
     <header class="panel-cabeza">
       <div>
         <h2><span class="celda">P1</span> 👨‍🏫 Panel del Profe</h2>
-        <p>Quién ya respondió el foro, qué falta por calificar y cómo va cada aprendiz.</p>
+        <p>Quién ya respondió el foro, quién está registrado y la asistencia de la ficha.</p>
       </div>
-      <div class="panel-acciones">
+      <div v-if="vista === 'foro'" class="panel-acciones">
         <button class="boton-secundario" type="button" :disabled="cargando" @click="cargar">
           {{ cargando ? 'Actualizando…' : '↻ Actualizar' }}
         </button>
@@ -93,9 +90,26 @@ onMounted(cargar)
       </div>
     </header>
 
+    <div class="panel-filtros panel-vistas" role="tablist" aria-label="Partes del panel">
+      <button
+        v-for="v in vistas"
+        :key="v.id"
+        type="button"
+        role="tab"
+        class="panel-chip"
+        :class="{ activo: vista === v.id }"
+        :aria-selected="vista === v.id"
+        @click="vista = v.id"
+      >{{ v.nombre }}</button>
+    </div>
+
+    <PanelAprendices v-if="vista === 'aprendices'" />
+    <PanelAsistencia v-else-if="vista === 'asistencia'" />
+
+    <template v-else>
     <p v-if="error" class="mensaje-error" role="alert">{{ error }}</p>
     <p v-else-if="cargando && !filas.length" class="foro-estado">Cargando el resumen del foro…</p>
-    <p v-else-if="!filas.length" class="foro-estado">Todavía nadie se ha registrado en el foro.</p>
+    <p v-else-if="!filas.length" class="foro-estado">Todavía nadie se ha registrado.</p>
 
     <template v-else>
       <div class="panel-stats">
@@ -126,34 +140,29 @@ onMounted(cargar)
           <thead>
             <tr>
               <th scope="col">Aprendiz</th>
-              <th scope="col">Usuario</th>
+              <th scope="col">Documento</th>
               <th scope="col">Respondidas</th>
               <th scope="col">Nota</th>
               <th scope="col">Estado</th>
-              <th scope="col"><span class="solo-lectores">Acciones</span></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="f in filasFiltradas" :key="f.usuario">
+            <tr v-for="f in filasFiltradas" :key="f.documento">
               <td>{{ f.nombre }}</td>
-              <td>@{{ f.usuario }}<small v-if="!f.conCuenta" class="sin-cuenta"> (sin cuenta)</small></td>
+              <td>{{ f.documento }}<small v-if="!f.conCuenta" class="sin-cuenta"> (sin cuenta)</small></td>
               <td class="num">{{ f.respondidas }}/{{ f.totalPreguntas }}</td>
               <td class="num">{{ f.nota ?? '—' }}</td>
               <td>
                 <span class="estado-tag" :class="f.estado">{{ nombreEstado(f.estado) }}</span>
                 <small v-if="f.pendientes" class="pendientes"> {{ f.pendientes }} por calificar</small>
               </td>
-              <td>
-                <button v-if="f.conCuenta" type="button" class="boton-peligro" @click="borrarCuenta(f)">
-                  Borrar cuenta
-                </button>
-              </td>
             </tr>
           </tbody>
         </table>
         <p v-if="!filasFiltradas.length" class="foro-estado">Nadie en este estado. ¡Ojalá siempre fuera así de fácil!</p>
       </div>
-      <p class="panel-ayuda">Para calificar, entra a la pestaña <a href="#fase-1">Fase 1</a> y baja hasta el foro: con el modo admin activo, cada respuesta trae el botón ⭐ Calificar.</p>
+      <p class="panel-ayuda">Para calificar, entra a la pestaña <a href="#fase-1">Fase 1</a> y baja hasta el foro: con el modo admin activo, cada respuesta trae el botón ⭐ Calificar. Para borrar cuentas o dar PIN nuevo, ve a 👥 Aprendices.</p>
+    </template>
     </template>
   </section>
 </template>

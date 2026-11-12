@@ -15,6 +15,8 @@ import ForoFase from './componentes/ForoFase.vue'
 import EvaluacionFase from './componentes/EvaluacionFase.vue'
 import AccesoAdmin from './componentes/AccesoAdmin.vue'
 import PanelProfe from './componentes/PanelProfe.vue'
+import IngresoAprendiz from './componentes/IngresoAprendiz.vue'
+import MiCuenta from './componentes/MiCuenta.vue'
 import { temas } from './datos/teoria.js'
 import { secciones, temasWord } from './datos/word.js'
 import { forosPorFase } from './datos/foro.js'
@@ -31,7 +33,12 @@ import {
   notaFinal
 } from './datos/guia.js'
 
-const { esAdmin } = useSesion()
+const { aprendiz, esAdmin } = useSesion()
+
+// La puerta: la guía solo se ve con sesión de aprendiz o de admin.
+// Ojo, es una puerta de la página, no del servidor: la teoría va en el paquete igual. Lo que sí protege
+// el servidor es el foro, las notas y la asistencia.
+const puedeEntrar = computed(() => Boolean(aprendiz.value || esAdmin.value))
 
 const codigos = fases.flatMap((fase) => fase.actividades.map((actividad) => actividad.codigo))
 const { hechas, cantidadHechas, porcentaje, alternar, reiniciar } = useProgreso(codigos)
@@ -53,12 +60,14 @@ const pestanas = computed(() => [
   { id: 'evaluacion', icono: '📋', etiqueta: 'Evaluación' },
   { id: 'recomendaciones', icono: '💡', etiqueta: 'Recomendaciones' },
   { id: 'word', icono: '📝', etiqueta: 'Word y normas' },
+  // la firma es lo único que el aprendiz tiene que hacer aparte, por eso la pestaña avisa si falta
+  ...(aprendiz.value ? [{ id: 'cuenta', icono: '👤', etiqueta: 'Mi cuenta', conteo: !aprendiz.value.aprobado ? '⏳' : aprendiz.value.tieneFirma ? null : 'firma' }] : []),
   // la pestaña del profe solo se pinta con el modo admin activo
   ...(esAdmin.value ? [{ id: 'panel', icono: '👨‍🏫', etiqueta: 'Panel del Profe' }] : [])
 ])
 
-// 'panel' va siempre en la lista para que el link #panel funcione apenas el profe ingrese
-const { activa, ancla } = usePestanaActiva([...pestanas.value.map((pestana) => pestana.id), 'panel'], 'inicio')
+// 'panel' y 'cuenta' van siempre en la lista para que sus links funcionen apenas alguien ingrese
+const { activa, ancla } = usePestanaActiva([...pestanas.value.map((pestana) => pestana.id), 'panel', 'cuenta'], 'inicio')
 
 // #teoria-buscarv → 'buscarv'; si no hay tema en el link, la teoría arranca con el primero
 const temaEnLink = computed(() => (ancla.value?.startsWith('teoria-') ? ancla.value.slice('teoria-'.length) : null))
@@ -79,6 +88,12 @@ function reiniciarConPermiso() {
 </script>
 
 <template>
+  <div v-if="!puedeEntrar" class="puerta">
+    <div class="puerta-admin"><AccesoAdmin /></div>
+    <IngresoAprendiz />
+  </div>
+
+  <template v-else>
   <div class="cabecera-fija">
     <BarraFormulas
       :hechas="cantidadHechas"
@@ -140,4 +155,10 @@ function reiniciarConPermiso() {
     <PanelProfe v-if="esAdmin && activa === 'panel'" />
     <p v-else-if="!esAdmin" class="foro-estado">🔐 Esta pestaña es solo para el profe. Ingresa con "Acceso Admin" arriba a la derecha.</p>
   </main>
+
+  <main v-show="activa === 'cuenta'" class="panel contenedor contenedor-panel">
+    <MiCuenta v-if="aprendiz" />
+    <p v-else class="foro-estado">🛡️ Estás como administrador: aquí no hay cuenta de aprendiz que mostrar.</p>
+  </main>
+  </template>
 </template>

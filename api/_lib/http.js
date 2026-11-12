@@ -1,5 +1,6 @@
 // Ayudas comunes de los endpoints: errores, método permitido y quién hace la petición.
 
+import { redis } from './redis.js'
 import { leerSesion } from './seguridad.js'
 
 export function tokenDe(req) {
@@ -7,13 +8,28 @@ export function tokenDe(req) {
   return cabecera.startsWith('Bearer ') ? cabecera.slice(7).trim() : ''
 }
 
-// La cabecera Authorization trae la sesión del aprendiz; X-Admin-Token, la del admin.
+// La cabecera Authorization trae la sesión del aprendiz (la lee aprendizDeLaPeticion); X-Admin-Token, la del admin.
 // Van separadas porque el profe puede estar logueado también como aprendiz para probar.
-export function quienEs(req) {
-  return {
-    usuario: leerSesion(tokenDe(req), 'aprendiz'),
-    admin: leerSesion(texto(req.headers['x-admin-token']), 'admin') === 'admin'
-  }
+
+// Cada sesión del admin lleva la versión vigente. "Salir de Admin" la sube y todas las sesiones del admin
+// se mueren, hasta la que alguien haya copiado del PC del salón (como en Razonar)
+export const LLAVE_VERSION_ADMIN = 'tic:admin:version'
+
+export async function versionAdmin() {
+  return Number(await redis(['GET', LLAVE_VERSION_ADMIN])) || 0
+}
+
+// Solo se le pregunta a Redis si la firma del token es buena: un token inventado no gasta comandos
+export async function esAdmin(req) {
+  const sujeto = leerSesion(texto(req.headers['x-admin-token']), 'admin')
+  if (!sujeto) return false
+  return sujeto === `v${await versionAdmin()}`
+}
+
+export async function exigirAdmin(req, res) {
+  if (await esAdmin(req)) return true
+  res.status(401).json({ error: 'Tu sesión de administrador venció. Vuelve a ingresar.', sesionVencida: true })
+  return false
 }
 
 const texto = (valor) => (typeof valor === 'string' ? valor.trim() : '')

@@ -2,7 +2,7 @@
 import { ref, nextTick } from 'vue'
 import { useSesion } from '../composables/useSesion.js'
 
-const { esAdmin, entrarAdmin, salirAdmin } = useSesion()
+const { esAdmin, entrarAdmin, cerrarAdmin } = useSesion()
 
 const abierto = ref(false)
 const clave = ref('')
@@ -37,7 +37,7 @@ async function entrar() {
   <div class="acceso-admin">
     <template v-if="esAdmin">
       <span class="admin-pill" title="Puedes calificar, borrar respuestas y ver el Panel del Profe">🛡️ Administrador activo</span>
-      <button type="button" class="boton-secundario" @click="salirAdmin">Salir de Admin</button>
+      <button type="button" class="boton-secundario" title="Cierra la sesión de admin en todos los equipos" @click="cerrarAdmin">Salir de Admin</button>
     </template>
     <button v-else type="button" class="boton-admin" @click="abrir">🔐 Acceso Admin</button>
 

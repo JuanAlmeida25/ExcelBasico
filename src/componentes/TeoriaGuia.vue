@@ -140,6 +140,13 @@ const faseDeActividad = (codigo) => codigo.split('.')[0]
             <figure v-for="ejemplo in tema.ejemplos" :key="ejemplo.titulo" class="ejemplo">
               <figcaption>{{ ejemplo.titulo }}</figcaption>
               <MiniHoja :columnas="ejemplo.columnas" :filas="ejemplo.filas" :formula="ejemplo.formula" />
+              <ul v-if="ejemplo.explicacion" class="ejemplo-explicacion">
+                <li v-for="item in ejemplo.explicacion" :key="item.columna">
+                  <strong>{{ item.columna }}</strong>
+                  <code>{{ item.formula }}</code>
+                  <span v-html="item.texto"></span>
+                </li>
+              </ul>
               <p v-if="ejemplo.nota" class="ejemplo-nota">{{ ejemplo.nota }}</p>
             </figure>
           </div>

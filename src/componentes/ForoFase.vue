@@ -1,6 +1,5 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
-import CuentaAprendiz from './CuentaAprendiz.vue'
 import RespuestaForo from './RespuestaForo.vue'
 import { useSesion } from '../composables/useSesion.js'
 import { api } from '../servicios/api.js'
@@ -21,7 +20,7 @@ const errores = reactive({})
 const enviando = reactive({})
 
 const dePregunta = (id) => respuestas.value.filter((r) => r.pregunta === id)
-const yaRespondio = (id) => aprendiz.value && respuestas.value.some((r) => r.pregunta === id && r.usuario === aprendiz.value.usuario)
+const yaRespondio = (id) => respuestas.value.some((r) => r.pregunta === id && r.esMia)
 const respondidas = computed(() => foro.preguntas.filter((p) => yaRespondio(p.id)).length)
 
 async function cargar() {
@@ -30,6 +29,7 @@ async function cargar() {
   try {
     respuestas.value = (await api.respuestas(props.fase)).respuestas
   } catch (e) {
+    atenderError(e, esAdmin.value && !aprendiz.value)
     errorCarga.value = e.message
   } finally {
     cargando.value = false
@@ -52,7 +52,7 @@ async function responder(pregunta) {
 }
 
 async function borrar(respuesta) {
-  const ajena = respuesta.usuario !== aprendiz.value?.usuario
+  const ajena = !respuesta.esMia
   const pregunta = ajena
     ? `¿Borrar la respuesta de ${respuesta.nombre}? No se puede deshacer.`
     : '¿Borrar tu respuesta? Si ya tenía nota, también se pierde.'
@@ -91,13 +91,10 @@ onMounted(cargar)
 
     <div class="foro-sesion">
       <template v-if="aprendiz">
-        <span>👋 Hola, <strong>{{ aprendiz.nombre }}</strong> (@{{ aprendiz.usuario }}) · respondiste {{ respondidas }} de {{ foro.preguntas.length }}</span>
+        <span>👋 Hola, <strong>{{ aprendiz.nombre }}</strong> · respondiste {{ respondidas }} de {{ foro.preguntas.length }}</span>
         <button type="button" class="boton-secundario" @click="salir">Salir</button>
       </template>
-      <template v-else>
-        <p><strong>Para responder, ingresa con tu cuenta o créala.</strong></p>
-        <CuentaAprendiz />
-      </template>
+      <p v-else>🛡️ Estás como administrador: ves y calificas, pero para responder hay que entrar como aprendiz.</p>
     </div>
 
     <p v-if="cargando" class="foro-estado">Cargando el foro…</p>
@@ -133,15 +130,14 @@ onMounted(cargar)
 
         <p class="foro-conteo">
           {{ dePregunta(pregunta.id).length || 'Todavía no hay' }}
-          {{ dePregunta(pregunta.id).length === 1 ? 'respuesta' : 'respuestas' }}
-          <template v-if="!dePregunta(pregunta.id).length">. ¡Estrénala! 🎉</template>
+          {{ dePregunta(pregunta.id).length === 1 ? 'respuesta' : 'respuestas' }}<template v-if="!dePregunta(pregunta.id).length">. ¡Estrénala! 🎉</template>
         </p>
         <div class="foro-respuestas">
           <RespuestaForo
             v-for="respuesta in dePregunta(pregunta.id)"
             :key="respuesta.id"
             :respuesta="respuesta"
-            :es-mia="respuesta.usuario === aprendiz?.usuario"
+            :es-mia="respuesta.esMia"
             :es-admin="esAdmin"
             @borrar="borrar(respuesta)"
             @calificar="calificar(respuesta, $event)"

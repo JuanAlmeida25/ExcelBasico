@@ -435,12 +435,19 @@ export const temas = [
       'Cambiar el punto de vista (por responsable, por tipo de documento) sin empezar de cero.',
       'Filtrar con botones bonitos (segmentaciones) en vez de menús.'
     ],
+    terminos: [
+      { termino: 'Campo', definicion: 'Cada columna de tus datos (Proceso, Estado, Responsable…). Son los que arrastras a Filas, Columnas, Valores o Filtros.' },
+      { termino: 'Segmentación de datos', definicion: 'Un panelito con <strong>un botón por cada valor</strong> de un campo (por ejemplo, un botón por proceso). Le das clic a "Producción" y la tabla dinámica muestra solo Producción. Es un filtro, pero a la vista: cualquiera ve de un vistazo qué está filtrado, sin abrir menús.' },
+      { termino: 'Cómo se usa', definicion: 'Clic en un botón filtra por ese valor. <strong>Ctrl + clic</strong> marca varios a la vez. El ícono del embudo con la X (arriba a la derecha del panel) <strong>borra el filtro</strong> y vuelve a mostrar todo.' },
+      { termino: 'Botones apagados', definicion: 'Si un botón sale gris o desteñido, es que con los filtros que ya tienes puestos no hay datos para ese valor. No está dañado, solo no tiene nada que mostrar.' },
+      { termino: 'Conexiones de informe', definicion: 'Una misma segmentación puede manejar <strong>varias tablas dinámicas</strong> a la vez: clic derecho sobre ella > <em>Conexiones de informe</em> y marcas las que quieras. Así armas un tablero donde un solo clic filtra todo.' }
+    ],
     pasos: [
       'Haz clic dentro de los datos (mejor si ya están como Tabla) y ve a <strong>Insertar > Tabla dinámica</strong>. Elige "Nueva hoja de cálculo".',
       'En el panel de la derecha, arrastra los campos a las 4 áreas: <strong>Filas</strong> (Proceso), <strong>Columnas</strong> (Estado), <strong>Valores</strong> (Código) y <strong>Filtros</strong> si quieres.',
       'Si en Valores sale "Suma de…", haz clic en el campo > <em>Configuración de campo de valor</em> y elige <strong>Cuenta</strong>.',
       'Para mostrar porcentajes: <em>Configuración de campo de valor > Mostrar valores como > % del total de filas</em>.',
-      'Segmentaciones: <strong>Análisis de tabla dinámica > Insertar segmentación de datos</strong> y marca, por ejemplo, Tipo de proceso.',
+      'Segmentaciones: haz clic dentro de la tabla dinámica, ve a <strong>Análisis de tabla dinámica > Insertar segmentación de datos</strong> y marca el campo por el que quieres filtrar, por ejemplo Tipo de proceso. Aparece un panel con botones; muévelo al lado de la tabla y pruébalo dando clic en cada botón.',
       'Si cambian los datos de origen: clic derecho sobre la tabla dinámica > <strong>Actualizar</strong>.'
     ],
     ejemplos: [
@@ -462,7 +469,8 @@ export const temas = [
       'Datos de origen con celdas combinadas, filas vacías o encabezados repetidos: la tabla dinámica sale rara o ni se deja crear.',
       'Cambiar los datos y no darle Actualizar: la tabla dinámica no se entera sola.',
       'Poner un campo de texto en Valores y que salga "Suma": cámbialo a Cuenta.',
-      'Escribir a mano dentro de la tabla dinámica: no se puede. Para cálculos extra, hazlos al lado.'
+      'Escribir a mano dentro de la tabla dinámica: no se puede. Para cálculos extra, hazlos al lado.',
+      'Dejar una segmentación filtrada y olvidarla: la tabla muestra menos datos y parece que faltan documentos. Revisa que el embudo esté limpio antes de sacar conclusiones.'
     ],
     atajos: [
       { teclas: 'Alt + F5', accion: 'Actualiza la tabla dinámica' },
@@ -514,7 +522,30 @@ export const temas = [
           ['Gestión ambiental', 0, 0, { v: '#¡DIV/0!', tono: 'rojo' }, { v: '#¡DIV/0!', tono: 'rojo' }]
         ],
         formula: { celda: 'B2', texto: '=CONTAR.SI(Documentos!$B$2:$B$41;A2)' },
-        nota: 'Vigentes: =CONTAR.SI.CONJUNTO(Documentos!$B$2:$B$41;A2;Documentos!$C$2:$C$41;"Vigente"). % Vigentes: =C2/B2. Promedio: =PROMEDIO.SI(Documentos!$B$2:$B$41;A2;Documentos!$D$2:$D$41). Los #¡DIV/0! de Gestión ambiental se arreglan en el tema de SI.ERROR.'
+        // Columna por columna, que todo junto en un párrafo no lo entendía ni el profe
+        explicacion: [
+          {
+            columna: 'Total',
+            formula: '=CONTAR.SI(Documentos!$B$2:$B$41;A2)',
+            texto: 'Busca en la columna <strong>Proceso</strong> de la hoja Documentos cuántas veces aparece el proceso de A2. "Gestión de la calidad" aparece <strong>6</strong> veces.'
+          },
+          {
+            columna: 'Vigentes',
+            formula: '=CONTAR.SI.CONJUNTO(Documentos!$B$2:$B$41;A2;Documentos!$C$2:$C$41;"Vigente")',
+            texto: 'Cuenta solo los documentos que cumplen <strong>dos condiciones a la vez</strong>: que sean del proceso de A2 <strong>y</strong> que su estado diga "Vigente". De los 6 de calidad, <strong>3</strong> están vigentes.'
+          },
+          {
+            columna: '% Vigentes',
+            formula: '=C2/B2',
+            texto: 'Divide vigentes entre total: 3 ÷ 6 = 0,5. Con formato de porcentaje se ve como <strong>50%</strong>.'
+          },
+          {
+            columna: 'Prom. días revisión',
+            formula: '=PROMEDIO.SI(Documentos!$B$2:$B$41;A2;Documentos!$D$2:$D$41)',
+            texto: 'Saca el promedio de los días de revisión (columna D de Documentos), pero <strong>solo de las filas</strong> cuyo proceso es el de A2.'
+          }
+        ],
+        nota: 'Los $ dejan quieto el rango de Documentos cuando arrastras la fórmula hacia abajo; A2 va sin $ para que cambie solito a A3, A4… ¿Y el #¡DIV/0! en rojo? Gestión ambiental no tiene documentos, su Total es 0 y Excel no puede dividir entre cero. Eso se arregla más adelante, en el tema de SI.ERROR.'
       }
     ],
     errores: [

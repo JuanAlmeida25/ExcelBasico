@@ -41,7 +41,10 @@ function guardarNota() {
       <span class="respuesta-avatar" aria-hidden="true">{{ respuesta.nombre.charAt(0).toUpperCase() }}</span>
       <div>
         <strong>{{ respuesta.nombre }}</strong>
-        <span class="respuesta-usuario">@{{ respuesta.usuario }}<template v-if="esMia"> · tú</template></span>
+        <!-- el documento solo le llega al admin; entre compañeros no se reparten cédulas -->
+        <span v-if="esMia || respuesta.documento" class="respuesta-usuario">
+          {{ esMia ? 'tú' : respuesta.documento }}
+        </span>
       </div>
       <time :datetime="respuesta.creado">{{ fecha }}</time>
     </header>
@@ -76,7 +79,7 @@ function guardarNota() {
         ⭐ {{ calificada ? 'Cambiar nota' : 'Calificar' }}
       </button>
       <button type="button" class="boton-peligro" @click="emit('borrar')">
-        🗑️ {{ esAdmin && !esMia ? 'Borrar (Admin)' : 'Borrar mi respuesta' }}
+        🗑️ {{ esAdmin && !esMia ? 'Borrar (admin)' : 'Borrar mi respuesta' }}
       </button>
     </footer>
   </article>

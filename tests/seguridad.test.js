@@ -1,7 +1,7 @@
 import { test, beforeEach } from 'node:test'
 import assert from 'node:assert/strict'
 import {
-  cifrarClave, verificarClave, crearSesion, leerSesion, esClaveAdmin, adminConfigurado, DURACION_SESION
+  crearSesion, leerSesion, esClaveAdmin, adminConfigurado, huellaPrivada, DURACION_SESION
 } from '../api/_lib/seguridad.js'
 
 beforeEach(() => {
@@ -9,17 +9,13 @@ beforeEach(() => {
   delete process.env.ADMIN_KEY
 })
 
-test('la contraseña se guarda cifrada y solo la correcta pasa', async () => {
-  const guardada = await cifrarClave('mi-clave-123')
-  assert.ok(guardada.startsWith('scrypt$'))
-  assert.ok(!guardada.includes('mi-clave-123'))
-  assert.equal(await verificarClave('mi-clave-123', guardada), true)
-  assert.equal(await verificarClave('mi-clave-124', guardada), false)
-  assert.equal(await verificarClave('', guardada), false)
-})
-
-test('dos cifrados de la misma clave salen distintos (lleva sal)', async () => {
-  assert.notEqual(await cifrarClave('igualita'), await cifrarClave('igualita'))
+test('la huella privada no deja ver el documento y cambia con el secreto', () => {
+  const huella = huellaPrivada('1020304050')
+  assert.equal(huella, huellaPrivada('1020304050'))
+  assert.ok(!huella.includes('1020304050'))
+  assert.notEqual(huella, huellaPrivada('1020304051'))
+  process.env.SESION_SECRETO = 'y'.repeat(40)
+  assert.notEqual(huella, huellaPrivada('1020304050'))
 })
 
 test('la sesión firmada devuelve el usuario, aunque tenga puntos', () => {

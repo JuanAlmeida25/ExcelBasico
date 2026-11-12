@@ -18,19 +18,22 @@ export function estadoNota(calificacion) {
 // Una fila por cuenta. La nota es el promedio de las respuestas calificadas, y el estado
 // queda "sin calificar" mientras falte calificar alguna de las que respondió.
 // Si alguien borró su cuenta pero tiene respuestas, igual aparece (marcado sin cuenta).
+// Cada quien se reconoce por su documento; las respuestas de las cuentas viejas solo traen "usuario".
 export function resumenPorAprendiz(cuentas, respuestas, totalPreguntas) {
   const filas = new Map()
-  const filaDe = (usuario, nombre, conCuenta) => {
-    if (!filas.has(usuario)) {
-      filas.set(usuario, { usuario, nombre, conCuenta, respondidas: 0, totalPreguntas, notas: [], pendientes: 0 })
+  const filaDe = (documento, nombre, conCuenta) => {
+    if (!filas.has(documento)) {
+      filas.set(documento, { documento, nombre, conCuenta, respondidas: 0, totalPreguntas, notas: [], pendientes: 0 })
     }
-    return filas.get(usuario)
+    return filas.get(documento)
   }
 
-  for (const cuenta of cuentas || []) filaDe(cuenta.usuario, cuenta.nombre, true)
+  for (const cuenta of cuentas || []) filaDe(cuenta.documento, cuenta.nombre, true)
 
   for (const respuesta of respuestas || []) {
-    const fila = filaDe(respuesta.usuario, respuesta.nombre, false)
+    // las viejas ya limpias no traen ni documento ni usuario: las agrupa la huella que quedó en su id (pregunta:viejo-…)
+    const quien = respuesta.documento || respuesta.usuario || String(respuesta.id).split(':').slice(1).join(':')
+    const fila = filaDe(quien, respuesta.nombre, false)
     fila.respondidas++
     if (respuesta.calificacion === null || respuesta.calificacion === undefined) fila.pendientes++
     else fila.notas.push(Number(respuesta.calificacion))

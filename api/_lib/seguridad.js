@@ -1,37 +1,13 @@
-// Contraseñas cifradas, sesiones firmadas, clave de admin y límites de intentos.
+// Sesiones firmadas, clave de admin, huellas privadas y límites de intentos.
 // Lo de aquí no toca la base de datos (salvo limitar), para poder probarlo con node --test.
 
 import crypto from 'node:crypto'
-import { promisify } from 'node:util'
-
-const scrypt = promisify(crypto.scrypt)
 
 // Compara sin que el tiempo de respuesta delate cuántos caracteres coinciden
 export function igualesSeguro(a, b) {
   const ha = crypto.createHash('sha256').update(String(a)).digest()
   const hb = crypto.createHash('sha256').update(String(b)).digest()
   return crypto.timingSafeEqual(ha, hb)
-}
-
-/* ----- Contraseñas de los aprendices ----- */
-
-const PREFIJO = 'scrypt$'
-
-export async function cifrarClave(clave) {
-  const sal = crypto.randomBytes(16)
-  const hash = await scrypt(clave, sal, 32)
-  return `${PREFIJO}${sal.toString('hex')}$${hash.toString('hex')}`
-}
-
-export async function verificarClave(clave, guardada) {
-  if (typeof clave !== 'string' || !clave || typeof guardada !== 'string' || !guardada.startsWith(PREFIJO)) {
-    return false
-  }
-  const [, salHex, hashHex] = guardada.split('$')
-  const esperado = Buffer.from(hashHex || '', 'hex')
-  if (!salHex || !esperado.length) return false
-  const calculado = await scrypt(clave, Buffer.from(salHex, 'hex'), esperado.length)
-  return crypto.timingSafeEqual(calculado, esperado)
 }
 
 /* ----- Clave de administrador ----- */
@@ -65,6 +41,10 @@ function secreto() {
 }
 
 const firmar = (texto) => crypto.createHmac('sha256', secreto()).update(texto).digest('base64url')
+
+// Una huella que no deja adivinar lo de adentro: sirve para mostrar ids sin regalar el documento de nadie.
+// (Un sha256 pelado no sirve: los documentos son puros números y se sacan probando.)
+export const huellaPrivada = (texto) => firmar(`huella:${texto}`).slice(0, 22)
 
 // Token: tipo.sujeto.expira.firma. El sujeto va en base64url para que un usuario con puntos no lo descuadre.
 export function crearSesion(tipo, sujeto, ahora = Date.now()) {

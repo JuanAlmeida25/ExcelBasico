@@ -2,42 +2,11 @@
 // Los mensajes van listos para mostrárselos al aprendiz tal cual.
 
 export const LIMITES = {
-  usuario: { min: 3, max: 30 },
-  nombre: { min: 3, max: 80 },
-  clave: { min: 6, max: 72 },
   respuesta: { min: 10, max: 2000 },
   retroalimentacion: { max: 1000 }
 }
 
 export const texto = (valor) => (typeof valor === 'string' ? valor.trim() : '')
-
-// Usuario en minúscula para que "Juan" y "juan" no sean dos cuentas distintas
-export function validarUsuario(valor) {
-  const usuario = texto(valor).toLowerCase()
-  const { min, max } = LIMITES.usuario
-  if (!new RegExp(`^[a-z0-9._-]{${min},${max}}$`).test(usuario)) {
-    return { error: `El usuario debe tener entre ${min} y ${max} caracteres: letras sin tildes, números, punto, guion o guion bajo.` }
-  }
-  return { valor: usuario }
-}
-
-export function validarNombre(valor) {
-  const nombre = texto(valor).replace(/\s+/g, ' ')
-  const { min, max } = LIMITES.nombre
-  if (nombre.length < min || nombre.length > max) {
-    return { error: `Escribe tu nombre completo (entre ${min} y ${max} caracteres).` }
-  }
-  return { valor: nombre }
-}
-
-// La contraseña no se recorta: si alguien la quiso con espacios, es su contraseña
-export function validarClave(valor) {
-  const { min, max } = LIMITES.clave
-  if (typeof valor !== 'string' || valor.length < min || valor.length > max) {
-    return { error: `La contraseña debe tener entre ${min} y ${max} caracteres.` }
-  }
-  return { valor }
-}
 
 export function validarRespuesta(valor) {
   const respuesta = texto(valor)
